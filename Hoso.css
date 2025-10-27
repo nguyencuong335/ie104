@@ -1,0 +1,81 @@
+/* Main content layout chỉnh lại giống thiết kế */
+.main-content {
+    flex: 1;
+    padding: 40px 48px;
+    background: #f8fdfd;
+    overflow-y: auto;
+}
+
+/* Profile section chỉnh theo hình */
+.user-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.user-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-color: #dfe8ef;
+    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+}
+
+.user-name {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.follow-stats {
+    font-size: 15px;
+    color: #111;
+    opacity: 0.85;
+}
+
+/* Title Playlist */
+.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 16px 0 20px;
+}
+
+/* Playlist Card Layout */
+.my-playlists {
+    display: flex;
+    gap: 24px;
+}
+
+.my-pl-card {
+    width: 160px;
+    cursor: pointer;
+}
+
+.my-pl-cover {
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+}
+
+.my-pl-name {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.my-pl-sub {
+    font-size: 13px;
+    opacity: 0.7;
+}
