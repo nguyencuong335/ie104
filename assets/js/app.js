@@ -19,35 +19,35 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Âm thầm bên em",
             artist: "Sơn Tùng M-TP",
             src: "./assets/songs/am-tham-ben-em-son-tung-mtp.mp3",
-            cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg",
+            cover: "./assets/imgs/am-tham-ben-em-son-tung-mtp.jpg",
             artistImg: "./assets/imgs/son-tung-mtp.jpg",
         },
         {
             title: "Buông đôi tay nhau ra",
             artist: "Sơn Tùng M-TP",
             src: "./assets/songs/buong-doi-tay-nhau-ra-son-tung-mtp.mp3",
-            cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg",
+            cover: "./assets/imgs/buong-doi-tay-nhau-ra-son-tung-mtp.jpg",
             artistImg: "./assets/imgs/son-tung-mtp.jpg",
         },
         {
             title: "Đừng Làm Trái Tim Anh Đau",
             artist: "Sơn Tùng M-TP",
             src: "./assets/songs/dung-lam-trai-tim-anh-dau-son-tung-mtp.mp3",
-            cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg",
+            cover: "./assets/imgs/dung-lam-trai-tim-anh-dau-son-tung-mtp.jpg",
             artistImg: "./assets/imgs/son-tung-mtp.jpg",
         },
         {
             title: "Không Phải Dạng Vừa Đâu",
             artist: "Sơn Tùng M-TP",
             src: "./assets/songs/khong-phai-dang-vua-dau-son-tung-mtp.mp3",
-            cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg",
+            cover: "./assets/imgs/khong-phai-dang-vua-dau-son-tung-mtp.jpg",
             artistImg: "./assets/imgs/son-tung-mtp.jpg",
         },
         {
             title: "Khuôn Mặt Đáng Thương",
             artist: "Sơn Tùng M-TP",
             src: "./assets/songs/khuon-mat-dang-thuong-son-tung-mtp.mp3",
-            cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg",
+            cover: "./assets/imgs/khuon-mat-dang-thuong-son-tung-mtp.jpg",
             artistImg: "./assets/imgs/son-tung-mtp.jpg",
         },
         {
@@ -416,4 +416,41 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("next/prev throw", err);
         }
     })();
+});
+
+// Chuyển trang khi click vào nút profile
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.querySelector(".profile-btn");
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+        // Đảm bảo đúng tên file: 'hoso.html' hay 'Hoso.html'
+        window.location.href = "./hoso.html";
+        // hoặc: window.location.assign('./hoso.html');
+    });
+});
+
+// Nhập Sơn Tùng thì sẽ qua trang tìm kiếm
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.querySelector('.search input[type="search"]');
+    if (!input) return;
+
+    // Chuẩn hoá: bỏ dấu tiếng Việt, về lowercase, trim
+    const normalize = (s) =>
+        s
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+
+        const q = normalize(input.value);
+        if (q.includes("son tung")) {
+            // chuyển trang; kèm query cho tiện nếu cần dùng ở timkiem.html
+            window.location.href =
+                "./timkiem.html?q=" + encodeURIComponent(input.value);
+        }
+    });
 });

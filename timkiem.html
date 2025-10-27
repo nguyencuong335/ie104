@@ -4,33 +4,53 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tìm kiếm</title>
-        <!-- Shared styles from PLAYER_MUSIC -->
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
-        <!-- Icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        <!-- Page-specific styles for main content -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
         <link rel="stylesheet" href="./assets/css/timkiem.css" />
     </head>
     <body>
         <div class="wrap">
-            <!-- Header (reuse from PLAYER_MUSIC) -->
+            <!-- Header -->
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
-                        <div class="logo-box" style="background-image: url('./assets/imgs/logo.png');"></div>
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
+                            <div
+                                class="logo-box"
+                                style="
+                                    background-image: url('./assets/imgs/logo.png');
+                                "
+                            ></div>
+                        </a>
                     </div>
                     <div class="header-center">
                         <button class="nav-btn" id="nav-back" title="Quay lại">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <button class="nav-btn" id="nav-forward" title="Tiến tới">
+                        <button
+                            class="nav-btn"
+                            id="nav-forward"
+                            title="Tiến tới"
+                        >
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                         <div class="search" role="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="search" placeholder="Tìm bài hát, nghệ sĩ..." aria-label="Tìm kiếm" />
+                            <input
+                                type="search"
+                                placeholder="Tìm bài hát, nghệ sĩ..."
+                                aria-label="Tìm kiếm"
+                            />
                         </div>
                     </div>
                     <div class="header-right">
@@ -45,14 +65,16 @@
             </header>
 
             <div class="content">
-                <!-- Sidebar (reuse from PLAYER_MUSIC) -->
+                <!-- Sidebar -->
                 <aside class="sidebar" id="sidebar">
                     <nav class="menu">
                         <button class="menu-btn explore">
-                            <i class="fa-solid fa-compass"></i><span>Khám phá</span>
+                            <i class="fa-solid fa-compass"></i
+                            ><span>Khám phá</span>
                         </button>
                         <button class="menu-btn your">
-                            <i class="fa-regular fa-user"></i><span>Playlist của bạn</span>
+                            <i class="fa-regular fa-user"></i
+                            ><span>Playlist của bạn</span>
                         </button>
 
                         <div class="section">
@@ -62,17 +84,24 @@
                         </div>
 
                         <button class="menu-btn liked">
-                            <i class="fa-regular fa-heart"></i><span>Yêu thích</span>
+                            <i class="fa-regular fa-heart"></i
+                            ><span>Yêu thích</span>
                         </button>
                         <button class="menu-btn recent">
-                            <i class="fa-solid fa-clock-rotate-left"></i><span>Nghe gần đây</span>
+                            <i class="fa-solid fa-clock-rotate-left"></i
+                            ><span>Nghe gần đây</span>
                         </button>
 
                         <div class="section">
                             <div class="section-sep"></div>
                             <div class="section-header">
-                                <span class="section-label">DANH SÁCH ĐÃ TẠO</span>
-                                <button class="icon-btn add" title="Thêm playlist">
+                                <span class="section-label"
+                                    >DANH SÁCH ĐÃ TẠO</span
+                                >
+                                <button
+                                    class="icon-btn add"
+                                    title="Thêm playlist"
+                                >
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
@@ -81,53 +110,121 @@
 
                         <div class="pl-list">
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">My Chill Mix</div>
-                                    <div class="pl-sub">Playlist • 34 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 34 songs
+                                    </div>
                                 </div>
                             </div>
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">Suy tí thôi</div>
-                                    <div class="pl-sub">Playlist • 100 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 100 songs
+                                    </div>
                                 </div>
                             </div>
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">IELTS</div>
-                                    <div class="pl-sub">Playlist • 28 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 28 songs
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </nav>
                 </aside>
 
-                <!-- Main content (ported from Do_an4) -->
+                <!-- Queue card -->
+                <div class="queue hidden" id="queue">
+                    <!-- Banner now playing -->
+                    <div class="q-banner" id="np-banner">
+                        <div class="q-banner-inner">
+                            <div class="q-banner-cover">
+                                <img id="b-cover" alt="Cover lớn" />
+                            </div>
+                            <div class="q-banner-text">
+                                <div class="b-title" id="b-title">—</div>
+                                <div class="b-artist">
+                                    <img
+                                        class="b-artist-avatar"
+                                        id="b-artist-avatar"
+                                        alt="Artist"
+                                    />
+                                    <span
+                                        class="b-artist-name"
+                                        id="b-artist-name"
+                                        >—</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Artist Bar -->
+                    <div class="artist-bar" id="artist-bar">
+                        <div class="artist-left">
+                            <div class="artist-chip">
+                                <div
+                                    class="avatar"
+                                    id="ab-avatar"
+                                    aria-label="Artist avatar"
+                                ></div>
+                                <div class="artist-meta">
+                                    <div class="label">Artist</div>
+                                    <div class="name" id="ab-name">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="follow-btn"
+                            id="ab-follow"
+                            aria-pressed="false"
+                        >
+                            Theo dõi
+                        </button>
+                    </div>
+
+                    <div class="q-header">
+                        <div class="q-title">Queue</div>
+                        <div class="q-sub">Based on this playlist</div>
+                    </div>
+                    <div id="queue-list" class="q-list"></div>
+                </div>
+
+                <!-- Main content -->
                 <main class="timkiem-main" aria-label="Kết quả tìm kiếm">
-                    <!-- Hidden essentials so app.js can initialize safely -->
-                    <div id="b-cover-wrap" style="display:none">
-                        <img id="b-cover" alt="banner cover" />
-                    </div>
-                    <div id="b-meta" style="display:none">
-                        <span id="b-title"></span>
-                        <span id="b-artist-name"></span>
-                        <img id="b-artist-avatar" alt="artist avatar" />
-                    </div>
-                    <div id="artist-bar" style="display:none">
-                        <div id="ab-name"></div>
-                        <div id="ab-avatar"></div>
-                        <button id="ab-follow" type="button">Theo dõi</button>
-                    </div>
-                    <div id="queue" class="hidden" style="display:none">
-                        <div id="queue-list"></div>
-                    </div>
                     <section class="top-result-section">
                         <h2 class="section-title">Top Result</h2>
                         <div class="top-result-card">
-                            <div class="artist-image" style="background-image: url('./assets/imgs/son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
+                            <div
+                                class="artist-image"
+                                style="
+                                    background-image: url('./assets/imgs/son-tung-mtp.jpg');
+                                    background-size: cover;
+                                    background-position: center;
+                                "
+                            ></div>
                             <div class="artist-name">Sơn Tùng MTP</div>
                             <div class="artist-type">Nghệ sĩ</div>
                             <button class="follow-button">Theo dõi</button>
@@ -143,38 +240,73 @@
                         <h2 class="section-title">Albums</h2>
                         <div class="songs-grid">
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div
+                                    class="song-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/albums-lac-troi-son-tung-mtp.jpg');
+                                        background-size: cover;
+                                        background-position: center;
+                                    "
+                                ></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">Lạc Trôi</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div
+                                    class="song-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/albums-m-tp-M-TP-son-tung-mtp.jpg');
+                                        background-size: cover;
+                                        background-position: center;
+                                    "
+                                ></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">m-tp M-TP</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div
+                                    class="song-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/albums-Sky-Tour-son-tung-mtp.jpg');
+                                        background-size: cover;
+                                        background-position: center;
+                                    "
+                                ></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">Sky Tour</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div
+                                    class="song-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/albums-SKY-DECADE-son-tung-mtp.jpg');
+                                        background-size: cover;
+                                        background-position: center;
+                                    "
+                                ></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">SKY DECADE</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div
+                                    class="song-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/albums-MAKING-MY-WAY-son-tung-mtp.jpg');
+                                        background-size: cover;
+                                        background-position: center;
+                                    "
+                                ></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">MAKING MY WAY</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                         </div>
@@ -183,24 +315,28 @@
             </div>
         </div>
 
-        <!-- Player bar (full-bleed, outside .wrap) -->
+        <!-- Player bar -->
         <div class="player" role="region" aria-label="Trình phát nhạc">
             <div class="bar">
-                <!-- Left: cover + meta -->
+                <!-- cover + meta -->
                 <div class="left">
                     <div class="cover">
                         <img id="cover" alt="Bìa bài hát" />
                     </div>
                     <div class="meta">
                         <div class="title" id="title">—</div>
-                        <button class="btn outline add-btn" id="add" title="Thêm (plus)">
+                        <button
+                            class="btn outline add-btn"
+                            id="add"
+                            title="Thêm (plus)"
+                        >
                             <i class="fa-solid fa-plus"></i>
                         </button>
                         <div class="artist" id="artist">—</div>
                     </div>
                 </div>
 
-                <!-- Center: controls + timeline -->
+                <!--controls + timeline -->
                 <div class="center">
                     <div class="controls">
                         <button class="btn" id="shuffle" title="Shuffle (trộn)">
@@ -209,90 +345,55 @@
                         <button class="btn" id="prev" title="Prev">
                             <i class="fa-solid fa-backward-step"></i>
                         </button>
-                        <button class="btn play" id="play" title="Phát/Tạm dừng">
+                        <button
+                            class="btn play"
+                            id="play"
+                            title="Phát/Tạm dừng"
+                        >
                             <i id="play-icon" class="fa-solid fa-play"></i>
                         </button>
                         <button class="btn" id="next" title="Next">
                             <i class="fa-solid fa-forward-step"></i>
                         </button>
-                        <button class="btn" id="repeat" title="Repeat (off/all/one)">
+                        <button
+                            class="btn"
+                            id="repeat"
+                            title="Repeat (off/all/one)"
+                        >
                             <i class="fa-solid fa-repeat"></i>
                         </button>
                     </div>
                     <div class="timeline">
                         <div class="time" id="current">0:00</div>
-                        <input id="progress" type="range" min="0" max="100" value="0" aria-label="Tiến độ" />
+                        <input
+                            id="progress"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                            aria-label="Tiến độ"
+                        />
                         <div class="time" id="duration">0:00</div>
                     </div>
                 </div>
 
-                <!-- Right: volume -->
+                <!-- volume -->
                 <div class="right" title="Âm lượng">
                     <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
-                    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Âm lượng" />
+                    <input
+                        id="volume"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.8"
+                        aria-label="Âm lượng"
+                    />
                 </div>
             </div>
         </div>
 
-        <script>
-            // Optional: wire header back/forward like index.html
-            const backBtn = document.getElementById('nav-back');
-            const fwdBtn = document.getElementById('nav-forward');
-            if (backBtn) backBtn.addEventListener('click', () => history.back());
-            if (fwdBtn) fwdBtn.addEventListener('click', () => history.forward());
-        </script>
         <script src="./assets/js/app.js"></script>
-        <script>
-            // Build Top Songs from the first 5 items in the rendered queue
-            (function initTopSongs() {
-                function build() {
-                    const grid = document.getElementById('top-songs-grid');
-                    if (!grid) return false;
-                    const items = Array.from(document.querySelectorAll('.q-item')).slice(0, 5);
-                    if (items.length === 0) return false;
-                    grid.innerHTML = '';
-                    items.forEach((row) => {
-                        const idx = row.getAttribute('data-index');
-                        const coverImg = row.querySelector('.q-cover img');
-                        const titleEl = row.querySelector('.q-title-text');
-                        const artistEl = row.querySelector('.q-artist');
-                        const card = document.createElement('div');
-                        card.className = 'song-item';
-                        card.innerHTML = `
-                            <div class="song-cover" style="background-image:url('${coverImg ? coverImg.src : ''}'); background-size: cover; background-position: center;"></div>
-                            <div class="song-info">
-                                <div class="song-name">${titleEl ? titleEl.textContent : ''}</div>
-                                <div class="song-artist">${artistEl ? artistEl.textContent : ''}</div>
-                            </div>
-                        `;
-                        card.addEventListener('click', () => {
-                            const target = document.querySelector(`.q-item[data-index="${idx}"]`);
-                            if (target) target.click();
-                        });
-                        grid.appendChild(card);
-                    });
-                    return true;
-                }
-                // Try to build after DOM ready and app.js has rendered queue
-                if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                    setTimeout(() => {
-                        if (!build()) {
-                            // In case app.js hasn't rendered yet
-                            const obs = new MutationObserver(() => { if (build()) obs.disconnect(); });
-                            obs.observe(document.body, { childList: true, subtree: true });
-                        }
-                    }, 0);
-                } else {
-                    window.addEventListener('DOMContentLoaded', () => {
-                        setTimeout(() => {
-                            if (!build()) {
-                                const obs = new MutationObserver(() => { if (build()) obs.disconnect(); });
-                                obs.observe(document.body, { childList: true, subtree: true });
-                            }
-                        }, 0);
-                    });
-                }
-            })();
-        </script>
+        <script src="./assets/js/timkiem.js"></script>
     </body>
-    </html>
+</html>
