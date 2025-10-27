@@ -4,18 +4,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tìm kiếm</title>
-        <!-- Shared styles from PLAYER_MUSIC -->
         <link rel="stylesheet" href="./assets/css/reset.css" />
         <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
-        <!-- Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-        <!-- Page-specific styles for main content -->
         <link rel="stylesheet" href="./assets/css/timkiem.css" />
     </head>
     <body>
         <div class="wrap">
-            <!-- Header (reuse from PLAYER_MUSIC) -->
+            <!-- Header -->
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
@@ -45,7 +42,7 @@
             </header>
 
             <div class="content">
-                <!-- Sidebar (reuse from PLAYER_MUSIC) -->
+                <!-- Sidebar -->
                 <aside class="sidebar" id="sidebar">
                     <nav class="menu">
                         <button class="menu-btn explore">
@@ -105,9 +102,8 @@
                     </nav>
                 </aside>
 
-                <!-- Main content (ported from Do_an4) -->
+                <!-- Main content -->
                 <main class="timkiem-main" aria-label="Kết quả tìm kiếm">
-                    <!-- Hidden essentials so app.js can initialize safely -->
                     <div id="b-cover-wrap" style="display:none">
                         <img id="b-cover" alt="banner cover" />
                     </div>
@@ -143,38 +139,38 @@
                         <h2 class="section-title">Albums</h2>
                         <div class="songs-grid">
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div class="song-cover" style="background-image: url('./assets/imgs/albums-lac-troi-son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">Lạc Trôi</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div class="song-cover" style="background-image: url('./assets/imgs/albums-m-tp-M-TP-son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">m-tp M-TP</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div class="song-cover" style="background-image: url('./assets/imgs/albums-Sky-Tour-son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">Sky Tour</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div class="song-cover" style="background-image: url('./assets/imgs/albums-SKY-DECADE-son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">SKY DECADE</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                             <div class="song-item">
-                                <div class="song-cover"></div>
+                                <div class="song-cover" style="background-image: url('./assets/imgs/albums-MAKING-MY-WAY-son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
                                 <div class="song-info">
-                                    <div class="song-name">Name of song</div>
-                                    <div class="song-artist">Nghệ sĩ</div>
+                                    <div class="song-name">MAKING MY WAY</div>
+                                    <div class="song-artist">Sơn Tùng M-TP</div>
                                 </div>
                             </div>
                         </div>
@@ -183,10 +179,10 @@
             </div>
         </div>
 
-        <!-- Player bar (full-bleed, outside .wrap) -->
+        <!-- Player bar -->
         <div class="player" role="region" aria-label="Trình phát nhạc">
             <div class="bar">
-                <!-- Left: cover + meta -->
+                <!-- cover + meta -->
                 <div class="left">
                     <div class="cover">
                         <img id="cover" alt="Bìa bài hát" />
@@ -200,7 +196,7 @@
                     </div>
                 </div>
 
-                <!-- Center: controls + timeline -->
+                <!--controls + timeline -->
                 <div class="center">
                     <div class="controls">
                         <button class="btn" id="shuffle" title="Shuffle (trộn)">
@@ -226,7 +222,7 @@
                     </div>
                 </div>
 
-                <!-- Right: volume -->
+                <!-- volume -->
                 <div class="right" title="Âm lượng">
                     <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
                     <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Âm lượng" />
@@ -235,7 +231,6 @@
         </div>
 
         <script>
-            // Optional: wire header back/forward like index.html
             const backBtn = document.getElementById('nav-back');
             const fwdBtn = document.getElementById('nav-forward');
             if (backBtn) backBtn.addEventListener('click', () => history.back());
@@ -243,7 +238,6 @@
         </script>
         <script src="./assets/js/app.js"></script>
         <script>
-            // Build Top Songs from the first 5 items in the rendered queue
             (function initTopSongs() {
                 function build() {
                     const grid = document.getElementById('top-songs-grid');
@@ -251,15 +245,23 @@
                     const items = Array.from(document.querySelectorAll('.q-item')).slice(0, 5);
                     if (items.length === 0) return false;
                     grid.innerHTML = '';
-                    items.forEach((row) => {
+                    const localCovers = [
+                        "./assets/imgs/am-tham-ben-em-son-tung-mtp.jpg",
+                        "./assets/imgs/buong-doi-tay-nhau-ra-son-tung-mtp.jpg",
+                        "./assets/imgs/dung-lam-trai-tim-anh-dau-son-tung-mtp.jpg",
+                        "./assets/imgs/khong-phai-dang-vua-dau-son-tung-mtp.jpg",
+                        "./assets/imgs/khuon-mat-dang-thuong-son-tung-mtp.jpg",
+                    ];
+                    items.forEach((row, i) => {
                         const idx = row.getAttribute('data-index');
                         const coverImg = row.querySelector('.q-cover img');
                         const titleEl = row.querySelector('.q-title-text');
                         const artistEl = row.querySelector('.q-artist');
+                        const coverUrl = (localCovers[i] || (coverImg ? coverImg.src : ''));
                         const card = document.createElement('div');
                         card.className = 'song-item';
                         card.innerHTML = `
-                            <div class="song-cover" style="background-image:url('${coverImg ? coverImg.src : ''}'); background-size: cover; background-position: center;"></div>
+                            <div class="song-cover" style="background-image:url('${coverUrl}'); background-size: cover; background-position: center;"></div>
                             <div class="song-info">
                                 <div class="song-name">${titleEl ? titleEl.textContent : ''}</div>
                                 <div class="song-artist">${artistEl ? artistEl.textContent : ''}</div>
@@ -273,11 +275,10 @@
                     });
                     return true;
                 }
-                // Try to build after DOM ready and app.js has rendered queue
                 if (document.readyState === 'complete' || document.readyState === 'interactive') {
                     setTimeout(() => {
                         if (!build()) {
-                            // In case app.js hasn't rendered yet
+
                             const obs = new MutationObserver(() => { if (build()) obs.disconnect(); });
                             obs.observe(document.body, { childList: true, subtree: true });
                         }
