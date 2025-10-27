@@ -101,25 +101,66 @@
                         </div>
                     </nav>
                 </aside>
+                
+                <!-- Queue card -->
+                <div class="queue hidden" id="queue">
+                    <!-- Banner now playing -->
+                    <div class="q-banner" id="np-banner">
+                        <div class="q-banner-inner">
+                            <div class="q-banner-cover">
+                                <img id="b-cover" alt="Cover lớn" />
+                            </div>
+                            <div class="q-banner-text">
+                                <div class="b-title" id="b-title">—</div>
+                                <div class="b-artist">
+                                    <img
+                                        class="b-artist-avatar"
+                                        id="b-artist-avatar"
+                                        alt="Artist"
+                                    />
+                                    <span
+                                        class="b-artist-name"
+                                        id="b-artist-name"
+                                        >—</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Artist Bar -->
+                    <div class="artist-bar" id="artist-bar">
+                        <div class="artist-left">
+                            <div class="artist-chip">
+                                <div
+                                    class="avatar"
+                                    id="ab-avatar"
+                                    aria-label="Artist avatar"
+                                ></div>
+                                <div class="artist-meta">
+                                    <div class="label">Artist</div>
+                                    <div class="name" id="ab-name">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="follow-btn"
+                            id="ab-follow"
+                            aria-pressed="false"
+                        >
+                            Theo dõi
+                        </button>
+                    </div>
+
+                    <div class="q-header">
+                        <div class="q-title">Queue</div>
+                        <div class="q-sub">Based on this playlist</div>
+                    </div>
+                    <div id="queue-list" class="q-list"></div>
+                </div>
 
                 <!-- Main content -->
                 <main class="timkiem-main" aria-label="Kết quả tìm kiếm">
-                    <div id="b-cover-wrap" style="display:none">
-                        <img id="b-cover" alt="banner cover" />
-                    </div>
-                    <div id="b-meta" style="display:none">
-                        <span id="b-title"></span>
-                        <span id="b-artist-name"></span>
-                        <img id="b-artist-avatar" alt="artist avatar" />
-                    </div>
-                    <div id="artist-bar" style="display:none">
-                        <div id="ab-name"></div>
-                        <div id="ab-avatar"></div>
-                        <button id="ab-follow" type="button">Theo dõi</button>
-                    </div>
-                    <div id="queue" class="hidden" style="display:none">
-                        <div id="queue-list"></div>
-                    </div>
                     <section class="top-result-section">
                         <h2 class="section-title">Top Result</h2>
                         <div class="top-result-card">
@@ -230,70 +271,7 @@
             </div>
         </div>
 
-        <script>
-            const backBtn = document.getElementById('nav-back');
-            const fwdBtn = document.getElementById('nav-forward');
-            if (backBtn) backBtn.addEventListener('click', () => history.back());
-            if (fwdBtn) fwdBtn.addEventListener('click', () => history.forward());
-        </script>
         <script src="./assets/js/app.js"></script>
-        <script>
-            (function initTopSongs() {
-                function build() {
-                    const grid = document.getElementById('top-songs-grid');
-                    if (!grid) return false;
-                    const items = Array.from(document.querySelectorAll('.q-item')).slice(0, 5);
-                    if (items.length === 0) return false;
-                    grid.innerHTML = '';
-                    const localCovers = [
-                        "./assets/imgs/am-tham-ben-em-son-tung-mtp.jpg",
-                        "./assets/imgs/buong-doi-tay-nhau-ra-son-tung-mtp.jpg",
-                        "./assets/imgs/dung-lam-trai-tim-anh-dau-son-tung-mtp.jpg",
-                        "./assets/imgs/khong-phai-dang-vua-dau-son-tung-mtp.jpg",
-                        "./assets/imgs/khuon-mat-dang-thuong-son-tung-mtp.jpg",
-                    ];
-                    items.forEach((row, i) => {
-                        const idx = row.getAttribute('data-index');
-                        const coverImg = row.querySelector('.q-cover img');
-                        const titleEl = row.querySelector('.q-title-text');
-                        const artistEl = row.querySelector('.q-artist');
-                        const coverUrl = (localCovers[i] || (coverImg ? coverImg.src : ''));
-                        const card = document.createElement('div');
-                        card.className = 'song-item';
-                        card.innerHTML = `
-                            <div class="song-cover" style="background-image:url('${coverUrl}'); background-size: cover; background-position: center;"></div>
-                            <div class="song-info">
-                                <div class="song-name">${titleEl ? titleEl.textContent : ''}</div>
-                                <div class="song-artist">${artistEl ? artistEl.textContent : ''}</div>
-                            </div>
-                        `;
-                        card.addEventListener('click', () => {
-                            const target = document.querySelector(`.q-item[data-index="${idx}"]`);
-                            if (target) target.click();
-                        });
-                        grid.appendChild(card);
-                    });
-                    return true;
-                }
-                if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                    setTimeout(() => {
-                        if (!build()) {
-
-                            const obs = new MutationObserver(() => { if (build()) obs.disconnect(); });
-                            obs.observe(document.body, { childList: true, subtree: true });
-                        }
-                    }, 0);
-                } else {
-                    window.addEventListener('DOMContentLoaded', () => {
-                        setTimeout(() => {
-                            if (!build()) {
-                                const obs = new MutationObserver(() => { if (build()) obs.disconnect(); });
-                                obs.observe(document.body, { childList: true, subtree: true });
-                            }
-                        }, 0);
-                    });
-                }
-            })();
-        </script>
+        <script src="./assets/js/timkiem.js"></script>
     </body>
     </html>
