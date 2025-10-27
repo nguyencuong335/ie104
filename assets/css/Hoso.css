@@ -1,4 +1,4 @@
-/* Main content layout chỉnh lại giống thiết kế */
+/* Main content */
 .main-content {
     flex: 1;
     padding: 40px 48px;
@@ -6,7 +6,7 @@
     overflow-y: auto;
 }
 
-/* Profile section chỉnh theo hình */
+/* Profile section */
 .user-header {
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@
     background-size: cover;
     background-position: center;
     background-color: #dfe8ef;
-    box-shadow: 0 0 6px rgba(0,0,0,0.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 .user-info {
@@ -78,4 +78,30 @@
 .my-pl-sub {
     font-size: 13px;
     opacity: 0.7;
+}
+
+/*RESPONSIVE*/
+@media (max-width: 720px) {
+    .main-content {
+        padding: 28px 24px;
+    }
+
+    .user-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-avatar {
+        width: 95px;
+        height: 95px;
+    }
+
+    .section-title {
+        font-size: 20px;
+        margin-top: 24px;
+    }
+
+    .my-playlists {
+        justify-content: center;
+    }
 }
