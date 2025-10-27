@@ -1,5 +1,5 @@
 // Page-specific behavior for timkiem.html
-// Builds the Top Songs grid from the queue items rendered by app.js
+
 (function initTopSongsForSearchPage() {
   function build() {
     const grid = document.getElementById('top-songs-grid');
@@ -39,10 +39,10 @@
   }
 
   function tryBuildWhenReady() {
-    // Try after current tick, assuming app.js rendered the queue
+   
     setTimeout(() => {
       if (build()) return;
-      // Observe for when queue or grid shows up
+   
       const obs = new MutationObserver(() => {
         if (build()) obs.disconnect();
       });
