@@ -64,7 +64,7 @@
     }
 })();
 
-// Ẩn .main-content khi có .queue hiển thị trên trang
+// Ẩn .main-content khi có .queue hiển thị trên trang fix bug
 (function () {
     const SEARCH_SEL = ".timkiem-main";
     const QUEUE_SEL = ".queue";
