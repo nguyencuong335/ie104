@@ -16,18 +16,38 @@
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
-                        <div class="logo-box" style="background-image: url('./assets/imgs/logo.png');"></div>
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
+                            <div
+                                class="logo-box"
+                                style="
+                                    background-image: url('./assets/imgs/logo.png');
+                                "
+                            ></div>
+                        </a>
                     </div>
                     <div class="header-center">
                         <button class="nav-btn" id="nav-back" title="Quay lại">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <button class="nav-btn" id="nav-forward" title="Tiến tới">
+                        <button
+                            class="nav-btn"
+                            id="nav-forward"
+                            title="Tiến tới"
+                        >
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                         <div class="search" role="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="search" placeholder="Tìm bài hát, nghệ sĩ..." aria-label="Tìm kiếm" />
+                            <input
+                                type="search"
+                                placeholder="Tìm bài hát, nghệ sĩ..."
+                                aria-label="Tìm kiếm"
+                            />
                         </div>
                     </div>
                     <div class="header-right">
@@ -46,10 +66,12 @@
                 <aside class="sidebar" id="sidebar">
                     <nav class="menu">
                         <button class="menu-btn explore">
-                            <i class="fa-solid fa-compass"></i><span>Khám phá</span>
+                            <i class="fa-solid fa-compass"></i
+                            ><span>Khám phá</span>
                         </button>
                         <button class="menu-btn your">
-                            <i class="fa-regular fa-user"></i><span>Playlist của bạn</span>
+                            <i class="fa-regular fa-user"></i
+                            ><span>Playlist của bạn</span>
                         </button>
 
                         <div class="section">
@@ -59,17 +81,24 @@
                         </div>
 
                         <button class="menu-btn liked">
-                            <i class="fa-regular fa-heart"></i><span>Yêu thích</span>
+                            <i class="fa-regular fa-heart"></i
+                            ><span>Yêu thích</span>
                         </button>
                         <button class="menu-btn recent">
-                            <i class="fa-solid fa-clock-rotate-left"></i><span>Nghe gần đây</span>
+                            <i class="fa-solid fa-clock-rotate-left"></i
+                            ><span>Nghe gần đây</span>
                         </button>
 
                         <div class="section">
                             <div class="section-sep"></div>
                             <div class="section-header">
-                                <span class="section-label">DANH SÁCH ĐÃ TẠO</span>
-                                <button class="icon-btn add" title="Thêm playlist">
+                                <span class="section-label"
+                                    >DANH SÁCH ĐÃ TẠO</span
+                                >
+                                <button
+                                    class="icon-btn add"
+                                    title="Thêm playlist"
+                                >
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
@@ -78,24 +107,45 @@
 
                         <div class="pl-list">
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">My Chill Mix</div>
-                                    <div class="pl-sub">Playlist • 34 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 34 songs
+                                    </div>
                                 </div>
                             </div>
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">Suy tí thôi</div>
-                                    <div class="pl-sub">Playlist • 100 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 100 songs
+                                    </div>
                                 </div>
                             </div>
                             <div class="pl-item">
-                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');
+                                    "
+                                ></div>
                                 <div class="pl-meta">
                                     <div class="pl-name">IELTS</div>
-                                    <div class="pl-sub">Playlist • 28 songs</div>
+                                    <div class="pl-sub">
+                                        Playlist • 28 songs
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +214,14 @@
                     <section class="top-result-section">
                         <h2 class="section-title">Top Result</h2>
                         <div class="top-result-card">
-                            <div class="artist-image" style="background-image: url('./assets/imgs/son-tung-mtp.jpg'); background-size: cover; background-position: center;"></div>
+                            <div
+                                class="artist-image"
+                                style="
+                                    background-image: url('./assets/imgs/son-tung-mtp.jpg');
+                                    background-size: cover;
+                                    background-position: center;
+                                "
+                            ></div>
                             <div class="artist-name">Sơn Tùng MTP</div>
                             <div class="artist-type">Nghệ sĩ</div>
                             <button class="follow-button">Theo dõi</button>
@@ -230,7 +287,11 @@
                     </div>
                     <div class="meta">
                         <div class="title" id="title">—</div>
-                        <button class="btn outline add-btn" id="add" title="Thêm (plus)">
+                        <button
+                            class="btn outline add-btn"
+                            id="add"
+                            title="Thêm (plus)"
+                        >
                             <i class="fa-solid fa-plus"></i>
                         </button>
                         <div class="artist" id="artist">—</div>
@@ -246,19 +307,34 @@
                         <button class="btn" id="prev" title="Prev">
                             <i class="fa-solid fa-backward-step"></i>
                         </button>
-                        <button class="btn play" id="play" title="Phát/Tạm dừng">
+                        <button
+                            class="btn play"
+                            id="play"
+                            title="Phát/Tạm dừng"
+                        >
                             <i id="play-icon" class="fa-solid fa-play"></i>
                         </button>
                         <button class="btn" id="next" title="Next">
                             <i class="fa-solid fa-forward-step"></i>
                         </button>
-                        <button class="btn" id="repeat" title="Repeat (off/all/one)">
+                        <button
+                            class="btn"
+                            id="repeat"
+                            title="Repeat (off/all/one)"
+                        >
                             <i class="fa-solid fa-repeat"></i>
                         </button>
                     </div>
                     <div class="timeline">
                         <div class="time" id="current">0:00</div>
-                        <input id="progress" type="range" min="0" max="100" value="0" aria-label="Tiến độ" />
+                        <input
+                            id="progress"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                            aria-label="Tiến độ"
+                        />
                         <div class="time" id="duration">0:00</div>
                     </div>
                 </div>
@@ -266,7 +342,15 @@
                 <!-- volume -->
                 <div class="right" title="Âm lượng">
                     <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
-                    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Âm lượng" />
+                    <input
+                        id="volume"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.8"
+                        aria-label="Âm lượng"
+                    />
                 </div>
             </div>
         </div>
@@ -274,4 +358,4 @@
         <script src="./assets/js/app.js"></script>
         <script src="./assets/js/timkiem.js"></script>
     </body>
-    </html>
+</html>

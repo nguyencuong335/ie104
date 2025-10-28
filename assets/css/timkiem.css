@@ -1,14 +1,20 @@
 /* timkiem.html page-specific styles (main content only) */
 
 /* Page-level scroll overrides for timkiem only */
-html, body {
+/* html,
+body {
     height: auto !important;
     min-height: 100vh;
     overflow-y: auto !important; /* enable page scroll */
-}
+} */
 
-.wrap { height: auto; }
-.content { overflow: visible !important; min-height: 0; }
+.wrap {
+    height: auto;
+}
+.content {
+    overflow: visible !important;
+    min-height: 0;
+}
 
 .timkiem-main {
     display: flex;
@@ -19,21 +25,24 @@ html, body {
     border-radius: 12px 12px 0 0;
     box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.1);
     min-width: 0;
-    height: auto;          /* no internal scroll */
-    overflow: visible;     /* let page handle scroll */
-    /* leave safe space for player bar at bottom */
+    /* height: auto; 
+    overflow: visible;  */
+    overflow-y: auto;
+    height: 100%;
+    min-height: 0;
+    scrollbar-width: none;
     padding-bottom: calc(var(--player-h, 96px) + 24px);
 }
 
 /* Sidebar follows (sticky) while scrolling the page) */
-.sidebar {
+/* .sidebar {
     position: sticky;
-    top: 14px; /* same pad used in layout */
-    height: auto !important; /* override global height:100% so sticky can work */
-    align-self: start;        /* prevent stretching in grid */
+    top: 14px; 
+    height: auto !important; 
+    align-self: start; 
     max-height: calc(100vh - 14px - var(--player-h) - var(--player-safe));
     overflow: auto;
-}
+} */
 
 .section-title {
     font-family: "Poppins", sans-serif;
@@ -45,7 +54,9 @@ html, body {
 }
 
 /* Top Result */
-.top-result-section { margin-bottom: 16px; }
+.top-result-section {
+    margin-bottom: 16px;
+}
 .top-result-card {
     background: #e0f2fe;
     border-radius: 10px;
@@ -89,10 +100,15 @@ html, body {
     background: transparent;
     cursor: pointer;
 }
-.follow-button:hover { background: rgba(16, 94, 140, 0.08); }
+.follow-button:hover {
+    background: rgba(16, 94, 140, 0.08);
+}
 
 /* Lists */
-.songs-section, .albums-section { margin-top: 8px; }
+.songs-section,
+.albums-section {
+    margin-top: 8px;
+}
 .songs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -108,7 +124,9 @@ html, body {
     cursor: pointer;
     min-width: 0; /* allow children to ellipsis */
 }
-.song-item:hover { background: rgba(0, 0, 0, 0.05); }
+.song-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
 .song-cover {
     width: 116px;
     height: 116px;
@@ -145,5 +163,7 @@ html, body {
 
 /* Responsive */
 @media (max-width: 900px) {
-    .songs-grid { gap: 8px; }
+    .songs-grid {
+        gap: 8px;
+    }
 }

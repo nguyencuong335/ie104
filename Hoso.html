@@ -102,12 +102,19 @@
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
-                        <div
-                            class="logo-box"
-                            style="
-                                background-image: url('./assets/imgs/logo.png');
-                            "
-                        ></div>
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
+                            <div
+                                class="logo-box"
+                                style="
+                                    background-image: url('./assets/imgs/logo.png');
+                                "
+                            ></div>
+                        </a>
                     </div>
                     <div class="header-center">
                         <button class="nav-btn" id="nav-back" title="Quay lại">
@@ -234,7 +241,12 @@
                 <main class="main-content">
                     <!-- Profile header -->
                     <div class="user-header">
-                        <div class="user-avatar" style="background-image: url('./assets/imgs/avatar.jpg');"></div>
+                        <div
+                            class="user-avatar"
+                            style="
+                                background-image: url('./assets/imgs/avatar.jpg');
+                            "
+                        ></div>
                         <div class="user-info">
                             <h2 class="user-name">Nguyễn Quốc Đạt</h2>
                             <div class="follow-stats">
@@ -250,25 +262,39 @@
 
                     <div class="my-playlists">
                         <div class="my-pl-card">
-                            <div class="my-pl-cover" style="background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');"></div>
+                            <div
+                                class="my-pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');
+                                "
+                            ></div>
                             <div class="my-pl-name">My Chill Mix</div>
                             <div class="my-pl-sub">34 bài hát</div>
                         </div>
 
                         <div class="my-pl-card">
-                            <div class="my-pl-cover" style="background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');"></div>
+                            <div
+                                class="my-pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');
+                                "
+                            ></div>
                             <div class="my-pl-name">Suy tí thôi</div>
                             <div class="my-pl-sub">100 bài hát</div>
                         </div>
 
                         <div class="my-pl-card">
-                            <div class="my-pl-cover" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');"></div>
+                            <div
+                                class="my-pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');
+                                "
+                            ></div>
                             <div class="my-pl-name">IELTS</div>
                             <div class="my-pl-sub">28 bài hát</div>
                         </div>
                     </div>
                 </main>
-
 
                 <!-- Queue card -->
                 <div class="queue hidden" id="queue">
@@ -409,5 +435,6 @@
         </div>
 
         <script src="./assets/js/app.js"></script>
+        <script src="./assets/js/hoso.js"></script>
     </body>
 </html>
