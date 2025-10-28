@@ -427,6 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Đảm bảo đúng tên file: 'hoso.html' hay 'Hoso.html'
         window.location.href = "./Hoso.html";
         // hoặc: window.location.assign('./hoso.html');
+        // Cập nhật Hoso.html
     });
 });
 
