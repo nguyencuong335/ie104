@@ -455,3 +455,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// =================Hiệu ứng thanh chạy nhạc ===================
+// Update progress bar value
+const progressBar = document.getElementById("progress");
+progressBar.style.setProperty("--progress-value", `${progressBar.value}%`);
+
+// Add event listener to update visual state when value changes
+progressBar.addEventListener("input", (e) => {
+    const value = e.target.value;
+    progressBar.style.setProperty("--progress-value", `${value}%`);
+});
+// =================Hiệu ứng thanh chạy nhạc ===================
+const volumeSlider = document.getElementById("volume");
+
+function updateVolumeSlider() {
+    const value = volumeSlider.value;
+    const percentage = (value / volumeSlider.max) * 100;
+    volumeSlider.style.setProperty("--volume-value", `${percentage}%`);
+}
+
+// Set initial value
+updateVolumeSlider();
+
+// Update on change
+volumeSlider.addEventListener("input", updateVolumeSlider);
