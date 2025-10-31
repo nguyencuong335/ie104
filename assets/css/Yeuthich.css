@@ -1,0 +1,151 @@
+/* ===== Playlist yêu thích ===== */
+.playlist {
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 32px 48px;
+    box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Header (ảnh + tiêu đề + nút) */
+.playlist-header {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+.playlist-cover {
+    width: 220px;
+    height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.playlist-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.playlist-info h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #000;
+    margin: 0;
+}
+.playlist-sub {
+    font-size: 16px;
+    opacity: 0.7;
+    margin: 8px 0 16px;
+}
+
+.playlist-sub {
+    font-size: 13px;
+    opacity: 0.7;
+    margin: 8px 0 16px;
+    color: #000;
+}
+
+.playlist-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    background: #1481b9;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.playlist-play:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(20, 129, 185, 0.25);
+}
+.playlist-play i {
+    font-size: 18px;
+}
+
+/* Danh sách bài hát */
+.song-list {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+.song-list th {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    color: #135e88;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e0f2fe;
+}
+.song-list td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f4f8;
+    font-family: "Inter", sans-serif;
+}
+.song-list tbody tr:hover {
+    background: rgba(20, 129, 185, 0.06);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* Nghệ sĩ kết hợp */
+.artist-section h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 16px;
+}
+.artist-list {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+.artist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.artist img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 6px 16px rgba(20, 129, 185, 0.12);
+}
+.artist span {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #135e88;
+}
+
+.main-content {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.song-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.song-title img {
+    width: 46px;
+    height: 46px;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.playlist {
+    padding-bottom: 100px;
+}
