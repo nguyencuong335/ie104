@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="./assets/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
+        <meta name="theme-color" content="#ffffff" />
+
+        <title>Nghe gần đây</title>
+        <link rel="stylesheet" href="./assets/css/reset.css" />
+        <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        <link rel="stylesheet" href="./assets/css/timkiem.css" />
+        <link rel="stylesheet" href="./assets/css/NgheGanDay.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <!-- Header -->
+            <header class="header" aria-label="Thanh điều hướng">
+                <div class="header-inner">
+                    <div class="header-left">
+                        <a href="./index.html" class="logo-link" aria-label="Trang chủ" title="Trang chủ">
+                            <div class="logo-box" style="background-image: url('./assets/imgs/logo.png');"></div>
+                        </a>
+                    </div>
+                    <div class="header-center">
+                        <button class="nav-btn" id="nav-back" title="Quay lại">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button class="nav-btn" id="nav-forward" title="Tiến tới">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                        <div class="search" role="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" placeholder="Tìm bài hát, nghệ sĩ..." aria-label="Tìm kiếm" />
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <button class="profile-btn" title="Hồ sơ">
+                            <i class="fa-regular fa-user"></i>
+                        </button>
+                        <button class="settings-btn" title="Cài đặt">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+                    <nav class="menu">
+                        <button class="menu-btn explore">
+                            <i class="fa-solid fa-compass"></i><span>Khám phá</span>
+                        </button>
+                        <button class="menu-btn your">
+                            <i class="fa-regular fa-user"></i><span>Playlist của bạn</span>
+                        </button>
+
+                        <div class="section">
+                            <div class="section-sep"></div>
+                            <div class="section-label">THƯ VIỆN</div>
+                            <div class="section-sep"></div>
+                        </div>
+
+                        <button class="menu-btn liked">
+                            <i class="fa-regular fa-heart"></i><span>Yêu thích</span>
+                        </button>
+                        <button class="menu-btn recent">
+                            <i class="fa-solid fa-clock-rotate-left"></i><span>Nghe gần đây</span>
+                        </button>
+
+                        <div class="section">
+                            <div class="section-sep"></div>
+                            <div class="section-header">
+                                <span class="section-label">DANH SÁCH ĐÃ TẠO</span>
+                                <button class="icon-btn add" title="Thêm playlist">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="section-sep"></div>
+                        </div>
+
+                        <div class="pl-list">
+                            <div class="pl-item">
+                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">My Chill Mix</div>
+                                    <div class="pl-sub">Playlist • 34 songs</div>
+                                </div>
+                            </div>
+                            <div class="pl-item">
+                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">Suy tí thôi</div>
+                                    <div class="pl-sub">Playlist • 100 songs</div>
+                                </div>
+                            </div>
+                            <div class="pl-item">
+                                <div class="pl-cover" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');"></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">IELTS</div>
+                                    <div class="pl-sub">Playlist • 28 songs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- Queue card (needed for app.js to render data) -->
+                <div class="queue hidden" id="queue">
+                    <div class="q-banner" id="np-banner">
+                        <div class="q-banner-inner">
+                            <div class="q-banner-cover">
+                                <img id="b-cover" alt="Cover lớn" />
+                            </div>
+                            <div class="q-banner-text">
+                                <div class="b-title" id="b-title">—</div>
+                                <div class="b-artist">
+                                    <img class="b-artist-avatar" id="b-artist-avatar" alt="Artist" />
+                                    <span class="b-artist-name" id="b-artist-name">—</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="artist-bar" id="artist-bar">
+                        <div class="artist-left">
+                            <div class="artist-chip">
+                                <div class="avatar" id="ab-avatar" aria-label="Artist avatar"></div>
+                                <div class="artist-meta">
+                                    <div class="label">Artist</div>
+                                    <div class="name" id="ab-name">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="follow-btn" id="ab-follow" aria-pressed="false">Theo dõi</button>
+                    </div>
+
+                    <div class="q-header">
+                        <div class="q-title">Queue</div>
+                        <div class="q-sub">Based on this playlist</div>
+                    </div>
+                    <div id="queue-list" class="q-list"></div>
+                </div>
+
+                <!-- Main content -->
+                <main class="played-main" aria-label="Bài hát đã phát">
+                    <section class="page-header">
+                        <h1 class="title-xl">Nghe gần đây</h1>
+                    </section>
+
+                    <section>
+                        <div class="played-table" role="table" aria-label="Danh sách bài hát đã phát">
+                            <div class="pt-head" role="row">
+                                <div class="pt-col idx">#</div>
+                                <div class="pt-col track">Title</div>
+                                <div class="pt-col artist">Artist</div>
+                                <div class="pt-col time">Time</div>
+                            </div>
+                            <div id="played-body" class="pt-body" role="rowgroup"></div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+
+        <!-- Player bar -->
+        <div class="player" role="region" aria-label="Trình phát nhạc">
+            <div class="bar">
+                <div class="left">
+                    <div class="cover"><img id="cover" alt="Bìa bài hát" /></div>
+                    <div class="meta">
+                        <div class="title" id="title">—</div>
+                        <button class="btn outline add-btn" id="add" title="Thêm (plus)"><i class="fa-solid fa-plus"></i></button>
+                        <div class="artist" id="artist">—</div>
+                    </div>
+                </div>
+                <div class="center">
+                    <div class="controls">
+                        <button class="btn" id="shuffle" title="Shuffle (trộn)"><i class="fa-solid fa-shuffle"></i></button>
+                        <button class="btn" id="prev" title="Prev"><i class="fa-solid fa-backward-step"></i></button>
+                        <button class="btn play" id="play" title="Phát/Tạm dừng"><i id="play-icon" class="fa-solid fa-play"></i></button>
+                        <button class="btn" id="next" title="Next"><i class="fa-solid fa-forward-step"></i></button>
+                        <button class="btn" id="repeat" title="Repeat (off/all/one)"><i class="fa-solid fa-repeat"></i></button>
+                    </div>
+                    <div class="timeline">
+                        <div class="time" id="current">0:00</div>
+                        <input id="progress" type="range" min="0" max="100" value="0" aria-label="Tiến độ" />
+                        <div class="time" id="duration">0:00</div>
+                    </div>
+                </div>
+                <div class="right" title="Âm lượng">
+                    <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
+                    <input id="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Âm lượng" />
+                </div>
+            </div>
+        </div>
+
+        <script src="./assets/js/app.js"></script>
+        <script src="./assets/js/NgheGanDay.js"></script>
+    </body>
+</html>

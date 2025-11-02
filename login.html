@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login • Music Box</title>
+  <link rel="stylesheet" href="./assets/css/reset.css" />
+  <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+  <link rel="stylesheet" href="./assets/css/auth.css" />
+</head>
+
+<body class="auth-bg">
+  <main class="auth-shell">
+    <section class="auth-card" aria-labelledby="login-title">
+      <!-- Logo 109x109 -->
+      <img class="auth-logo" src="./assets/imgs/music_box_icon.png" alt="Music Box" />
+
+      <!-- Heading -->
+      <h1 id="login-title" class="auth-title">Welcome back!</h1>
+      <p class="auth-sub">Login to access your music library</p>
+
+      <form id="form-login" novalidate>
+        <label class="auth-label" for="login-email">Email</label>
+        <input id="login-email" name="email" type="email" placeholder="example@email.com" class="auth-input"
+          autocomplete="username" required />
+
+        <label class="auth-label" for="login-pass">Password</label>
+        <input id="login-pass" name="password" type="password" placeholder="Enter your password" class="auth-input"
+          autocomplete="current-password" required />
+
+        <div class="auth-row auth-row--mini">
+          <label class="checkbox">
+            <input type="checkbox" id="login-remember" />
+            <span>Remember me</span>
+          </label>
+          <a class="auth-forgot" href="#">Forgot Password?</a>
+        </div>
+
+        <!-- error (TRÊN nút) -->
+        <div id="login-error" class="auth-inline-error" hidden>
+          Please fill in all the required fields
+        </div>
+
+        <!-- Nút chuẩn 610x45 -->
+        <button type="submit" class="btn-primary" id="btn-login">Login</button>
+
+        <div class="auth-or"><span>or</span></div>
+
+        <!-- 2 nút SSO cùng một hàng -->
+        <div class="sso-row">
+          <button type="button" class="btn-sso">
+            <img class="sso-ico" src="./assets/imgs/google_icon.png" alt="Google" />
+            <span>Continue with Google</span>
+          </button>
+          <button type="button" class="btn-sso">
+            <img class="sso-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
+            <span>Continue with Facebook</span>
+          </button>
+        </div>
+
+        <p class="auth-switch">
+          Don’t have an account? <a href="./signup.html">Sign up</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="./assets/js/auth-login.js"></script>
+</body>
+
+</html>
