@@ -1,7 +1,16 @@
-:root { --player-h: 96px; }
+/* timkiem.html page-specific styles (main content only) */
 
-/* Không ép chiều cao toàn cục ở trang tìm kiếm */
-.wrap { min-height: 0; height: auto; }
+/* Page-level scroll overrides for timkiem only */
+/* html,
+body {
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto !important; /* enable page scroll */
+} */
+
+.wrap {
+    height: auto;
+}
 .content {
   /* Layout 2 cột: sidebar + main */
   display: grid;

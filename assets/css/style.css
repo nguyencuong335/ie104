@@ -381,9 +381,9 @@ body {
 }
 .b-artist-name {
     color: #000;
-    font-family: "Poppins", sans-serif;
-    font-size: 14px;
+    font-family: "Inter", sans-serif;
     font-weight: 700;
+    font-size: 16px;
     letter-spacing: -0.56px;
     line-height: 1;
 }
@@ -461,7 +461,9 @@ body {
     background-repeat: no-repeat;
 }
 .artist-meta .label {
-    font: 700 12px/1 "Inter", sans-serif;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
     color: #6b7280;
     letter-spacing: 0.6px;
     opacity: 0.9;
@@ -471,7 +473,7 @@ body {
     height: 15px;
     flex-shrink: 0;
     color: #000;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 700;
     letter-spacing: -0.16px;
@@ -593,10 +595,10 @@ body {
 }
 .q-title-text {
     color: #135e88;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1.44px;
+    /* letter-spacing: 1.44px; */
     line-height: 1.25;
     padding-bottom: 2px;
     white-space: nowrap;
@@ -608,7 +610,7 @@ body {
     font-family: "Inter", sans-serif;
     font-size: 12px;
     font-weight: 400;
-    letter-spacing: 1.08px;
+    /* letter-spacing: 1.08px; */
     line-height: 1;
     opacity: 0.9;
 }
@@ -667,10 +669,10 @@ body {
 }
 .title {
     color: #135e88;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     font-weight: 700;
-    letter-spacing: 1.44px;
+    /* letter-spacing: 1.44px; */
     line-height: 1.25;
     padding-bottom: 2px;
     white-space: nowrap;
@@ -855,6 +857,123 @@ input[type="range"]::-moz-range-thumb {
 .nav-btn[disabled] {
     opacity: 0.45;
     pointer-events: none;
+}
+
+/* ================= Điều chỉnh thanh chạy nhạc ================= */
+#progress {
+    width: 100%;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#progress::-webkit-slider-runnable-track {
+    background: rgba(
+        127,
+        212,
+        249,
+        0.2
+    ); /* Light blue background for remaining portion */
+    height: 4px;
+    border-radius: 2px;
+}
+
+#progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px;
+    width: 12px;
+    background-color: #13a6e9;
+    border-radius: 50%;
+    border: none;
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+/* This creates the filled portion of the progress bar */
+#progress::-webkit-slider-container {
+    background: linear-gradient(
+        to right,
+        #13a6e9 var(--progress-value, 0%),
+        rgba(127, 212, 249, 0.2) var(--progress-value, 0%)
+    );
+    border-radius: 2px;
+}
+
+/* Firefox specific styles */
+#progress::-moz-range-track {
+    background: rgba(127, 212, 249, 0.2);
+    height: 4px;
+    border-radius: 2px;
+}
+
+#progress::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    background-color: #13a6e9;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+/* ==================== Diều chỉnh thanh âm lượng ====================== */
+#volume {
+    width: 100px;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(127, 212, 249, 0.2); /* Base background color */
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+/* This creates the filled portion effect */
+#volume::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(
+        to right,
+        #13a6e9 0%,
+        #13a6e9 var(--volume-value),
+        rgba(127, 212, 249, 0.2) var(--volume-value),
+        rgba(127, 212, 249, 0.2) 100%
+    );
+}
+
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px;
+    width: 12px;
+    background-color: #13a6e9;
+    border-radius: 50%;
+    border: none;
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+/* Firefox styles */
+#volume::-moz-range-progress {
+    background-color: #13a6e9;
+    height: 4px;
+    border-radius: 2px;
+}
+
+#volume::-moz-range-track {
+    background-color: rgba(127, 212, 249, 0.2);
+    height: 4px;
+    border-radius: 2px;
+}
+
+#volume::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    background-color: #13a6e9;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
 }
 
 .sr-only {
