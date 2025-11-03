@@ -4,10 +4,10 @@
     const u = JSON.parse(localStorage.getItem("auth_user") || "null");
     if (!u) {
       const next = location.pathname + location.search + location.hash;
-      location.replace("./auth.html?next=" + encodeURIComponent(next));
+      location.replace("./landingpage.html");
     }
   } catch {
-    location.replace("./auth.html");
+    location.replace("./landingpage.html");
   }
 })();
 
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Settings button: click trái -> auth.html, chuột phải -> Đăng xuất nhanh
   const settingsBtn = document.querySelector(".settings-btn");
   if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => { go("./auth.html"); });
+    settingsBtn.addEventListener("click", () => { go("./landingpage.html"); });
     settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); signOut(true); });
     settingsBtn.setAttribute("title", "Cài đặt (Click) / Đăng xuất (Right-click)");
   }
