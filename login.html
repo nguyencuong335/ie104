@@ -14,11 +14,11 @@
   <main class="auth-shell">
     <section class="auth-card" aria-labelledby="login-title">
       <!-- Logo 109x109 -->
-      <img class="auth-logo" src="./assets/imgs/music_box_icon.png" alt="Music Box" />
+      <img class="brand-mark" src="./assets/imgs/music_box_icon.png" alt="Music Box" />
 
       <!-- Heading -->
       <h1 id="login-title" class="auth-title">Welcome back!</h1>
-      <p class="auth-sub">Login to access your music library</p>
+      <p class="auth-subtitle">Login to access your music library</p>
 
       <form id="form-login" novalidate>
         <label class="auth-label" for="login-email">Email</label>
@@ -29,38 +29,38 @@
         <input id="login-pass" name="password" type="password" placeholder="Enter your password" class="auth-input"
           autocomplete="current-password" required />
 
-        <div class="auth-row auth-row--mini">
-          <label class="checkbox">
+        <div class="auth-row between">
+          <label class="auth-check">
             <input type="checkbox" id="login-remember" />
             <span>Remember me</span>
           </label>
-          <a class="auth-forgot" href="#">Forgot Password?</a>
+          <a class="auth-link" href="#">Forgot Password?</a>
         </div>
 
         <!-- error (TRÊN nút) -->
-        <div id="login-error" class="auth-inline-error" hidden>
+        <div id="login-error" class="auth-error" hidden>
           Please fill in all the required fields
         </div>
 
         <!-- Nút chuẩn 610x45 -->
-        <button type="submit" class="btn-primary" id="btn-login">Login</button>
+        <button type="submit" class="auth-btn primary" id="btn-login">Login</button>
 
-        <div class="auth-or"><span>or</span></div>
+        <div class="divider"><span>or</span></div>
 
         <!-- 2 nút SSO cùng một hàng -->
-        <div class="sso-row">
-          <button type="button" class="btn-sso">
-            <img class="sso-ico" src="./assets/imgs/google_icon.png" alt="Google" />
+        <div class="oauth-row">
+          <button type="button" class="oauth-btn">
+            <img class="oauth-ico" src="./assets/imgs/google_icon.png" alt="Google" />
             <span>Continue with Google</span>
           </button>
-          <button type="button" class="btn-sso">
-            <img class="sso-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
+          <button type="button" class="oauth-btn">
+            <img class="oauth-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
             <span>Continue with Facebook</span>
           </button>
         </div>
 
-        <p class="auth-switch">
-          Don’t have an account? <a href="./signup.html">Sign up</a>
+        <p class="auth-foot">
+          Don’t have an account? <a class="auth-link" href="./signup.html">Sign up</a>
         </p>
       </form>
     </section>

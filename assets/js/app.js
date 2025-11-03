@@ -22,10 +22,51 @@ function signOut(redirect = true) {
 
 // ===== TẤT CẢ LOGIC SAU KHI DOM SẴN SÀNG =====
 document.addEventListener("DOMContentLoaded", () => {
+  // Smooth page enter
+  try { requestAnimationFrame(() => document.body.classList.add("is-loaded")); } catch {}
+
+  // Helper: smooth navigate with fade-out
+  function go(url) {
+    try { document.body.classList.add("page-exit"); } catch {}
+    setTimeout(() => { window.location.href = url; }, 180);
+  }
   // Bind nút Đăng xuất (sidebar)
   document.querySelector(".menu-btn.logout")?.addEventListener("click", () => {
     signOut(true);
   });
+
+  // ===== Expose minimal API for other pages =====
+  try {
+    window.MusicBox = Object.freeze({
+      playAt(i) { if (typeof i === "number" && i >= 0 && i < playlist.length) { loadTrack(i); play(); pushUIState(); } },
+      currentIndex() { return index; },
+      playlist() { return playlist.slice(); },
+    });
+  } catch {}
+
+  // Sidebar: Yêu thích -> Yeuthich.html
+  const likedBtn = document.querySelector(".menu-btn.liked");
+  if (likedBtn) {
+    likedBtn.addEventListener("click", () => {
+      go("./Yeuthich.html");
+    });
+  }
+
+  // Sidebar: Playlist của bạn -> Hoso.html
+  const yourBtn = document.querySelector(".menu-btn.your");
+  if (yourBtn) {
+    yourBtn.addEventListener("click", () => {
+      go("./Hoso.html");
+    });
+  }
+
+  // Sidebar: Khám phá -> index.html (Trang chủ)
+  const exploreBtn = document.querySelector(".menu-btn.explore");
+  if (exploreBtn) {
+    exploreBtn.addEventListener("click", () => {
+      go("./index.html");
+    });
+  }
 
   // ===== Đồng bộ chiều cao player để sidebar/queue ăn khít bên trên
   function setPlayerSpacer() {
@@ -74,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const queuePanel     = document.getElementById("queue");
   const recentBtn      = document.querySelector(".menu-btn.recent");
   const qTitle         = document.querySelector(".q-title");
+  const playlistSection = document.querySelector(".playlist");
 
   // Banner elements
   const bTitle = document.getElementById("b-title");
@@ -131,6 +173,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // update artist bar
     abName.textContent = t.artist;
     abAvatar.style.backgroundImage = 'url("' + (t.artistImg || t.cover) + '")';
+
+    // thông báo ra ngoài để trang khác sync
+    try { window.dispatchEvent(new CustomEvent('musicbox:trackchange', { detail: { index } })); } catch {}
   }
 
   function play()  { audio.play();  isPlaying = true;  setPlayUI(true); }
@@ -279,6 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleClickable = titleEl;
   function setQueueVisible(show, fromPop = false) {
     queuePanel.classList.toggle("hidden", !show);
+    if (playlistSection) playlistSection.classList.toggle("hidden", show);
 
     if (recentBtn) recentBtn.setAttribute("aria-expanded", String(show));
     if (show) {
@@ -336,9 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== Profile -> Hoso.html =====
-  document.querySelector(".profile-btn")?.addEventListener("click", () => {
-    window.location.href = "./Hoso.html";
-  });
+  document.querySelector(".profile-btn")?.addEventListener("click", () => { go("./Hoso.html"); });
 
   // ===== Search enter "son tung" -> timkiem.html =====
   const searchInput = document.querySelector('.search input[type="search"]');
@@ -347,18 +391,22 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
       const q = normalize(searchInput.value);
-      if (q.includes("son tung")) {
-        window.location.href = "./timkiem.html?q=" + encodeURIComponent(searchInput.value);
-      }
+      if (q.includes("son tung")) { go("./timkiem.html?q=" + encodeURIComponent(searchInput.value)); }
     });
   }
 
   // ===== Settings button: click trái -> auth.html, chuột phải -> Đăng xuất nhanh
   const settingsBtn = document.querySelector(".settings-btn");
   if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => { window.location.href = "./auth.html"; });
+    settingsBtn.addEventListener("click", () => { go("./auth.html"); });
     settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); signOut(true); });
     settingsBtn.setAttribute("title", "Cài đặt (Click) / Đăng xuất (Right-click)");
+  }
+
+  // Logo link smooth
+  const logoLink = document.querySelector("a.logo-link");
+  if (logoLink) {
+    logoLink.addEventListener("click", (e) => { e.preventDefault(); go(logoLink.getAttribute("href") || "./index.html"); });
   }
 
   // ===== Smoke tests nho nhỏ =====

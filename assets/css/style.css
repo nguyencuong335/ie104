@@ -2,12 +2,18 @@
     box-sizing: border-box;
 }
 
+/* Page transition states */
+body.is-loaded { opacity: 1; }
+body.page-exit { opacity: 0; }
+
 html {
     font-size: 62.5%;
 }
 
 body {
     font-size: 1.6rem;
+    opacity: 0;
+    transition: opacity 0.18s ease;
 }
 
 :root {
@@ -69,6 +75,11 @@ body {
     align-items: center;
     gap: 12px;
 }
+.header-left {
+    width: var(--sidebar);
+    justify-content: center;
+    padding: 4px 0; /* nhẹ để cân giữa theo chiều dọc với menu */
+}
 .header-center {
     display: flex;
     align-items: center;
@@ -82,8 +93,11 @@ body {
     flex-shrink: 0;
     aspect-ratio: 154/71;
     border-radius: 8px;
-    background: #f8fafc / cover no-repeat;
-    transition: box-shadow 0.2s ease, transform 0.12s ease;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: outline-color 0.2s ease;
 }
 .nav-btn,
 .profile-btn,
@@ -119,10 +133,8 @@ body {
 .settings-btn:active {
     transform: translateY(1px);
 }
-.logo-box:hover {
-    transform: translateY(-1px);
-    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.12);
-}
+.logo-box:hover { cursor: pointer; box-shadow: none; transform: none; }
+.logo-box:focus-visible { outline: 3px solid rgba(20,129,185,0.35); outline-offset: 2px; }
 .nav-btn i,
 .profile-btn i,
 .settings-btn i {
@@ -188,7 +200,7 @@ body {
 }
 .menu-btn {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
     border-radius: 10px;
     border: 0;
@@ -196,6 +208,7 @@ body {
     cursor: pointer;
     width: 100%;
     color: #000;
+    padding: 8px 12px;
 }
 .menu-btn i {
     width: 20px;
@@ -210,19 +223,19 @@ body {
 }
 .menu-btn.explore {
     height: 35px;
-    padding: 7px 91px 8px 14px;
+    padding: 8px 12px;
     background: rgba(74, 188, 242, 0.6);
 }
 .menu-btn.your {
-    padding: 8px 56px 6px 18px;
+    padding: 8px 12px;
 }
 .menu-btn.liked {
     height: 32px;
-    padding: 7px 103px 6px 18px;
+    padding: 8px 12px;
 }
 .menu-btn.recent {
     height: 32px;
-    padding: 7px 68px 6px 18px;
+    padding: 8px 12px;
 }
 .menu-btn:hover {
     background: rgba(74, 188, 242, 0.2);
@@ -232,7 +245,7 @@ body {
 }
 
 .section {
-    margin: 8px 0;
+    margin: 10px 0;
 }
 .section-sep {
     height: 1px;
@@ -242,16 +255,18 @@ body {
 .section-label {
     color: #000;
     font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    padding: 6px 0;
+    display: block;
 }
 .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 4px;
+    padding: 8px 4px;
 }
 .icon-btn.add {
     display: inline-grid;
@@ -415,6 +430,9 @@ body {
 }
 .queue.hidden {
     display: none;
+}
+.hidden {
+    display: none !important;
 }
 .queue::-webkit-scrollbar {
     width: 0;
@@ -683,28 +701,34 @@ body {
 /* Meta layout */
 .meta {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr auto;
     grid-template-areas:
         "title add"
         "artist artist";
-    column-gap: 10px;
+    column-gap: 14px;
     row-gap: 2px;
     align-items: center;
+    justify-items: start; /* ensure text blocks align left */
     justify-content: start;
     min-width: 0;
 }
 .meta .title {
     grid-area: title;
     cursor: pointer;
+    justify-self: start;
+    text-align: left;
 }
 .meta .artist {
     grid-area: artist;
+    justify-self: start;
+    text-align: left;
 }
 .meta .add-btn {
     grid-area: add;
     width: 34px;
     height: 34px;
     border-radius: 50%;
+    justify-self: end; /* keep the add button to the right */
 }
 
 /* Center: controls + timeline */
