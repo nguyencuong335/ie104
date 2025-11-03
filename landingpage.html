@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Favicon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="./assets/favicon/apple-icon-57x57.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="./assets/favicon/apple-icon-60x60.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="./assets/favicon/apple-icon-72x72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-icon-76x76.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="./assets/favicon/apple-icon-114x114.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="./assets/favicon/apple-icon-120x120.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="./assets/favicon/apple-icon-144x144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="./assets/favicon/apple-icon-152x152.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="./assets/favicon/apple-icon-180x180.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="./assets/favicon/android-icon-192x192.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="./assets/favicon/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="./assets/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta
+            name="msapplication-TileImage"
+            content="./assets/favicon/ms-icon-144x144.png"
+        />
+        <meta name="theme-color" content="#ffffff" />
+
+        <title>Music Box - Landing Page</title>
+        <link rel="stylesheet" href="./assets/css/reset.css" />
+        <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+        <link rel="stylesheet" href="./assets/css/landingpage.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+    </head>
+    <body>
+        <header class="header">
+            <nav class="container nav">
+                <a href="#hero" class="brand" aria-label="Về phần Hero">
+                    <div class="logo" aria-label="Music Box logo"></div>
+                </a>
+
+                <div class="menu">
+                    <a href="#about">Music box là gì?</a>
+                    <a href="#team">Về chúng tôi</a>
+                    <a href="#contact">Liên hệ</a>
+                </div>
+
+                <div class="auth">
+                    <a class="button button-ghost" href="./login.html"
+                        >Đăng nhập</a
+                    >
+                    <a class="button button-primary" href="./signup.html"
+                        >Đăng ký</a
+                    >
+                </div>
+
+                <button class="burger" data-burger aria-label="Toggle menu">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M4 6h16M4 12h16M4 18h16"
+                            stroke="#4683A6"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="container mobile" data-mobile>
+                <div>
+                    <a href="#about">Music box là gì?</a>
+                    <a href="#team">Về chúng tôi</a>
+                    <a href="#contact">Liên hệ</a>
+                    <div class="stack">
+                        <a class="button button-ghost" href="./login.html"
+                            >Đăng nhập</a
+                        >
+                        <a class="button button-primary" href="./signup.html"
+                            >Đăng ký</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="hero" class="section hero">
+                <div class="container hero-grid">
+                    <div>
+                        <div class="hero badge">
+                            <span class="dot"></span>
+                            <span class="p"
+                                >Nền tảng nghe nhạc vui vẻ nhất!</span
+                            >
+                        </div>
+                        <h1 class="h1">
+                            Âm nhạc cho mọi
+                            <span class="primary">khoảnh khắc</span> của bạn
+                            <i class="fa-solid fa-music" aria-hidden="true"></i>
+                        </h1>
+                        <p class="p mxw-640">
+                            Khám phá hàng triệu bài hát, tạo playlist theo sở
+                            thích và chia sẻ niềm đam mê âm nhạc cùng bạn bè.
+                            Music Box - Nơi âm nhạc trở nên vui tươi hơn!
+                        </p>
+                        <div class="actions">
+                            <a class="button button-primary" href="#contact"
+                                >Bắt đầu ngay</a
+                            >
+                            <a class="button button-outline" href="#about"
+                                >Tìm hiểu thêm</a
+                            >
+                        </div>
+
+                        <div class="stats3">
+                            <div class="card">
+                                <div class="h3 stat-strong">10M+</div>
+                                <div class="p small">Bài hát</div>
+                            </div>
+                            <div class="card">
+                                <div class="h3 stat-strong">500K+</div>
+                                <div class="p small">Người dùng</div>
+                            </div>
+                            <div class="card">
+                                <div class="h3 stat-strong">100%</div>
+                                <div class="p small">Vui vẻ</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-imgwrap">
+                        <div class="hero-img">
+                            <img
+                                src="https://images.unsplash.com/photo-1738962670723-baf133df8ea7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHBlb3BsZSUyMGhlYWRwaG9uZXMlMjBtdXNpY3xlbnwxfHx8fDE3NjIxMzk5MTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                                alt="Happy person with headphones"
+                            />
+                            <div class="image-overlay"></div>
+                        </div>
+                        <div class="hero-float">
+                            <i class="fa-solid fa-music" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="section features">
+                <div class="container">
+                    <div class="center mb-48">
+                        <h2 class="h2">
+                            <i class="fa-solid fa-music" aria-hidden="true"></i>
+                            Music Box là gì?
+                        </h2>
+                        <p class="p mxw-720">
+                            Music Box là nền tảng nghe nhạc trực tuyến với giao
+                            diện thân thiện, tính năng đa dạng và trải nghiệm
+                            vui tươi cho mọi người!
+                        </p>
+                    </div>
+
+                    <div class="grid">
+                        <div class="feature">
+                            <div class="icon icon-blue">
+                                <i
+                                    class="fa-solid fa-music"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Thư viện khổng lồ</h3>
+                            <p class="p">
+                                Hơn 10 triệu bài hát từ mọi thể loại, từ pop,
+                                rock đến nhạc không lời
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <div class="icon icon-purple">
+                                <i
+                                    class="fa-solid fa-list-ul"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Playlist cá nhân</h3>
+                            <p class="p">
+                                Tạo và quản lý playlist theo tâm trạng, hoạt
+                                động hoặc sở thích của bạn
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <div class="icon icon-pink">
+                                <i
+                                    class="fa-regular fa-lightbulb"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Gợi ý thông minh</h3>
+                            <p class="p">
+                                AI đề xuất nhạc phù hợp dựa trên sở thích và
+                                lịch sử nghe của bạn
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <div class="icon icon-green">
+                                <i
+                                    class="fa-solid fa-users"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Chia sẻ với bạn bè</h3>
+                            <p class="p">
+                                Chia sẻ playlist, cùng nghe nhạc và khám phá âm
+                                nhạc mới cùng nhau
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <div class="icon icon-orange">
+                                <i
+                                    class="fa-solid fa-tower-broadcast"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Radio trực tuyến</h3>
+                            <p class="p">
+                                Nghe các kênh radio được tuyển chọn theo chủ đề
+                                và tâm trạng
+                            </p>
+                        </div>
+                        <div class="feature">
+                            <div class="icon icon-indigo">
+                                <i
+                                    class="fa-solid fa-star"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <h3 class="h3">Chất lượng cao</h3>
+                            <p class="p">
+                                Âm thanh lossless, trải nghiệm nghe nhạc tuyệt
+                                vời nhất
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="center mt-48">
+                        <div class="badge features-badge">
+                            <i
+                                class="fa-solid fa-wand-magic-sparkles"
+                                aria-hidden="true"
+                            ></i>
+                            <span
+                                >Và còn nhiều tính năng thú vị khác đang chờ bạn
+                                khám phá!</span
+                            >
+                            <i
+                                class="fa-solid fa-wand-magic-sparkles"
+                                aria-hidden="true"
+                            ></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section stats">
+                <div class="container grid">
+                    <div class="image-block">
+                        <img
+                            src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMGZlc3RpdmFsJTIwY3Jvd2R8ZW58MXx8fHwxNzYyMDYwMTg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                            alt="Music festival crowd"
+                            class="h-500"
+                        />
+                        <div class="image-overlay"></div>
+                        <div class="float-card">
+                            <div class="sq-gradient">
+                                <i
+                                    class="fa-solid fa-music"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <div>
+                                <div class="stat-strong">2M+</div>
+                                <div class="p xsmall">Lượt nghe hôm nay</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-16">
+                            <h2 class="h2">
+                                <i
+                                    class="fa-solid fa-chart-column"
+                                    aria-hidden="true"
+                                ></i>
+                                Con số ấn tượng
+                            </h2>
+                            <p class="p">
+                                Hàng ngàn người đã tin tưởng và lựa chọn Music
+                                Box làm người bạn đồng hành âm nhạc của mình!
+                            </p>
+                        </div>
+                        <div class="stat-cards">
+                            <div class="stat-card">
+                                <div class="number">10M+</div>
+                                <div class="h3 mt-6 mb-4">Bài hát</div>
+                                <div class="p small">
+                                    Thư viện âm nhạc đa dạng
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">500K+</div>
+                                <div class="h3 mt-6 mb-4">Người dùng</div>
+                                <div class="p small">Cộng đồng yêu nhạc</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">1000+</div>
+                                <div class="h3 mt-6 mb-4">Kênh Radio</div>
+                                <div class="p small">Chủ đề phong phú</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="number">99%</div>
+                                <div class="h3 mt-6 mb-4">Hài lòng</div>
+                                <div class="p small">
+                                    Đánh giá từ người dùng
+                                </div>
+                            </div>
+                        </div>
+                        <div class="value mt-16 text-left">
+                            <div class="row-start">
+                                <div class="text-22">
+                                    <i
+                                        class="fa-solid fa-face-laugh-beam"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <h4 class="h3">Tăng trưởng nhanh chóng</h4>
+                                    <p class="p small">
+                                        Mỗi ngày có hàng nghìn người dùng mới
+                                        tham gia cộng đồng Music Box. Hãy cùng
+                                        chúng mình khám phá thế giới âm nhạc đầy
+                                        màu sắc!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team" class="section team">
+                <div class="container">
+                    <div class="center mb-48">
+                        <h2 class="h2">
+                            <i
+                                class="fa-solid fa-people-group"
+                                aria-hidden="true"
+                            ></i>
+                            Về chúng tôi
+                        </h2>
+                        <p class="p mxw-720">
+                            Chúng mình là nhóm 5 người yêu âm nhạc, đam mê công
+                            nghệ và muốn mang đến trải nghiệm nghe nhạc vui vẻ
+                            nhất cho mọi người!
+                        </p>
+                    </div>
+
+                    <div class="team-grid mb-32">
+                        <div class="member">
+                            <div class="relative">
+                                <div class="avatar icon-blue">
+                                    <i
+                                        class="fa-solid fa-guitar"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div class="role">Co-Founder & CEO</div>
+                            </div>
+                            <div class="center mt-16">
+                                <h3 class="h3">Cường</h3>
+                                <p class="p small">
+                                    Đam mê âm nhạc và công nghệ
+                                </p>
+                                <div class="social mt-8">
+                                    <button aria-label="GitHub">
+                                        <i
+                                            class="fa-brands fa-github"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="LinkedIn">
+                                        <i
+                                            class="fa-brands fa-linkedin-in"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="Email">
+                                        <i
+                                            class="fa-regular fa-envelope"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="relative">
+                                <div class="avatar icon-purple">
+                                    <i
+                                        class="fa-regular fa-keyboard"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div class="role">Co-Founder & CTO</div>
+                            </div>
+                            <div class="center mt-16">
+                                <h3 class="h3">Đạt</h3>
+                                <p class="p small">
+                                    Chuyên gia về AI và Machine Learning
+                                </p>
+                                <div class="social mt-8">
+                                    <button aria-label="GitHub">
+                                        <i
+                                            class="fa-brands fa-github"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="LinkedIn">
+                                        <i
+                                            class="fa-brands fa-linkedin-in"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="Email">
+                                        <i
+                                            class="fa-regular fa-envelope"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="relative">
+                                <div class="avatar icon-pink">
+                                    <i
+                                        class="fa-solid fa-music"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div class="role">Lead Designer</div>
+                            </div>
+                            <div class="center mt-16">
+                                <h3 class="h3">Danh</h3>
+                                <p class="p small">
+                                    Sáng tạo trải nghiệm người dùng tuyệt vời
+                                </p>
+                                <div class="social mt-8">
+                                    <button aria-label="GitHub">
+                                        <i
+                                            class="fa-brands fa-github"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="LinkedIn">
+                                        <i
+                                            class="fa-brands fa-linkedin-in"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="Email">
+                                        <i
+                                            class="fa-regular fa-envelope"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="relative">
+                                <div class="avatar icon-green">
+                                    <i
+                                        class="fa-solid fa-music"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div class="role">Product Manager</div>
+                            </div>
+                            <div class="center mt-16">
+                                <h3 class="h3">Tùng</h3>
+                                <p class="p small">
+                                    Kết nối ý tưởng và thực tế
+                                </p>
+                                <div class="social mt-8">
+                                    <button aria-label="GitHub">
+                                        <i
+                                            class="fa-brands fa-github"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="LinkedIn">
+                                        <i
+                                            class="fa-brands fa-linkedin-in"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="Email">
+                                        <i
+                                            class="fa-regular fa-envelope"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="relative">
+                                <div class="avatar icon-orange">
+                                    <i
+                                        class="fa-solid fa-microphone"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div class="role">Marketing Lead</div>
+                            </div>
+                            <div class="center mt-16">
+                                <h3 class="h3">Khôi</h3>
+                                <p class="p small">
+                                    Lan tỏa âm nhạc đến mọi người
+                                </p>
+                                <div class="social mt-8">
+                                    <button aria-label="GitHub">
+                                        <i
+                                            class="fa-brands fa-github"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="LinkedIn">
+                                        <i
+                                            class="fa-brands fa-linkedin-in"
+                                            aria-hidden="true"
+                                        ></i></button
+                                    ><button aria-label="Email">
+                                        <i
+                                            class="fa-regular fa-envelope"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="values">
+                        <div class="value">
+                            <div class="vicon" aria-hidden="true">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <div class="h3">Sứ mệnh</div>
+                            <p class="p small">
+                                Mang âm nhạc chất lượng đến với mọi người một
+                                cách dễ dàng và vui vẻ nhất
+                            </p>
+                        </div>
+                        <div class="value">
+                            <div class="vicon" aria-hidden="true">
+                                <i class="fa-regular fa-lightbulb"></i>
+                            </div>
+                            <div class="h3">Tầm nhìn</div>
+                            <p class="p small">
+                                Trở thành nền tảng nghe nhạc được yêu thích nhất
+                                tại Việt Nam
+                            </p>
+                        </div>
+                        <div class="value">
+                            <div class="vicon" aria-hidden="true">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="h3">Giá trị cốt lõi</div>
+                            <p class="p small">
+                                Sáng tạo, thân thiện, và luôn lắng nghe người
+                                dùng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section cta">
+                <div class="pattern">
+                    <svg
+                        width="100%"
+                        height="100%"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <defs>
+                            <pattern
+                                id="music-pattern"
+                                x="0"
+                                y="0"
+                                width="100"
+                                height="100"
+                                patternUnits="userSpaceOnUse"
+                            >
+                                <circle cx="25" cy="25" r="2" fill="white" />
+                                <circle cx="75" cy="75" r="2" fill="white" />
+                                <path
+                                    d="M50 20 L50 80 M50 20 L65 25 M50 30 L65 35"
+                                    stroke="white"
+                                    stroke-width="2"
+                                    fill="none"
+                                />
+                            </pattern>
+                        </defs>
+                        <rect
+                            width="100%"
+                            height="100%"
+                            fill="url(#music-pattern)"
+                        />
+                    </svg>
+                </div>
+                <div class="container grid">
+                    <div>
+                        <div class="badge">
+                            <i
+                                class="fa-solid fa-wand-magic-sparkles"
+                                aria-hidden="true"
+                            ></i>
+                            <span>Dùng thử miễn phí 30 ngày</span>
+                        </div>
+                        <h2 class="h2 text-white">
+                            Sẵn sàng bắt đầu hành trình âm nhạc? 🚀
+                        </h2>
+                        <p class="p text-white-90 mxw-620">
+                            Tham gia Music Box ngay hôm nay và khám phá hàng
+                            triệu bài hát, tạo playlist theo phong cách riêng và
+                            chia sẻ niềm đam mê âm nhạc của bạn!
+                        </p>
+                        <div class="actions-cta">
+                            <button
+                                class="button button-white"
+                                type="button"
+                                data-cta-signup
+                            >
+                                Đăng ký miễn phí
+                            </button>
+                            <button
+                                class="button button-outline white"
+                                type="button"
+                                data-cta-demo
+                            >
+                                Xem demo
+                            </button>
+                        </div>
+                        <div class="grid-2 text-white">
+                            <div class="flex-center gap-8">
+                                <span class="tick"
+                                    ><i
+                                        class="fa-solid fa-check"
+                                        aria-hidden="true"
+                                    ></i></span
+                                ><span>Không cần thẻ tín dụng</span>
+                            </div>
+                            <div class="flex-center gap-8">
+                                <span class="tick"
+                                    ><i
+                                        class="fa-solid fa-check"
+                                        aria-hidden="true"
+                                    ></i></span
+                                ><span>Hủy bất kỳ lúc nào</span>
+                            </div>
+                            <div class="flex-center gap-8">
+                                <span class="tick"
+                                    ><i
+                                        class="fa-solid fa-check"
+                                        aria-hidden="true"
+                                    ></i></span
+                                ><span>Không quảng cáo</span>
+                            </div>
+                            <div class="flex-center gap-8">
+                                <span class="tick"
+                                    ><i
+                                        class="fa-solid fa-check"
+                                        aria-hidden="true"
+                                    ></i></span
+                                ><span>Chất lượng cao</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-imgwrap">
+                        <div class="hero-img">
+                            <img
+                                src="https://images.unsplash.com/photo-1520884225266-ebc9159f0aab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW55bCUyMHJlY29yZHMlMjBjb2xvcmZ1bHxlbnwxfHx8fDE3NjIwNzMxOTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                                alt="Colorful vinyl records"
+                                class="h-400"
+                            />
+                            <div class="image-overlay cta-overlay-dark"></div>
+                        </div>
+                        <div class="float-box">
+                            <div class="row-center">
+                                <div class="sq-gradient-lg">
+                                    <i
+                                        class="fa-solid fa-wand-magic-sparkles"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <div class="h3 stat-strong">100%</div>
+                                    <div class="p small">Vui vẻ bảo đảm!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="contact" class="footer">
+            <div class="container">
+                <div class="grid mb-32">
+                    <div>
+                        <div class="brandline">
+                            <div class="logo" aria-label="Music Box logo"></div>
+                            <span class="fw-800">Music Box</span>
+                        </div>
+                        <p>
+                            Nền tảng nghe nhạc vui tươi nhất dành cho bạn. Khám
+                            phá, chia sẻ và yêu âm nhạc mỗi ngày!
+                        </p>
+                        <div class="social footer-social">
+                            <a href="#" aria-label="Facebook"
+                                ><i
+                                    class="fa-brands fa-facebook-f"
+                                    aria-hidden="true"
+                                ></i
+                            ></a>
+                            <a href="#" aria-label="Twitter"
+                                ><i
+                                    class="fa-brands fa-x-twitter"
+                                    aria-hidden="true"
+                                ></i
+                            ></a>
+                            <a href="#" aria-label="Instagram"
+                                ><i
+                                    class="fa-brands fa-instagram"
+                                    aria-hidden="true"
+                                ></i
+                            ></a>
+                            <a href="#" aria-label="YouTube"
+                                ><i
+                                    class="fa-brands fa-youtube"
+                                    aria-hidden="true"
+                                ></i
+                            ></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="h3">Liên kết nhanh</h4>
+                        <ul class="no-list list-grid-8">
+                            <li><a href="#about">Music Box là gì?</a></li>
+                            <li><a href="#team">Về chúng tôi</a></li>
+                            <li><a href="#">Tính năng</a></li>
+                            <li><a href="#">Bảng giá</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="h3">Hỗ trợ</h4>
+                        <ul class="no-list list-grid-8">
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                            <li><a href="#">Câu hỏi thường gặp</a></li>
+                            <li><a href="#">Điều khoản dịch vụ</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="h3">Liên hệ</h4>
+                        <ul class="no-list list-grid-10">
+                            <li>
+                                <i
+                                    class="fa-solid fa-location-dot"
+                                    aria-hidden="true"
+                                ></i>
+                                123 Đường Âm Nhạc, Quận 1, TP.HCM
+                            </li>
+                            <li>
+                                <i
+                                    class="fa-solid fa-phone"
+                                    aria-hidden="true"
+                                ></i>
+                                +84 123 456 789
+                            </li>
+                            <li>
+                                <i
+                                    class="fa-regular fa-envelope"
+                                    aria-hidden="true"
+                                ></i>
+                                hello@musicbox.vn
+                            </li>
+                        </ul>
+                        <div class="newsletter">
+                            <input type="email" placeholder="Email của bạn" />
+                            <button class="button button-primary" type="button">
+                                Gửi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <p>
+                        2025 Music Box. Made with by Cường, Đạt, Danh, Tùng &
+                        Khôi
+                    </p>
+                    <div class="bottom-links">
+                        <a href="#">Điều khoản</a>
+                        <a href="#">Bảo mật</a>
+                        <a href="#">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="./assets/js/landingpage.js" defer></script>
+    </body>
+</html>
