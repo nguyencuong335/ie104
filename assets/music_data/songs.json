@@ -1,0 +1,198 @@
+[
+    {
+        "title": "Muộn Rồi Mà Sao Còn",
+        "artist": "Sơn Tùng M-TP",
+        "src": "./assets/music_data/songs/son_tung_mtp/muon_roi_ma_sao_con.mp3",
+        "cover": "./assets/music_data/imgs_song/son_tung_mtp/muon_roi_ma_sao_con.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/son_tung_mtp.jpg"
+    },
+    {
+        "title": "Nơi Này Có Anh",
+        "artist": "Sơn Tùng M-TP",
+        "src": "./assets/music_data/songs/son_tung_mtp/noi_nay_co_anh.mp3",
+        "cover": "./assets/music_data/imgs_song/son_tung_mtp/noi_nay_co_anh.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/son_tung_mtp.jpg"
+    },
+    {
+        "title": "Chúng Ta Của Hiện Tại",
+        "artist": "Sơn Tùng M-TP",
+        "src": "./assets/music_data/songs/son_tung_mtp/chung_ta_cua_hien_tai.mp3",
+        "cover": "./assets/music_data/imgs_song/son_tung_mtp/chung_ta_cua_hien_tai.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/son_tung_mtp.jpg"
+    },
+    {
+        "title": "Có Chắc Yêu Là Đây",
+        "artist": "Sơn Tùng M-TP",
+        "src": "./assets/music_data/songs/son_tung_mtp/co_chac_yeu_la_day.mp3",
+        "cover": "./assets/music_data/imgs_song/son_tung_mtp/co_chac_yeu_la_day.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/son_tung_mtp.jpg"
+    },
+    {
+        "title": "Gái Độc Thân",
+        "artist": "Tlinh",
+        "src": "./assets/music_data/songs/tlinh/gai_doc_than.mp3",
+        "cover": "./assets/music_data/imgs_song/tlinh/gai_doc_than.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/tlinh.jpg"
+    },
+    {
+        "title": "Nếu Lúc Đó",
+        "artist": "Tlinh",
+        "src": "./assets/music_data/songs/tlinh/neu_luc_do.mp3",
+        "cover": "./assets/music_data/imgs_song/tlinh/neu_luc_do.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/tlinh.jpg"
+    },
+    {
+        "title": "Nữ Siêu Anh Hùng",
+        "artist": "Tlinh",
+        "src": "./assets/music_data/songs/tlinh/nu_sieu_anh_hung.mp3",
+        "cover": "./assets/music_data/imgs_song/tlinh/nu_sieu_anh_hung.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/tlinh.jpg"
+    },
+    {
+        "title": "Phong Zin Zin",
+        "artist": "Tlinh",
+        "src": "./assets/music_data/songs/tlinh/phong_zin_zin.mp3",
+        "cover": "./assets/music_data/imgs_song/tlinh/phong_zin_zin.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/tlinh.jpg"
+    },
+    {
+        "title": "Lớn Rồi Còn Khóc Nhè",
+        "artist": "Trúc Nhân",
+        "src": "./assets/music_data/songs/truc_nhan/lon_roi_con_khoc_nhe.mp3",
+        "cover": "./assets/music_data/imgs_song/truc_nhan/lon_roi_con_khoc_nhe.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/truc_nhan.jpg"
+    },
+    {
+        "title": "Made in Vietnam",
+        "artist": "Trúc Nhân",
+        "src": "./assets/music_data/songs/truc_nhan/made_in_vietnam.mp3",
+        "cover": "./assets/music_data/imgs_song/truc_nhan/made_in_vietnam.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/truc_nhan.jpg"
+    },
+    {
+        "title": "Sáng Mắt Chưa",
+        "artist": "Trúc Nhân",
+        "src": "./assets/music_data/songs/truc_nhan/sang_mat_chua.mp3",
+        "cover": "./assets/music_data/imgs_song/truc_nhan/sang_mat_chua.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/truc_nhan.jpg"
+    },
+    {
+        "title": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+        "artist": "Trúc Nhân",
+        "src": "./assets/music_data/songs/truc_nhan/toi_thay_hoa_vang_tren_co_xanh.mp3",
+        "cover": "./assets/music_data/imgs_song/truc_nhan/toi_thay_hoa_vang_tren_co_xanh.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/truc_nhan.jpg"
+    },
+    {
+        "title": "Đếm Cừu",
+        "artist": "Han Sara",
+        "src": "./assets/music_data/songs/han_sara/dem_cuu.mp3",
+        "cover": "./assets/music_data/imgs_song/han_sara/dem_cuu.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/han_sara.jpg"
+    },
+    {
+        "title": "Do Anh Si",
+        "artist": "Han Sara",
+        "src": "./assets/music_data/songs/han_sara/do_anh_si.mp3",
+        "cover": "./assets/music_data/imgs_song/han_sara/do_anh_si.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/han_sara.jpg"
+    },
+    {
+        "title": "Giống Như Em",
+        "artist": "Han Sara",
+        "src": "./assets/music_data/songs/han_sara/giong_nhu_em.mp3",
+        "cover": "./assets/music_data/imgs_song/han_sara/giong_nhu_em.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/han_sara.jpg"
+    },
+    {
+        "title": "Xinh",
+        "artist": "Han Sara",
+        "src": "./assets/music_data/songs/han_sara/xinh.mp3",
+        "cover": "./assets/music_data/imgs_song/han_sara/xinh.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/han_sara.jpg"
+    },
+    {
+        "title": "Gã săn cá",
+        "artist": "Em Xinh Say Hi",
+        "src": "./assets/music_data/songs/em_xinh_say_hi/ga_san_ca.mp3",
+        "cover": "./assets/music_data/imgs_song/em_xinh_say_hi/ga_san_ca.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/em_xinh_say_hi.jpg"
+    },
+    {
+        "title": "Hề",
+        "artist": "Em Xinh Say Hi",
+        "src": "./assets/music_data/songs/em_xinh_say_hi/he.mp3",
+        "cover": "./assets/music_data/imgs_song/em_xinh_say_hi/he.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/em_xinh_say_hi.jpg"
+    },
+    {
+        "title": "Không Đau Nữa Rồi",
+        "artist": "Em Xinh Say Hi",
+        "src": "./assets/music_data/songs/em_xinh_say_hi/khong_dau_nua_roi.mp3",
+        "cover": "./assets/music_data/imgs_song/em_xinh_say_hi/khong_dau_nua_roi.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/em_xinh_say_hi.jpg"
+    },
+    {
+        "title": "Not My Fault",
+        "artist": "Em Xinh Say Hi",
+        "src": "./assets/music_data/songs/em_xinh_say_hi/not_my_fault.mp3",
+        "cover": "./assets/music_data/imgs_song/em_xinh_say_hi/not_my_fault.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/em_xinh_say_hi.jpg"
+    },
+    {
+        "title": "Đa nghi",
+        "artist": "Anh Trai Say Hi",
+        "src": "./assets/music_data/songs/anh_trai_say_hi/da_nghi.mp3",
+        "cover": "./assets/music_data/imgs_song/anh_trai_say_hi/da_nghi.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/anh_trai_say_hi.jpg"
+    },
+    {
+        "title": "Hermosa",
+        "artist": "Anh Trai Say Hi",
+        "src": "./assets/music_data/songs/anh_trai_say_hi/hermosa.mp3",
+        "cover": "./assets/music_data/imgs_song/anh_trai_say_hi/hermosa.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/anh_trai_say_hi.jpg"
+    },
+    {
+        "title": "Người Như Anh Xứng Đáng Cô Đơn",
+        "artist": "Anh Trai Say Hi",
+        "src": "./assets/music_data/songs/anh_trai_say_hi/nguoi_nhu_anh_xung_dang_co_don.mp3",
+        "cover": "./assets/music_data/imgs_song/anh_trai_say_hi/nguoi_nhu_anh_xung_dang_co_don.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/anh_trai_say_hi.jpg"
+    },
+    {
+        "title": "Người Yêu Chưa Sinh Ra",
+        "artist": "Anh Trai Say Hi",
+        "src": "./assets/music_data/songs/anh_trai_say_hi/nguoi_yeu_chua_sinh_ra.mp3",
+        "cover": "./assets/music_data/imgs_song/anh_trai_say_hi/nguoi_yeu_chua_sinh_ra.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/anh_trai_say_hi.jpg"
+    },
+    {
+        "title": "Mộc Miên",
+        "artist": "Chi Xê",
+        "src": "./assets/music_data/songs/chi_xe/moc_mien.mp3",
+        "cover": "./assets/music_data/imgs_song/chi_xe/moc_mien.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/chi_xe.jpg"
+    },
+    {
+        "title": "Seenderella",
+        "artist": "Chi Xê",
+        "src": "./assets/music_data/songs/chi_xe/seenderella.mp3",
+        "cover": "./assets/music_data/imgs_song/chi_xe/seenderella.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/chi_xe.jpg"
+    },
+    {
+        "title": "Trà Và Cà Phê",
+        "artist": "Chi Xê",
+        "src": "./assets/music_data/songs/chi_xe/tra_va_ca_phe.mp3",
+        "cover": "./assets/music_data/imgs_song/chi_xe/tra_va_ca_phe.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/chi_xe.jpg"
+    },
+    {
+        "title": "Xoay",
+        "artist": "Chi Xê",
+        "src": "./assets/music_data/songs/chi_xe/xoay.mp3",
+        "cover": "./assets/music_data/imgs_song/chi_xe/xoay.jpg",
+        "artistImg": "./assets/music_data/imgs_casi/chi_xe.jpg"
+    }
+]

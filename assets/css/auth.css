@@ -53,6 +53,56 @@
 
 /* cho signup dài hơn */
 
+/* ====== Signup specific spacing (wider and roomier) ====== */
+.auth-card.wide {
+  padding: 34px 28px;
+}
+
+.auth-card.wide form {
+  max-width: 640px;
+}
+
+.auth-card.wide .oauth-row {
+  gap: 20px;
+  margin: 14px 0 18px;
+}
+
+.auth-card.wide .divider {
+  margin: 18px 0;
+}
+
+.auth-card.wide .grid-2 {
+  gap: 22px 22px;
+  margin-top: 10px;
+}
+
+.auth-card.wide .pair .auth-label {
+  margin: 12px 0 8px;
+}
+
+.auth-card.wide .auth-input {
+  height: 52px;
+}
+
+.auth-card.wide .auth-btn.primary {
+  height: 50px;
+  margin-top: 16px;
+}
+
+.auth-card.wide .auth-check {
+  margin: 16px 0;
+  align-items: center;
+}
+
+.auth-card.wide .auth-check span {
+  line-height: 1.55;
+  padding-block: 6px;
+  display: block;
+}
+
+/* Remove vertical offset to center with first line */
+.auth-card.wide .auth-check input { margin-top: 0; }
+
 /* ====== Logo 109 × 109 ====== */
 .brand-mark {
   width: 109px;
@@ -111,6 +161,7 @@ form {
   font-size: 16px;
   outline: none;
   transition: border-color .15s, box-shadow .15s;
+  box-sizing: border-box;
 }
 
 .auth-input:focus {
@@ -137,7 +188,7 @@ form {
 .auth-check {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 18px;
   font-weight: 600;
   color: var(--ink-70);
@@ -149,7 +200,10 @@ form {
   -webkit-appearance: none;
   outline: none;
   width: 18px;
-  height: 17px;
+  height: 18px;
+  aspect-ratio: 1/1;
+  box-sizing: border-box;
+  display: inline-block;
   border-radius: 2px;
   border: 1px solid var(--border);
   background: #FFF;
@@ -281,13 +335,14 @@ form {
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px 16px;
+  gap: 20px 24px;
   margin-top: 6px;
 }
 
 .pair {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 /* ====== Responsive ====== */

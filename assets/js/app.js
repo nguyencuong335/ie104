@@ -4,10 +4,10 @@
     const u = JSON.parse(localStorage.getItem("auth_user") || "null");
     if (!u) {
       const next = location.pathname + location.search + location.hash;
-      location.replace("./auth.html?next=" + encodeURIComponent(next));
+      location.replace("./landingpage.html");
     }
   } catch {
-    location.replace("./auth.html");
+    location.replace("./landingpage.html");
   }
 })();
 
@@ -22,10 +22,51 @@ function signOut(redirect = true) {
 
 // ===== TẤT CẢ LOGIC SAU KHI DOM SẴN SÀNG =====
 document.addEventListener("DOMContentLoaded", () => {
+  // Smooth page enter
+  try { requestAnimationFrame(() => document.body.classList.add("is-loaded")); } catch {}
+
+  // Helper: smooth navigate with fade-out
+  function go(url) {
+    try { document.body.classList.add("page-exit"); } catch {}
+    setTimeout(() => { window.location.href = url; }, 180);
+  }
   // Bind nút Đăng xuất (sidebar)
   document.querySelector(".menu-btn.logout")?.addEventListener("click", () => {
     signOut(true);
   });
+
+  // ===== Expose minimal API for other pages =====
+  try {
+    window.MusicBox = Object.freeze({
+      playAt(i) { if (typeof i === "number" && i >= 0 && i < playlist.length) { loadTrack(i); play(); pushUIState(); } },
+      currentIndex() { return index; },
+      playlist() { return playlist.slice(); },
+    });
+  } catch {}
+
+  // Sidebar: Yêu thích -> Yeuthich.html
+  const likedBtn = document.querySelector(".menu-btn.liked");
+  if (likedBtn) {
+    likedBtn.addEventListener("click", () => {
+      go("./Yeuthich.html");
+    });
+  }
+
+  // Sidebar: Playlist của bạn -> Hoso.html
+  const yourBtn = document.querySelector(".menu-btn.your");
+  if (yourBtn) {
+    yourBtn.addEventListener("click", () => {
+      go("./Hoso.html");
+    });
+  }
+
+  // Sidebar: Khám phá -> index.html (Trang chủ)
+  const exploreBtn = document.querySelector(".menu-btn.explore");
+  if (exploreBtn) {
+    exploreBtn.addEventListener("click", () => {
+      go("./index.html");
+    });
+  }
 
   // ===== Đồng bộ chiều cao player để sidebar/queue ăn khít bên trên
   function setPlayerSpacer() {
@@ -38,16 +79,43 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", setPlayerSpacer);
 
   // ===== Playlist =====
-  const playlist = [
-    { title: "Âm thầm bên em", artist: "Sơn Tùng M-TP", src: "./assets/songs/am-tham-ben-em-son-tung-mtp.mp3", cover: "./assets/imgs/am-tham-ben-em-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Buông đôi tay nhau ra", artist: "Sơn Tùng M-TP", src: "./assets/songs/buong-doi-tay-nhau-ra-son-tung-mtp.mp3", cover: "./assets/imgs/buong-doi-tay-nhau-ra-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Đừng Làm Trái Tim Anh Đau", artist: "Sơn Tùng M-TP", src: "./assets/songs/dung-lam-trai-tim-anh-dau-son-tung-mtp.mp3", cover: "./assets/imgs/dung-lam-trai-tim-anh-dau-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Không Phải Dạng Vừa Đâu", artist: "Sơn Tùng M-TP", src: "./assets/songs/khong-phai-dang-vua-dau-son-tung-mtp.mp3", cover: "./assets/imgs/khong-phai-dang-vua-dau-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Khuôn Mặt Đáng Thương", artist: "Sơn Tùng M-TP", src: "./assets/songs/khuon-mat-dang-thuong-son-tung-mtp.mp3", cover: "./assets/imgs/khuon-mat-dang-thuong-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Muộn Rồi Mà Sao Còn", artist: "Sơn Tùng M-TP", src: "./assets/songs/muon-roi-ma-sao-con-son-tung-mtp.mp3", cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Nắng Ấm Xa Dần", artist: "Sơn Tùng M-TP", src: "./assets/songs/nang-am-xa-dan-son-tung-mtp.mp3", cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
-    { title: "Nơi Này Có Anh", artist: "Sơn Tùng M-TP", src: "./assets/songs/noi-nay-co-anh-son-tung-mtp.mp3", cover: "./assets/imgs/chung-ta-cua-hien-tai-son-tung-mtp.jpg", artistImg: "./assets/imgs/son-tung-mtp.jpg" },
+  let playlist = [];
+  const fallbackPlaylist = [
+    { title: "Muộn Rồi Mà Sao Còn", artist: "Sơn Tùng M-TP", src: "./assets/music_data/songs/muon_roi_ma_sao_con.mp3", cover: "./assets/music_data/imgs_song/muon_roi_ma_sao_con.jpg", artistImg: "./assets/music_data/imgs_casi/son_tung_mtp.jpg" },
+    { title: "Nơi Này Có Anh", artist: "Sơn Tùng M-TP", src: "./assets/music_data/songs/noi_nay_co_anh.mp3", cover: "./assets/music_data/imgs_song/noi_nay_co_anh.jpg", artistImg: "./assets/music_data/imgs_casi/son_tung_mtp.jpg" },
+    { title: "Chúng Ta Của Hiện Tại", artist: "Sơn Tùng M-TP", src: "./assets/music_data/songs/chung_ta_cua_hien_tai.mp3", cover: "./assets/music_data/imgs_song/chung_ta_cua_hien_tai.jpg", artistImg: "./assets/music_data/imgs_casi/son_tung_mtp.jpg" },
+    { title: "Gái Độc Thân", artist: "Tlinh", src: "./assets/music_data/songs/gai_doc_than.mp3", cover: "./assets/music_data/imgs_song/gai_doc_than.jpg", artistImg: "./assets/music_data/imgs_casi/tlinh.jpg" },
   ];
+  async function loadPlaylistFromJSON() {
+    try {
+      const res = await fetch("./assets/music_data/songs.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to fetch songs.json");
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) throw new Error("songs.json invalid or empty");
+      // Replace playlist contents in-place
+      playlist.splice(0, playlist.length, ...data);
+      renderQueue();
+      loadTrack(0);
+      audio.volume = Number(volume.value);
+      volume.setAttribute("aria-valuenow", String(audio.volume));
+      progress.setAttribute("aria-valuenow", "0");
+      setPlayUI(false);
+      console.assert(playlist.length >= 3, "Playlist phải có >= 3 bài");
+      // simple smoke after data ready
+      try { nextTrack(false); prevTrack(); } catch (err) { console.error("next/prev throw", err); }
+    } catch (err) {
+      console.error("Không thể tải playlist từ songs.json:", err);
+      // Fallback to built-in playlist
+      playlist.splice(0, playlist.length, ...fallbackPlaylist);
+      renderQueue();
+      loadTrack(0);
+      audio.volume = Number(volume.value);
+      volume.setAttribute("aria-valuenow", String(audio.volume));
+      progress.setAttribute("aria-valuenow", "0");
+      setPlayUI(false);
+      console.warn("Đang sử dụng fallback playlist nội bộ");
+    }
+  }
 
   // ===== State & Elements =====
   const audio = new Audio();
@@ -74,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const queuePanel     = document.getElementById("queue");
   const recentBtn      = document.querySelector(".menu-btn.recent");
   const qTitle         = document.querySelector(".q-title");
+  const playlistSection = document.querySelector(".playlist");
 
   // Banner elements
   const bTitle = document.getElementById("b-title");
@@ -88,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isFollowing = false;
 
   // ===== Guards =====
-  console.assert(playlist.length >= 3, "Playlist phải có >= 3 bài");
+  // Moved playlist length assertion to after JSON load
   [
     ["title", titleEl],["artist", artistEl],["cover", coverEl],
     ["b-title", bTitle],["b-artist-name", bArtistName],["b-cover", bCover],["b-artist-avatar", bArtistAvatar],
@@ -131,6 +200,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // update artist bar
     abName.textContent = t.artist;
     abAvatar.style.backgroundImage = 'url("' + (t.artistImg || t.cover) + '")';
+
+    // thông báo ra ngoài để trang khác sync
+    try { window.dispatchEvent(new CustomEvent('musicbox:trackchange', { detail: { index } })); } catch {}
   }
 
   function play()  { audio.play();  isPlaying = true;  setPlayUI(true); }
@@ -215,11 +287,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Listeners =====
   playBtn.addEventListener("click", () => {
-    if (audio.src === "") loadTrack(index);
+    if (audio.src === "" && playlist.length > 0) loadTrack(index);
     isPlaying ? pause() : play();
   });
-  prevBtn.addEventListener("click", prevTrack);
-  nextBtn.addEventListener("click", () => nextTrack(false));
+  prevBtn.addEventListener("click", () => { if (playlist.length === 0) return; prevTrack(); });
+  nextBtn.addEventListener("click", () => { if (playlist.length === 0) return; nextTrack(false); });
 
   shuffleBtn.addEventListener("click", () => {
     shuffle = !shuffle;
@@ -268,17 +340,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Init =====
   updateShuffleA11y();
   updateRepeatA11y();
-  renderQueue();
-  loadTrack(index);
-  audio.volume = Number(volume.value);
-  volume.setAttribute("aria-valuenow", String(audio.volume));
-  progress.setAttribute("aria-valuenow", "0");
-  setPlayUI(false);
+  // Load playlist from JSON and then render UI
+  loadPlaylistFromJSON();
 
   // ===== Queue toggle từ tiêu đề bài hát trong player =====
   const titleClickable = titleEl;
   function setQueueVisible(show, fromPop = false) {
+    if (!queuePanel) return;
     queuePanel.classList.toggle("hidden", !show);
+    if (playlistSection) playlistSection.classList.toggle("hidden", show);
 
     if (recentBtn) recentBtn.setAttribute("aria-expanded", String(show));
     if (show) {
@@ -299,10 +369,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function pushUIState() {
-    const state = { index, queueOpen: !queuePanel.classList.contains("hidden") };
+    const state = { index, queueOpen: queuePanel ? !queuePanel.classList.contains("hidden") : false };
     try { history.pushState(state, ""); } catch {}
   }
-  try { history.replaceState({ index, queueOpen: !queuePanel.classList.contains("hidden") }, ""); } catch {}
+  try { history.replaceState({ index, queueOpen: queuePanel ? !queuePanel.classList.contains("hidden") : false }, ""); } catch {}
   window.addEventListener("popstate", (e) => {
     const s = e.state; if (!s) return;
     loadTrack(s.index);
@@ -322,23 +392,18 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-back")?.addEventListener("click", () => history.back());
   document.getElementById("nav-forward")?.addEventListener("click", () => history.forward());
 
-  // ===== Nút "Nghe gần đây" mở/đóng Queue (A11y) =====
+  // ===== Nút "Nghe gần đây": luôn điều hướng sang NgheGanDay.html
   if (recentBtn) {
-    recentBtn.setAttribute("aria-controls", "queue");
-    recentBtn.setAttribute("aria-expanded", String(!queuePanel.classList.contains("hidden")));
-    recentBtn.addEventListener("click", () => {
-      const open = queuePanel.classList.contains("hidden");
-      setQueueVisible(open);
+    recentBtn.addEventListener("click", () => { go("./NgheGanDay.html"); });
+  }
+  if (queuePanel) {
+    queuePanel.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setQueueVisible(false);
     });
   }
-  queuePanel.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setQueueVisible(false);
-  });
 
   // ===== Profile -> Hoso.html =====
-  document.querySelector(".profile-btn")?.addEventListener("click", () => {
-    window.location.href = "./Hoso.html";
-  });
+  document.querySelector(".profile-btn")?.addEventListener("click", () => { go("./Hoso.html"); });
 
   // ===== Search enter "son tung" -> timkiem.html =====
   const searchInput = document.querySelector('.search input[type="search"]');
@@ -346,19 +411,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const normalize = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
     searchInput.addEventListener("keydown", (e) => {
       if (e.key !== "Enter") return;
-      const q = normalize(searchInput.value);
-      if (q.includes("son tung")) {
-        window.location.href = "./timkiem.html?q=" + encodeURIComponent(searchInput.value);
-      }
+      const raw = searchInput.value;
+      const q = normalize(raw);
+      if (q.length === 0) return;
+      go("./timkiem.html?q=" + encodeURIComponent(raw));
     });
   }
 
   // ===== Settings button: click trái -> auth.html, chuột phải -> Đăng xuất nhanh
   const settingsBtn = document.querySelector(".settings-btn");
   if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => { window.location.href = "./auth.html"; });
+    settingsBtn.addEventListener("click", () => { go("./landingpage.html"); });
     settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); signOut(true); });
     settingsBtn.setAttribute("title", "Cài đặt (Click) / Đăng xuất (Right-click)");
+  }
+
+  // Logo link smooth
+  const logoLink = document.querySelector("a.logo-link");
+  if (logoLink) {
+    logoLink.addEventListener("click", (e) => { e.preventDefault(); go(logoLink.getAttribute("href") || "./index.html"); });
   }
 
   // ===== Smoke tests nho nhỏ =====
@@ -369,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (function smokeTests() {
     console.assert(playIcon.classList.contains("fa-play") && !playIcon.classList.contains("fa-pause"), "Nút play phải hiển thị biểu tượng play khi khởi động");
     console.assert(document.querySelectorAll(".q-item").length >= playlist.length, "Queue phải được render đủ items");
-    try { nextTrack(false); prevTrack(); } catch (err) { console.error("next/prev throw", err); }
+    // defer navigation tests until data is loaded
   })();
 });
 

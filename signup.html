@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign up • Music Box</title>
+  <title>Sign up • MusicStream</title>
   <link rel="stylesheet" href="./assets/css/reset.css" />
   <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
   <link rel="stylesheet" href="./assets/css/auth.css" />
@@ -13,24 +13,24 @@
 <body class="auth-bg">
   <main class="auth-shell">
     <section class="auth-card wide" aria-labelledby="su-title">
-      <img class="auth-logo" src="./assets/imgs/music_box_icon.png" alt="Music Box" />
+      <img class="brand-mark" src="./assets/favicon/apple-icon-180x180.png" alt="MusicStream" />
 
-      <h1 id="su-title" class="auth-title">Sign up to access your music library</h1>
-      <p class="auth-sub">Create an account to get started.</p>
+      <h1 id="su-title" class="auth-title">Welcome to MusicStream</h1>
+      <p class="auth-subtitle">Sign up to access your music library</p>
 
       <!-- SSO cùng 1 hàng -->
-      <div class="sso-row" style="margin-bottom:10px;">
-        <button type="button" class="btn-sso">
-          <img class="sso-ico" src="./assets/imgs/google_icon.png" alt="Google" />
+      <div class="oauth-row top" style="margin-bottom:10px;">
+        <button type="button" class="oauth-btn">
+          <img class="oauth-ico" src="./assets/favicon/favicon-32x32.png" alt="Google" />
           <span>Continue with Google</span>
         </button>
-        <button type="button" class="btn-sso">
-          <img class="sso-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
+        <button type="button" class="oauth-btn">
+          <img class="oauth-ico" src="./assets/favicon/favicon-32x32.png" alt="Facebook" />
           <span>Continue with Facebook</span>
         </button>
       </div>
 
-      <div class="auth-or"><span>or</span></div>
+      <div class="divider"><span>or</span></div>
 
       <form id="form-signup" novalidate>
         <div class="grid-2">
@@ -76,20 +76,20 @@
           </div>
         </div>
 
-        <label class="checkbox mt6">
+        <label class="auth-check" style="margin-top:6px;">
           <input type="checkbox" id="su-terms" required />
-          <span>By creating an account, you agree to the <a href="#" class="auth-forgot">Terms of Service</a>.</span>
+          <span>By creating an account, you agree to the <a href="#" class="auth-link">Terms of Service</a>. For more information about our privacy practices, see the Privacy Statements. We’ll occasionally send you account‑related emails.</span>
         </label>
 
         <!-- error (TRÊN nút) -->
-        <div id="su-error" class="auth-inline-error" hidden>
+        <div id="su-error" class="auth-error" hidden>
           Please fill in all the required fields
         </div>
 
-        <button type="submit" class="btn-primary" id="btn-signup">Sign up</button>
+        <button type="submit" class="auth-btn primary" id="btn-signup">Sign up</button>
 
-        <p class="auth-switch">
-          Already have an account? <a href="./login.html">Login</a>
+        <p class="auth-foot">
+          Already have an account? <a class="auth-link" href="./login.html">Login</a>
         </p>
       </form>
     </section>
