@@ -1,66 +1,103 @@
-// Page-specific behavior for timkiem.html
+// Page-specific behavior for timkiem.html: render artist and songs by query
 
-(function initTopSongsForSearchPage() {
-    function build() {
+(function searchArtistAndRender() {
+    function normalize(s) {
+        return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    }
+
+    function getQuery() {
+        try { return new URLSearchParams(location.search).get("q") || ""; } catch { return ""; }
+    }
+
+    async function getAllSongs() {
+        try {
+            if (window.MusicBox && typeof window.MusicBox.playlist === "function") {
+                const pl = window.MusicBox.playlist();
+                if (Array.isArray(pl) && pl.length) return pl;
+            }
+        } catch {}
+        try {
+            const res = await fetch("./assets/music_data/songs.json", { cache: "no-store" });
+            const data = await res.json();
+            if (Array.isArray(data)) return data;
+        } catch {}
+        return [];
+    }
+
+    function pickArtist(artists, qNorm) {
+        const list = artists.map(name => ({ name, norm: normalize(name) }));
+        if (!qNorm) return list[0]?.name || "";
+        const exact = list.find(a => a.norm === qNorm);
+        if (exact) return exact.name;
+        const contains = list.find(a => a.norm.includes(qNorm) || qNorm.includes(a.norm));
+        if (contains) return contains.name;
+        return list[0]?.name || "";
+    }
+
+    function renderArtistHeader(artistName, artistImgUrl) {
+        const card = document.querySelector(".top-result-card");
+        const imgBox = card?.querySelector(".artist-image");
+        const nameEl = card?.querySelector(".artist-name");
+        if (imgBox) imgBox.style.backgroundImage = `url('${artistImgUrl || ""}')`;
+        if (nameEl) nameEl.textContent = artistName || "—";
+    }
+
+    function mapToPlaylistIndex(track) {
+        try {
+            if (!window.MusicBox || typeof window.MusicBox.playlist !== "function") return -1;
+            const list = window.MusicBox.playlist();
+            const tNorm = normalize(track.title);
+            const aNorm = normalize(track.artist);
+            return list.findIndex(p => normalize(p.title) === tNorm && normalize(p.artist) === aNorm);
+        } catch { return -1; }
+    }
+
+    function renderSongs(songs) {
         const grid = document.getElementById("top-songs-grid");
-        if (!grid) return false;
-        const items = Array.from(document.querySelectorAll(".q-item")).slice(
-            0,
-            5
-        );
-        if (items.length === 0) return false;
+        if (!grid) return;
         grid.innerHTML = "";
-        const localCovers = [
-            "./assets/imgs/am-tham-ben-em-son-tung-mtp.jpg",
-            "./assets/imgs/buong-doi-tay-nhau-ra-son-tung-mtp.jpg",
-            "./assets/imgs/dung-lam-trai-tim-anh-dau-son-tung-mtp.jpg",
-            "./assets/imgs/khong-phai-dang-vua-dau-son-tung-mtp.jpg",
-            "./assets/imgs/khuon-mat-dang-thuong-son-tung-mtp.jpg",
-        ];
-        items.forEach((row, i) => {
-            const idx = row.getAttribute("data-index");
-            const coverImg = row.querySelector(".q-cover img");
-            const titleEl = row.querySelector(".q-title-text");
-            const artistEl = row.querySelector(".q-artist");
-            const coverUrl = localCovers[i] || (coverImg ? coverImg.src : "");
+        songs.forEach((t) => {
             const card = document.createElement("div");
             card.className = "song-item";
             card.innerHTML = `
-        <div class="song-cover" style="background-image:url('${coverUrl}'); background-size: cover; background-position: center;"></div>
-        <div class="song-info">
-          <div class="song-name">${titleEl ? titleEl.textContent : ""}</div>
-          <div class="song-artist">${artistEl ? artistEl.textContent : ""}</div>
-        </div>
-      `;
+                <div class="song-cover" style="background-image:url('${t.cover}'); background-size: cover; background-position: center;"></div>
+                <div class="song-info">
+                  <div class="song-name">${t.title}</div>
+                  <div class="song-artist">${t.artist}</div>
+                </div>
+            `;
             card.addEventListener("click", () => {
-                const target = document.querySelector(
-                    `.q-item[data-index="${idx}"]`
-                );
-                if (target) target.click();
+                const idx = mapToPlaylistIndex(t);
+                if (idx >= 0 && window.MusicBox && typeof window.MusicBox.playAt === "function") {
+                    window.MusicBox.playAt(idx);
+                }
             });
             grid.appendChild(card);
         });
-        return true;
     }
 
-    function tryBuildWhenReady() {
-        setTimeout(() => {
-            if (build()) return;
+    async function start() {
+        const rawQ = getQuery();
+        const qNorm = normalize(rawQ);
 
-            const obs = new MutationObserver(() => {
-                if (build()) obs.disconnect();
-            });
-            obs.observe(document.body, { childList: true, subtree: true });
-        }, 0);
+        const input = document.querySelector('.search input[type="search"]');
+        if (input) input.value = rawQ;
+
+        const all = await getAllSongs();
+        if (!all.length) return;
+        const artistSet = Array.from(new Set(all.map(s => s.artist)));
+        const pickedArtist = pickArtist(artistSet, qNorm);
+        const artistSongs = all.filter(s => normalize(s.artist) === normalize(pickedArtist)).slice(0, 12);
+        const artistImg = artistSongs[0]?.artistImg || artistSongs[0]?.cover || "";
+
+        renderArtistHeader(pickedArtist, artistImg);
+        renderSongs(artistSongs);
     }
 
-    if (
-        document.readyState === "complete" ||
-        document.readyState === "interactive"
-    ) {
-        tryBuildWhenReady();
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", start, { once: true });
     } else {
-        window.addEventListener("DOMContentLoaded", tryBuildWhenReady);
+        start();
     }
 })();
 
