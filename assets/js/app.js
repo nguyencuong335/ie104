@@ -323,6 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Queue toggle từ tiêu đề bài hát trong player =====
   const titleClickable = titleEl;
   function setQueueVisible(show, fromPop = false) {
+    if (!queuePanel) return;
     queuePanel.classList.toggle("hidden", !show);
     if (playlistSection) playlistSection.classList.toggle("hidden", show);
 
@@ -345,10 +346,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function pushUIState() {
-    const state = { index, queueOpen: !queuePanel.classList.contains("hidden") };
+    const state = { index, queueOpen: queuePanel ? !queuePanel.classList.contains("hidden") : false };
     try { history.pushState(state, ""); } catch {}
   }
-  try { history.replaceState({ index, queueOpen: !queuePanel.classList.contains("hidden") }, ""); } catch {}
+  try { history.replaceState({ index, queueOpen: queuePanel ? !queuePanel.classList.contains("hidden") : false }, ""); } catch {}
   window.addEventListener("popstate", (e) => {
     const s = e.state; if (!s) return;
     loadTrack(s.index);
@@ -368,18 +369,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-back")?.addEventListener("click", () => history.back());
   document.getElementById("nav-forward")?.addEventListener("click", () => history.forward());
 
-  // ===== Nút "Nghe gần đây" mở/đóng Queue (A11y) =====
+  // ===== Nút "Nghe gần đây": luôn điều hướng sang NgheGanDay.html
   if (recentBtn) {
-    recentBtn.setAttribute("aria-controls", "queue");
-    recentBtn.setAttribute("aria-expanded", String(!queuePanel.classList.contains("hidden")));
-    recentBtn.addEventListener("click", () => {
-      const open = queuePanel.classList.contains("hidden");
-      setQueueVisible(open);
+    recentBtn.addEventListener("click", () => { go("./NgheGanDay.html"); });
+  }
+  if (queuePanel) {
+    queuePanel.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setQueueVisible(false);
     });
   }
-  queuePanel.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setQueueVisible(false);
-  });
 
   // ===== Profile -> Hoso.html =====
   document.querySelector(".profile-btn")?.addEventListener("click", () => { go("./Hoso.html"); });
