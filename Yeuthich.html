@@ -102,12 +102,12 @@
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
-                        <div
-                            class="logo-box"
-                            style="
-                                background-image: url('./assets/imgs/logo.png');
-                            "
-                        ></div>
+                        <a href="./index.html" class="logo-link" aria-label="Trang chủ" title="Trang chủ">
+                            <div
+                                class="logo-box"
+                                style="background-image: url('./assets/imgs/logo.png');"
+                            ></div>
+                        </a>
                     </div>
                     <div class="header-center">
                         <button class="nav-btn" id="nav-back" title="Quay lại">
@@ -166,6 +166,12 @@
                         <button class="menu-btn recent">
                             <i class="fa-solid fa-clock-rotate-left"></i
                             ><span>Nghe gần đây</span>
+                        </button>
+
+                        <!-- Đăng xuất -->
+                        <button class="menu-btn logout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Đăng xuất</span>
                         </button>
 
                         <div class="section">
@@ -258,44 +264,7 @@
                                 <th>Thời lượng</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                  <td class="song-title">
-                                    <img src="./assets/imgs/In-Love.jpg" alt="In-Love" />
-                                    <span>In Love</span></td>
-                                <td>INGROOVES MUSIC GROUP</td>
-                                <td>Low G JustaTee</td>
-                                <td>04:36</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td class="song-title">
-                                    <img src="./assets/imgs/chẳng-phải-tình-đầu-sao-đau-đến-thế.jpg" alt="cptdsddt" />
-                                    <span>chẳng phải tình đầu sao đau đến thế</span></td>
-                                <td>WARNER RECORDED MUSIC</td>
-                                <td>MIN Dangrangto antransax</td>
-                                <td>05:12</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td class="song-title">
-                                    <img src="./assets/imgs/Panorama.jpg" alt="Panorama" />
-                                    <span>Panorama</span></td>
-                                <td>WARNER RECORDED MUSIC</td>
-                                <td>Richie D. ICY Obito</td>
-                                <td>04:04</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td class="song-title">
-                                    <img src="./assets/imgs/Còn-gì-đau-hơn-chữ-đã-từng.jpg" alt="cgdhcdt" />
-                                    <span>Còn Gì Đau Hơn Chữ Đã Từng</span></td>
-                                <td>SONY MUSIC</td>
-                                <td>Quân A.P</td>
-                                <td>03:36</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="yt-body"></tbody>
                     </table>
 
                     <div class="artist-section">
@@ -459,5 +428,57 @@
         </div>
 
         <script src="./assets/js/app.js"></script>
+        <script>
+          // Populate Yêu thích using the shared playlist from app.js
+          document.addEventListener('DOMContentLoaded', function () {
+            var api = window.MusicBox;
+            if (!api || typeof api.playlist !== 'function') return;
+            var list = api.playlist();
+            var tbody = document.getElementById('yt-body');
+            var coverEl = document.querySelector('.playlist-cover img');
+            var subs = document.querySelectorAll('.playlist-sub');
+
+            if (coverEl && list[0] && list[0].cover) coverEl.src = list[0].cover;
+            if (subs && subs[0]) subs[0].textContent = 'Playlist • ' + list.length + ' bài hát';
+
+            function fmt(sec){ if(!isFinite(sec)) return '--:--'; var m=Math.floor(sec/60), s=Math.floor(sec%60).toString().padStart(2,'0'); return m+':'+s; }
+
+            tbody.innerHTML = '';
+            list.forEach(function(t, i){
+              var tr = document.createElement('tr');
+              tr.setAttribute('data-track-index', i);
+              tr.setAttribute('role', 'button');
+              tr.setAttribute('tabindex', '0');
+              tr.innerHTML = `
+                <td>${i + 1}</td>
+                <td class="song-title"><img src="${t.cover || ''}" alt="${t.title || ''}"><span>${t.title || ''}</span></td>
+                <td>—</td>
+                <td>${t.artist || ''}</td>
+                <td id="dur-${i}">--:--</td>`;
+
+              var play = function(){ if (window.MusicBox && typeof window.MusicBox.playAt==='function') window.MusicBox.playAt(i); };
+              tr.addEventListener('click', play);
+              tr.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); }});
+              tr.style.cursor = 'pointer';
+              tbody.appendChild(tr);
+
+              // Fetch duration like queue
+              var a = new Audio(t.src);
+              a.addEventListener('loadedmetadata', function(){
+                var d = document.getElementById('dur-'+i);
+                if (d) d.textContent = fmt(a.duration);
+              });
+            });
+
+            // Optional: highlight current playing row
+            function highlight(ix){
+              document.querySelectorAll('.song-list tbody tr').forEach(function(r){ r.classList.remove('is-playing'); });
+              var active = document.querySelector('.song-list tbody tr[data-track-index="'+ix+'"]');
+              if (active) active.classList.add('is-playing');
+            }
+            if (typeof api.currentIndex === 'function') highlight(api.currentIndex());
+            window.addEventListener('musicbox:trackchange', function(e){ if(e && e.detail) highlight(e.detail.index); });
+          });
+        </script>
     </body>
 </html>
