@@ -656,12 +656,9 @@ body {
 }
 .bar {
     display: grid;
-    grid-template-columns: minmax(360px, 1.2fr) minmax(520px, 1.6fr) minmax(
-            220px,
-            0.8fr
-        );
+    grid-template-columns: 1fr 1.6fr 1fr; /* cân đối ba cột trái - giữa - phải */
     align-items: center;
-    gap: 14px;
+    gap: 16px;
 }
 
 /* Left: cover + text */
@@ -705,7 +702,7 @@ body {
     grid-template-areas:
         "title add"
         "artist artist";
-    column-gap: 14px;
+    column-gap: 4px; /* bring add button closer to title */
     row-gap: 2px;
     align-items: center;
     justify-items: start; /* ensure text blocks align left */
@@ -728,7 +725,8 @@ body {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    justify-self: end; /* keep the add button to the right */
+    justify-self: start; /* pull closer to title */
+    margin-left: 0;
 }
 
 /* Center: controls + timeline */
@@ -753,19 +751,34 @@ body {
     border: 0;
     background: transparent;
     cursor: pointer;
+    transition: transform 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
 }
 .btn i {
     color: var(--icon);
     font-size: 16px;
 }
+.btn:hover {
+    background-color: rgba(19, 94, 136, 0.08);
+}
+.btn:hover i { opacity: 0.9; }
+.btn:active {
+    transform: scale(0.92);
+}
 .btn.play {
     width: 42px;
     height: 42px;
     background: var(--track);
+    box-shadow: 0 4px 14px rgba(20, 129, 185, 0.25);
 }
 .btn.play i {
     color: #fff;
     font-size: 18px;
+}
+.btn.play:hover {
+    box-shadow: 0 6px 18px rgba(20, 129, 185, 0.35);
+}
+.btn.play:active {
+    transform: scale(0.94);
 }
 .btn.active {
     outline: 2px solid rgba(19, 94, 136, 0.25);
@@ -894,14 +907,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 #progress::-webkit-slider-runnable-track {
-    background: rgba(
-        127,
-        212,
-        249,
-        0.2
-    ); /* Light blue background for remaining portion */
+    background: linear-gradient(
+        to right,
+        #13a6e9 var(--progress-value, 0%),
+        #bde8fc var(--progress-value, 0%)
+    );
     height: 4px;
-    border-radius: 2px;
+    border-radius: 999px;
+    transition: height 0.15s ease;
 }
 
 #progress::-webkit-slider-thumb {
@@ -909,7 +922,7 @@ input[type="range"]::-moz-range-thumb {
     appearance: none;
     height: 12px;
     width: 12px;
-    background-color: #13a6e9;
+    background-color: #13a6e9; /* match volume knob */
     border-radius: 50%;
     border: none;
     margin-top: -4px;
@@ -920,26 +933,41 @@ input[type="range"]::-moz-range-thumb {
 #progress::-webkit-slider-container {
     background: linear-gradient(
         to right,
-        #13a6e9 var(--progress-value, 0%),
-        rgba(127, 212, 249, 0.2) var(--progress-value, 0%)
+        #1DB954 var(--progress-value, 0%),
+        #4d4d4d var(--progress-value, 0%)
     );
-    border-radius: 2px;
+    border-radius: 999px;
+}
+
+/* Khi người dùng rê hoặc kéo, phần đã chạy sẽ trông đậm và "to" hơn */
+#progress:hover::-webkit-slider-runnable-track,
+#progress:active::-webkit-slider-runnable-track {
+    height: 6px;
 }
 
 /* Firefox specific styles */
 #progress::-moz-range-track {
-    background: rgba(127, 212, 249, 0.2);
+    background: linear-gradient(
+        to right,
+        #1DB954 var(--progress-value, 0%),
+        #4d4d4d var(--progress-value, 0%)
+    );
     height: 4px;
-    border-radius: 2px;
+    border-radius: 999px;
 }
 
 #progress::-moz-range-thumb {
     height: 12px;
     width: 12px;
-    background-color: #13a6e9;
+    background-color: #13a6e9; /* match volume knob */
     border-radius: 50%;
     border: none;
     cursor: pointer;
+}
+
+#progress:hover::-moz-range-track,
+#progress:active::-moz-range-track {
+    height: 6px;
 }
 
 /* ==================== Diều chỉnh thanh âm lượng ====================== */
