@@ -702,7 +702,7 @@ body {
     grid-template-areas:
         "title add"
         "artist artist";
-    column-gap: 14px;
+    column-gap: 4px; /* bring add button closer to title */
     row-gap: 2px;
     align-items: center;
     justify-items: start; /* ensure text blocks align left */
@@ -725,7 +725,8 @@ body {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    justify-self: end; /* keep the add button to the right */
+    justify-self: start; /* pull closer to title */
+    margin-left: 0;
 }
 
 /* Center: controls + timeline */
@@ -750,19 +751,34 @@ body {
     border: 0;
     background: transparent;
     cursor: pointer;
+    transition: transform 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
 }
 .btn i {
     color: var(--icon);
     font-size: 16px;
 }
+.btn:hover {
+    background-color: rgba(19, 94, 136, 0.08);
+}
+.btn:hover i { opacity: 0.9; }
+.btn:active {
+    transform: scale(0.92);
+}
 .btn.play {
     width: 42px;
     height: 42px;
     background: var(--track);
+    box-shadow: 0 4px 14px rgba(20, 129, 185, 0.25);
 }
 .btn.play i {
     color: #fff;
     font-size: 18px;
+}
+.btn.play:hover {
+    box-shadow: 0 6px 18px rgba(20, 129, 185, 0.35);
+}
+.btn.play:active {
+    transform: scale(0.94);
 }
 .btn.active {
     outline: 2px solid rgba(19, 94, 136, 0.25);

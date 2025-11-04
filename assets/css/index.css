@@ -594,6 +594,56 @@ body.dark-mode .track-index {
   margin-top: 20px;
 }
 
+/* ---------- SLIDER (HORIZONTAL SCROLL) ---------- */
+.slider {
+  position: relative;
+}
+
+.slider-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slider-track::-webkit-scrollbar {
+  height: 0; /* hide bar */
+}
+
+/* Ensure cards have fixed width and snap */
+.slider .playlist-card { min-width: 220px; scroll-snap-align: start; }
+.slider .album-card { min-width: 220px; scroll-snap-align: start; }
+.slider .artist-card { min-width: 180px; scroll-snap-align: start; }
+.slider .category-card { min-width: 220px; scroll-snap-align: start; }
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+}
+
+.slider:hover .slider-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slider-btn.prev { left: -4px; }
+.slider-btn.next { right: -4px; }
+
 .artist-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);

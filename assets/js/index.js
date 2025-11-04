@@ -76,3 +76,29 @@ function syncRangeFills() {
 }
 
 document.addEventListener('DOMContentLoaded', syncRangeFills);
+
+// ---------- SLIDER CONTROLS ----------
+function setupSliders() {
+  const sliders = document.querySelectorAll('.slider');
+  sliders.forEach((slider) => {
+    const track = slider.querySelector('.slider-track');
+    const prev = slider.querySelector('.slider-btn.prev');
+    const next = slider.querySelector('.slider-btn.next');
+    if (!track) return;
+
+    const scrollAmount = () => Math.max(300, track.clientWidth * 0.8);
+
+    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
+    if (next) next.addEventListener('click', () => track.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
+
+    // Map vertical wheel to horizontal when appropriate (trackpad friendly)
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) < 2 && Math.abs(e.deltaY) > 0) {
+        e.preventDefault();
+        track.scrollBy({ left: e.deltaY, behavior: 'auto' });
+      }
+    }, { passive: false });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', setupSliders);
