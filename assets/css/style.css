@@ -656,12 +656,9 @@ body {
 }
 .bar {
     display: grid;
-    grid-template-columns: minmax(360px, 1.2fr) minmax(520px, 1.6fr) minmax(
-            220px,
-            0.8fr
-        );
+    grid-template-columns: 1fr 1.6fr 1fr; /* cân đối ba cột trái - giữa - phải */
     align-items: center;
-    gap: 14px;
+    gap: 16px;
 }
 
 /* Left: cover + text */
@@ -894,14 +891,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 #progress::-webkit-slider-runnable-track {
-    background: rgba(
-        127,
-        212,
-        249,
-        0.2
-    ); /* Light blue background for remaining portion */
+    background: linear-gradient(
+        to right,
+        #13a6e9 var(--progress-value, 0%),
+        #bde8fc var(--progress-value, 0%)
+    );
     height: 4px;
-    border-radius: 2px;
+    border-radius: 999px;
+    transition: height 0.15s ease;
 }
 
 #progress::-webkit-slider-thumb {
@@ -909,7 +906,7 @@ input[type="range"]::-moz-range-thumb {
     appearance: none;
     height: 12px;
     width: 12px;
-    background-color: #13a6e9;
+    background-color: #13a6e9; /* match volume knob */
     border-radius: 50%;
     border: none;
     margin-top: -4px;
@@ -920,26 +917,41 @@ input[type="range"]::-moz-range-thumb {
 #progress::-webkit-slider-container {
     background: linear-gradient(
         to right,
-        #13a6e9 var(--progress-value, 0%),
-        rgba(127, 212, 249, 0.2) var(--progress-value, 0%)
+        #1DB954 var(--progress-value, 0%),
+        #4d4d4d var(--progress-value, 0%)
     );
-    border-radius: 2px;
+    border-radius: 999px;
+}
+
+/* Khi người dùng rê hoặc kéo, phần đã chạy sẽ trông đậm và "to" hơn */
+#progress:hover::-webkit-slider-runnable-track,
+#progress:active::-webkit-slider-runnable-track {
+    height: 6px;
 }
 
 /* Firefox specific styles */
 #progress::-moz-range-track {
-    background: rgba(127, 212, 249, 0.2);
+    background: linear-gradient(
+        to right,
+        #1DB954 var(--progress-value, 0%),
+        #4d4d4d var(--progress-value, 0%)
+    );
     height: 4px;
-    border-radius: 2px;
+    border-radius: 999px;
 }
 
 #progress::-moz-range-thumb {
     height: 12px;
     width: 12px;
-    background-color: #13a6e9;
+    background-color: #13a6e9; /* match volume knob */
     border-radius: 50%;
     border: none;
     cursor: pointer;
+}
+
+#progress:hover::-moz-range-track,
+#progress:active::-moz-range-track {
+    height: 6px;
 }
 
 /* ==================== Diều chỉnh thanh âm lượng ====================== */

@@ -564,9 +564,9 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Daily Mix 1</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     The Weeknd, Dua Lipa, Harry Styles và hơn thế nữa
-                                </p>
+                            </p>
                             </div>
                         </article>
 
@@ -586,9 +586,9 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Discover Weekly</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     Bản mix hàng tuần của bạn với những ca khúc mới
-                                </p>
+                            </p>
                             </div>
                         </article>
 
@@ -608,9 +608,9 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Release Radar</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     Các bài hát mới từ nghệ sĩ bạn yêu thích
-                                </p>
+                            </p>
                             </div>
                         </article>
 
@@ -630,10 +630,10 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Time Capsule</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     Những bài hát từ quá khứ mà bạn yêu thích
-                                </p>
-                            </div>
+                            </p>
+                    </div>
                         </article>
 
                         <article class="playlist-card">
@@ -652,9 +652,9 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">On Repeat</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     Những bài hát bạn đang nghe nhiều nhất
-                                </p>
+                            </p>
                             </div>
                         </article>
 
@@ -674,7 +674,7 @@
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Daily Mix 2</h3>
-                                <p class="playlist-meta">
+                            <p class="playlist-meta">
                                     Olivia Rodrigo, Justin Bieber, Taylor Swift và hơn thế nữa
                                 </p>
                             </div>
@@ -1110,13 +1110,13 @@
                                     src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&auto=format&fit=crop"
                                     alt="Workout playlist cover"
                                 />
-                                <button
+                            <button
                                     class="playlist-play"
-                                    type="button"
+                                type="button"
                                     title="Phát Workout"
-                                >
+                            >
                                     <i class="fa-solid fa-play"></i>
-                                </button>
+                            </button>
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Workout</h3>
@@ -1176,13 +1176,13 @@
                                     src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
                                     alt="Lo-Fi Beats playlist cover"
                                 />
-                                <button
+                            <button
                                     class="playlist-play"
-                                    type="button"
+                                type="button"
                                     title="Phát Lo-Fi Beats"
-                                >
+                            >
                                     <i class="fa-solid fa-play"></i>
-                                </button>
+                            </button>
                             </div>
                             <div class="playlist-content">
                                 <h3 class="playlist-title">Lo-Fi Beats</h3>
@@ -1193,7 +1193,7 @@
                         </article>
                     </div>
                 </section>
-
+    
                 <!-- TOP CHARTS -->
                 <section
                     class="home-section home-charts"
@@ -1359,8 +1359,8 @@
                         </table>
                     </div>
                 </section>
-  
-                   <!-- FOOTER -->
+    
+                <!-- FOOTER -->
                 <footer
                     class="home-footer"
                     aria-label="Footer"
@@ -1422,11 +1422,11 @@
 
         <!-- PLAYER BAR (THANH PHÁT NHẠC) -->
 
-        <div class="player" role="region" aria-label="Trình phát nhạc">
+        <div class="player" role="region" aria-label="Trình phát nhạc" style="bottom: -6px;">
             <div class="bar">
                 <!-- Left: bài đang phát -->
                 <div class="left">
-                    <div class="cover">
+                    <div class="cover" style="width: 48px; height: 48px; border-radius: 6px;">
                         <img
                             id="cover"
                             alt="Bìa bài hát"
@@ -1434,7 +1434,10 @@
                         />
                     </div>
                     <div class="meta">
-                        <div class="title" id="title">Blinding Lights</div>
+                        <div class="title" id="title">
+                            <span>Blinding Lights</span>
+                            <i class="fa-solid fa-circle-check" aria-hidden="true" title="Đã xác minh" style="color:#1DB954; margin-left:8px; font-size: 0.9em;"></i>
+                        </div>
                         <button
                             class="btn outline add-btn"
                             id="add"
@@ -1473,10 +1476,12 @@
                             id="play"
                             title="Phát/Tạm dừng"
                             type="button"
+                            style="width:46px; height:46px; background:#fff;"
                         >
                             <i
                                 id="play-icon"
                                 class="fa-solid fa-play"
+                                style="color:#000"
                             ></i>
                         </button>
                         <button
@@ -1511,11 +1516,18 @@
                     </div>
                 </div>
 
-                <!-- Right: volume -->
-                <div class="right" title="Âm lượng">
+                <!-- Right: extra controls + volume -->
+                <div class="right" title="Khu điều khiển bên phải">
+                    <button class="btn" id="lyrics" title="Lời bài hát" type="button">
+                        <i class="fa-solid fa-comment-dots"></i>
+                    </button>
+                    <button class="btn" id="devices" title="Thiết bị khả dụng" type="button">
+                        <i class="fa-solid fa-display"></i>
+                    </button>
                     <i
                         id="vol-icon"
                         class="fa-solid fa-volume-high fa-fw"
+                        title="Âm lượng"
                     ></i>
                     <input
                         id="volume"
@@ -1526,6 +1538,9 @@
                         value="0.8"
                         aria-label="Âm lượng"
                     />
+                    <button class="btn" id="fullscreen" title="Toàn màn hình" type="button">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    </button>
                 </div>
             </div>
         </div>
