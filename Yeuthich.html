@@ -299,23 +299,49 @@
                             </div>
                             <div class="q-banner-text">
                                 <div class="b-title" id="b-title">—</div>
-                                <div class="b-artist-row">
-                                    <div class="b-artist-block">
-                                        <img class="b-artist-avatar" id="b-artist-avatar" alt="Artist" />
-                                        <div class="b-artist-meta">
-                                            <div class="b-artist-label">Artist</div>
-                                            <div class="b-artist-name" id="b-artist-name">—</div>
-                                        </div>
-                                    </div>
-                                    <button class="follow-btn" id="b-follow" aria-pressed="false">Theo dõi</button>
+                                <div class="b-artist">
+                                    <img
+                                        class="b-artist-avatar"
+                                        id="b-artist-avatar"
+                                        alt="Artist"
+                                    />
+                                    <span
+                                        class="b-artist-name"
+                                        id="b-artist-name"
+                                        >—</span
+                                    >
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Artist Bar -->
+                    <div class="artist-bar" id="artist-bar">
+                        <div class="artist-left">
+                            <div class="artist-chip">
+                                <div
+                                    class="avatar"
+                                    id="ab-avatar"
+                                    aria-label="Artist avatar"
+                                ></div>
+                                <div class="artist-meta">
+                                    <div class="label">Artist</div>
+                                    <div class="name" id="ab-name">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="follow-btn"
+                            id="ab-follow"
+                            aria-pressed="false"
+                        >
+                            Theo dõi
+                        </button>
+                    </div>
+
                     <div class="q-header">
                         <div class="q-title">Queue</div>
-                        <div class="q-sub">Based on this song</div>
+                        <div class="q-sub">Based on this playlist</div>
                     </div>
                     <div id="queue-list" class="q-list"></div>
                 </div>
