@@ -68,6 +68,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Sidebar: Nghe gần đây -> NgheGanDay.html
+  const recentNavBtn = document.querySelector(".menu-btn.recent");
+  if (recentNavBtn) {
+    recentNavBtn.addEventListener("click", () => {
+      go("./NgheGanDay.html");
+    });
+  }
+
   // ===== Đồng bộ chiều cao player để sidebar/queue ăn khít bên trên
   function setPlayerSpacer() {
     const p = document.querySelector(".player");
@@ -150,18 +158,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const bCover = document.getElementById("b-cover");
   const bArtistAvatar = document.getElementById("b-artist-avatar");
 
-  // Artist bar
-  const abName = document.getElementById("ab-name");
-  const abAvatar = document.getElementById("ab-avatar");
-  const abFollow = document.getElementById("ab-follow");
+  // Follow state (banner button)
+  const bFollow = document.getElementById("b-follow");
   let isFollowing = false;
+
+  // Meta actions
+  const likeBtn = document.getElementById("like");
+  const moreBtn = document.getElementById("more");
+  const moreMenu = document.getElementById("more-menu");
+  const downloadBtn = document.getElementById("download");
+  const addToPlBtn = document.getElementById("add-to-playlist");
 
   // ===== Guards =====
   // Moved playlist length assertion to after JSON load
   [
     ["title", titleEl],["artist", artistEl],["cover", coverEl],
     ["b-title", bTitle],["b-artist-name", bArtistName],["b-cover", bCover],["b-artist-avatar", bArtistAvatar],
-    ["ab-name", abName],["ab-avatar", abAvatar],["ab-follow", abFollow],["queue-list", queueListEl],
+    ["queue-list", queueListEl],
   ].forEach(([id, el]) => {
     console.assert(el instanceof HTMLElement, `Phần tử #${id} phải tồn tại trước khi dùng`);
   });
@@ -197,9 +210,8 @@ document.addEventListener("DOMContentLoaded", () => {
     durationEl.textContent = "0:00";
     updateQueueActive();
 
-    // update artist bar
-    abName.textContent = t.artist;
-    abAvatar.style.backgroundImage = 'url("' + (t.artistImg || t.cover) + '")';
+    // update follow button aria label
+    if (bFollow) bFollow.setAttribute("aria-pressed", String(isFollowing));
 
     // thông báo ra ngoài để trang khác sync
     try { window.dispatchEvent(new CustomEvent('musicbox:trackchange', { detail: { index } })); } catch {}
@@ -313,6 +325,59 @@ document.addEventListener("DOMContentLoaded", () => {
   audio.addEventListener("loadedmetadata", () => {
     durationEl.textContent = fmt(audio.duration);
   });
+
+  // ===== Like button & More (ellipsis) menu =====
+  if (likeBtn) {
+    likeBtn.addEventListener("click", () => {
+      const icon = likeBtn.querySelector("i");
+      const isSolid = icon.classList.toggle("fa-solid");
+      icon.classList.toggle("fa-regular", !isSolid);
+      icon.classList.add("fa-heart");
+      likeBtn.classList.toggle("active", isSolid);
+    });
+  }
+  function hideMoreMenu() {
+    if (!moreMenu) return;
+    moreMenu.classList.remove("open");
+    moreMenu.setAttribute("aria-hidden", "true");
+    document.removeEventListener("click", onDocClick, true);
+    document.removeEventListener("keydown", onEsc, true);
+  }
+  function onDocClick(e) {
+    if (!moreMenu || !moreBtn) return;
+    if (moreMenu.contains(e.target) || moreBtn.contains(e.target)) return;
+    hideMoreMenu();
+  }
+  function onEsc(e) { if (e.key === "Escape") hideMoreMenu(); }
+  if (moreBtn && moreMenu) {
+    moreBtn.addEventListener("click", (e) => {
+      const open = moreMenu.classList.toggle("open");
+      moreMenu.setAttribute("aria-hidden", String(!open));
+      if (open) {
+        document.addEventListener("click", onDocClick, true);
+        document.addEventListener("keydown", onEsc, true);
+      } else hideMoreMenu();
+    });
+  }
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => {
+      const t = playlist[index];
+      if (!t || !t.src) return;
+      const a = document.createElement("a");
+      a.href = t.src;
+      a.download = `${t.title || "baihat"}.mp3`;
+      document.body.appendChild(a);
+      a.click(); a.remove();
+      hideMoreMenu();
+    });
+  }
+  if (addToPlBtn) {
+    addToPlBtn.addEventListener("click", () => {
+      try { window.dispatchEvent(new CustomEvent('musicbox:addtoplaylist', { detail: { index } })); } catch {}
+      hideMoreMenu();
+    });
+  }
+
   audio.addEventListener("timeupdate", () => {
     const pct = (audio.currentTime / audio.duration) * 100;
     const val = isFinite(pct) ? Math.round(pct) : 0;
@@ -357,6 +422,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       recentBtn?.focus();
     }
+    // Toggle a body state class so CSS can target small-screen layout when queue is open
+    try { document.body.classList.toggle("queue-open", !!show); } catch {}
     if (!fromPop) pushUIState();
   }
   if (titleClickable) {
@@ -380,30 +447,51 @@ document.addEventListener("DOMContentLoaded", () => {
     setQueueVisible(!!s.queueOpen, true);
   });
 
-  // ===== Follow button =====
-  abFollow.addEventListener("click", () => {
-    isFollowing = !isFollowing;
-    abFollow.classList.toggle("is-following", isFollowing);
-    abFollow.textContent = isFollowing ? "Đã theo dõi" : "Theo dõi";
-    abFollow.setAttribute("aria-pressed", String(isFollowing));
-  });
+  // (disabled) Auto-open Queue on small screens was removed per request.
 
-  // ===== Header nav back/forward =====
-  document.getElementById("nav-back")?.addEventListener("click", () => history.back());
-  document.getElementById("nav-forward")?.addEventListener("click", () => history.forward());
+  // ===== Profile dropdown =====
+  const profileBtn = document.getElementById("profile-btn");
+  const profileMenu = document.getElementById("profile-menu");
+  const profileOpen = document.getElementById("profile-open");
+  const profileLogout = document.getElementById("profile-logout");
 
-  // ===== Nút "Nghe gần đây": luôn điều hướng sang NgheGanDay.html
-  if (recentBtn) {
-    recentBtn.addEventListener("click", () => { go("./NgheGanDay.html"); });
+  function closeProfileMenu() {
+    if (!profileMenu) return;
+    profileMenu.classList.remove("open");
+    profileMenu.setAttribute("aria-hidden", "true");
+    document.removeEventListener("click", onProfileDoc, true);
+    document.removeEventListener("keydown", onProfileEsc, true);
   }
-  if (queuePanel) {
-    queuePanel.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setQueueVisible(false);
+  function onProfileDoc(e) {
+    if (!profileMenu || !profileBtn) return;
+    if (profileMenu.contains(e.target) || profileBtn.contains(e.target)) return;
+    closeProfileMenu();
+  }
+  function onProfileEsc(e) { if (e.key === "Escape") closeProfileMenu(); }
+
+  if (profileBtn && profileMenu) {
+    profileBtn.addEventListener("click", () => {
+      const open = profileMenu.classList.toggle("open");
+      profileMenu.setAttribute("aria-hidden", String(!open));
+      if (open) {
+        document.addEventListener("click", onProfileDoc, true);
+        document.addEventListener("keydown", onProfileEsc, true);
+      } else closeProfileMenu();
     });
   }
-
-  // ===== Profile -> Hoso.html =====
-  document.querySelector(".profile-btn")?.addEventListener("click", () => { go("./Hoso.html"); });
+  if (profileOpen) {
+    profileOpen.addEventListener("click", () => {
+      closeProfileMenu();
+      try { go("./Hoso.html"); } catch { window.location.href = "./Hoso.html"; }
+    });
+  }
+  if (profileLogout) {
+    profileLogout.addEventListener("click", () => {
+      closeProfileMenu();
+      try { localStorage.removeItem("auth_user"); } catch {}
+      try { go("./landingpage.html"); } catch { window.location.href = "./landingpage.html"; }
+    });
+  }
 
   // ===== Search enter "son tung" -> timkiem.html =====
   const searchInput = document.querySelector('.search input[type="search"]');
@@ -418,12 +506,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== Settings button: click trái -> auth.html, chuột phải -> Đăng xuất nhanh
+  // ===== Settings button: vô hiệu hóa điều hướng/đăng xuất theo yêu cầu
   const settingsBtn = document.querySelector(".settings-btn");
   if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => { go("./landingpage.html"); });
-    settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); signOut(true); });
-    settingsBtn.setAttribute("title", "Cài đặt (Click) / Đăng xuất (Right-click)");
+    const noop = (e) => { try { e.preventDefault(); } catch {} };
+    settingsBtn.addEventListener("click", noop);
+    settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); });
+    settingsBtn.setAttribute("title", "Cài đặt");
   }
 
   // Logo link smooth

@@ -1,188 +1,109 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8" />
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    />
-    <title>Music Box - Nghe nhạc trực tuyến cùng bạn</title>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-        name="description"
-        content="Music Box - Nghe nhạc trực tuyến, khám phá playlist cá nhân, nghệ sĩ yêu thích và bảng xếp hạng âm nhạc Việt - Anh."
-    />
-    <meta
-        name="keywords"
-        content="Music Box, nghe nhạc trực tuyến, playlist, nghệ sĩ, bảng xếp hạng, music streaming"
-    />
+        <!-- Favicon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="./assets/favicon/apple-icon-57x57.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="./assets/favicon/apple-icon-60x60.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="./assets/favicon/apple-icon-72x72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-icon-76x76.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="./assets/favicon/apple-icon-114x114.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="./assets/favicon/apple-icon-120x120.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="./assets/favicon/apple-icon-144x144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="./assets/favicon/apple-icon-152x152.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="./assets/favicon/apple-icon-180x180.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="./assets/favicon/android-icon-192x192.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="./assets/favicon/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="./assets/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta
+            name="msapplication-TileImage"
+            content="./assets/favicon/ms-icon-144x144.png"
+        />
+        <meta name="theme-color" content="#ffffff" />
 
-    <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
-    <link rel="stylesheet" href="./assets/css/reset.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/index.css" />
-
-    <!-- FontAwesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    />
-</head>
-
-<body class="is-loaded">
-    <div class="wrap">
-        <!-- HEADER -->
-        <header class="header" aria-label="Thanh điều hướng">
-            <div class="header-inner">
-                <!-- Logo / Brand -->
-                <div class="header-left">
-                    <a
-                        href="./index.html"
-                        class="logo-link"
-                        aria-label="Music Box - Trang chủ"
-                        title="Music Box - Trang chủ"
-                    >
-                        <div
-                            class="logo-box"
-                            style="background-image: url('./assets/imgs/logo.png');"
-                        ></div>
-                    </a>
-                </div>
-
-                <!-- Điều hướng trung tâm: back/forward + search -->
-                <div class="header-center">
-                    <button
-                        class="nav-btn"
-                        id="nav-back"
-                        title="Quay lại"
-                        aria-label="Quay lại"
-                    >
-                        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-                    </button>
-                    <button
-                        class="nav-btn"
-                        id="nav-forward"
-                        title="Tiến tới"
-                        aria-label="Tiến tới"
-                    >
-                        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-
-                    <div class="search" role="search">
-                        <i
-                            class="fa-solid fa-magnifying-glass"
-                            aria-hidden="true"
-                        ></i>
-                        <input
-                            id="search-input"
-                            type="search"
-                            placeholder="Tìm bài hát, nghệ sĩ, album..."
-                            aria-label="Tìm kiếm"
-                        />
-                    </div>
-                </div>
-
-                <!-- Khu vực bên phải: chuyển theme + user -->
-                <div class="header-right">
-                    <!-- Toggle Light / Dark Mode -->
-                    <button
-                        class="settings-btn"
-                        id="theme-toggle"
-                        title="Chuyển chế độ sáng / tối"
-                        aria-label="Chuyển chế độ sáng / tối"
-                        data-theme="light"
-                    >
-                        <i class="fa-solid fa-moon" id="theme-toggle-icon"></i>
-                    </button>
-
-                    <!-- Hồ sơ -->
-                    <button
-                        class="profile-btn"
-                        title="Hồ sơ"
-                        aria-label="Hồ sơ"
-                    >
-                        <i
-                            class="fa-regular fa-user"
-                            aria-hidden="true"
-                        ></i>
-                    </button>
-
-                    <!-- Cài đặt -->
-                    <button
-                        class="settings-btn"
-                        title="Cài đặt"
-                        aria-label="Cài đặt"
-                    >
-                        <i class="fa-solid fa-gear" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <!-- LAYOUT CHÍNH: SIDEBAR + MAIN CONTENT -->
-        <div class="content">
-            <!-- SIDEBAR TRÁI: LIBRARY / PLAYLIST -->
-            <aside class="sidebar" id="sidebar" aria-label="Thanh bên">
-                <nav class="menu">
-                    <button class="menu-btn explore" type="button">
-                        <i class="fa-solid fa-house"></i>
-                        <span>Trang chủ</span>
-                    </button>
-
-                    <button class="menu-btn your" type="button">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>Khám phá</span>
-                    </button>
-
-                    <button class="menu-btn your" type="button">
-                        <i class="fa-regular fa-user"></i>
-                        <span>Hồ sơ</span>
-                    </button>
-
-                    <div class="section">
-                        <div class="section-sep"></div>
-                        <div class="section-label">THƯ VIỆN</div>
-                        <div class="section-sep"></div>
-                    </div>
-
-                    <button class="menu-btn liked" type="button">
-                        <i class="fa-regular fa-heart"></i>
-                        <span>Bài hát yêu thích</span>
-                    </button>
-
-                    <button class="menu-btn recent" type="button">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <span>Nghe gần đây</span>
-                    </button>
-
-                    <!-- <button class="menu-btn recent" type="button">
-                        <i class="fa-solid fa-list"></i>
-                        <span>Hàng chờ</span>
-                    </button> -->
-
-                    <div class="section">
-                        <div class="section-sep"></div>
-                        <div class="section-header">
-                            <span class="section-label">
-                                DANH SÁCH CỦA BẠN
-                            </span>
-                            <button
-                                class="icon-btn add"
-                                title="Thêm playlist mới"
-                                type="button"
-                            >
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="section-sep"></div>
-                    </div>
-
-                    <!-- Danh sách playlist người dùng -->
-                    <div class="pl-list">
-                        <div class="pl-item">
+        <title>Tìm kiếm</title>
+        <link rel="stylesheet" href="./assets/css/reset.css" />
+        <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="./assets/css/index.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+    </head>
+    <body>
+        <div class="wrap">
+            <!-- Header -->
+            <header class="header" aria-label="Thanh điều hướng">
+                <div class="header-inner">
+                    <div class="header-left">
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
                             <div
                                 class="pl-cover"
                                 style="
@@ -196,6 +117,69 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="header-right">
+                        <div class="profile-wrapper">
+                            <button
+                                class="profile-btn"
+                                id="profile-btn"
+                                title="Hồ sơ"
+                                aria-label="Hồ sơ"
+                            >
+                                <i
+                                    class="fa-regular fa-user"
+                                    aria-hidden="true"
+                                ></i>
+                            </button>
+                            <div
+                                class="profile-menu"
+                                id="profile-menu"
+                                role="menu"
+                                aria-hidden="true"
+                            >
+                                <button
+                                    class="profile-item"
+                                    id="profile-open"
+                                    role="menuitem"
+                                >
+                                    <i class="fa-regular fa-user"></i>
+                                    <span>Hồ sơ</span>
+                                </button>
+                                <button
+                                    class="profile-item"
+                                    id="profile-logout"
+                                    role="menuitem"
+                                >
+                                    <i
+                                        class="fa-solid fa-right-from-bracket"
+                                    ></i>
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button
+                            class="settings-btn"
+                            title="Cài đặt"
+                            aria-label="Cài đặt"
+                        >
+                            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+                    <nav class="menu">
+                        <button class="menu-btn explore">
+                            <i class="fa-solid fa-compass"></i
+                            ><span>Khám phá</span>
+                        </button>
+                        <button class="menu-btn your">
+                            <i class="fa-regular fa-user"></i
+                            ><span>Playlist của bạn</span>
+                        </button>
 
                         <div class="pl-item">
                             <div
@@ -212,33 +196,27 @@
                             </div>
                         </div>
 
-                        <div class="pl-item">
-                            <div
-                                class="pl-cover"
-                                style="
-                                    background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop');
-                                "
-                            ></div>
-                            <div class="pl-meta">
-                                <div class="pl-name">Workout Energy</div>
-                                <div class="pl-sub">
-                                    Playlist • 40 bài hát
-                                </div>
-                            </div>
-                        </div>
+                        <button class="menu-btn liked">
+                            <i class="fa-regular fa-heart"></i
+                            ><span>Yêu thích</span>
+                        </button>
+                        <button class="menu-btn recent">
+                            <i class="fa-solid fa-clock-rotate-left"></i
+                            ><span>Nghe gần đây</span>
+                        </button>
 
-                        <div class="pl-item">
-                            <div
-                                class="pl-cover"
-                                style="
-                                    background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=300&auto=format&fit=crop');
-                                "
-                            ></div>
-                            <div class="pl-meta">
-                                <div class="pl-name">Indie Vibes</div>
-                                <div class="pl-sub">
-                                    Playlist • 28 bài hát
-                                </div>
+                        <div class="section">
+                            <div class="section-sep"></div>
+                            <div class="section-header">
+                                <span class="section-label"
+                                    >DANH SÁCH ĐÃ TẠO</span
+                                >
+                                <button
+                                    class="icon-btn add"
+                                    title="Thêm playlist"
+                                >
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
                             </div>
                         </div>
 
@@ -345,1102 +323,1445 @@
                                 />
                             </div>
                             <div class="q-banner-text">
-                                <div class="b-title">Acoustic Stories</div>
-                                <div class="b-artist">
-                                    <img
-                                        class="b-artist-avatar"
-                                        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&auto=format&fit=crop"
-                                        alt="Artist avatar"
-                                    />
-                                    <span class="b-artist-name">
-                                        Minh An
-                                    </span>
-                                </div>
-                                <p class="hero-subtitle">
-                                    Những bản guitar mộc mạc, nhẹ nhàng
-                                    dành cho buổi tối thư giãn.
-                                    <span>(Acoustic • Chill)</span>
-                                </p>
-                                <div class="hero-actions">
+                                <div class="b-title" id="b-title">—</div>
+                                <div class="b-artist-row">
+                                    <div class="b-artist-block">
+                                        <img
+                                            class="b-artist-avatar"
+                                            id="b-artist-avatar"
+                                            alt="Artist"
+                                        />
+                                        <div class="b-artist-meta">
+                                            <div class="b-artist-label">
+                                                Artist
+                                            </div>
+                                            <div
+                                                class="b-artist-name"
+                                                id="b-artist-name"
+                                            >
+                                                —
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button
-                                        class="btn hero-play"
-                                        type="button"
+                                        class="follow-btn"
+                                        id="b-follow"
+                                        aria-pressed="false"
                                     >
-                                        <i class="fa-solid fa-play"></i>
-                                        Phát ngay
-                                    </button>
-                                    <button
-                                        class="btn outline hero-save"
-                                        type="button"
-                                    >
-                                        <i class="fa-regular fa-heart"></i>
-                                        Thêm vào yêu thích
+                                        Theo dõi
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div
-                        class="q-banner hidden"
-                        id="hero-slide-3"
-                        data-hero-index="2"
-                    >
-                        <div class="q-banner-inner">
-                            <div class="q-banner-cover">
-                                <img
-                                    src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop"
-                                    alt="Crowd at a live concert"
-                                />
-                            </div>
-                            <div class="q-banner-text">
-                                <div class="b-title">
-                                    Live Moments
-                                </div>
-                                <div class="b-artist">
-                                    <img
-                                        class="b-artist-avatar"
-                                        src="https://images.unsplash.com/photo-1438109491414-7198515b166b?w=200&auto=format&fit=crop"
-                                        alt="Band avatar"
-                                    />
-                                    <span class="b-artist-name">
-                                        Music Box Live
-                                    </span>
-                                </div>
-                                <p class="hero-subtitle">
-                                    Tổng hợp những bản live hay nhất,
-                                    mang lại cảm giác như bạn đang ở
-                                    ngay trước sân khấu.
-                                    <span>(Live • Pop • Rock)</span>
-                                </p>
-                                <div class="hero-actions">
-                                    <button
-                                        class="btn hero-play"
-                                        type="button"
-                                    >
-                                        <i class="fa-solid fa-play"></i>
-                                        Xem live
-                                    </button>
-                                    <button
-                                        class="btn outline hero-save"
-                                        type="button"
-                                    >
-                                        <i class="fa-solid fa-plus"></i>
-                                        Thêm vào playlist
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="q-header">
+                        <div class="q-title">Queue</div>
+                        <div class="q-sub">Based on this song</div>
                     </div>
-
-                    <!-- Điều khiển carousel -->
-                    <div class="hero-dots" id="hero-dots">
-                        <button
-                            class="hero-dot is-active"
-                            data-target="0"
-                            aria-label="Slide 1"
-                        ></button>
-                        <button
-                            class="hero-dot"
-                            data-target="1"
-                            aria-label="Slide 2"
-                        ></button>
-                        <button
-                            class="hero-dot"
-                            data-target="2"
-                            aria-label="Slide 3"
-                        ></button>
-                    </div>
+                    <div id="queue-list" class="q-list"></div>
                 </div>
 
-    
-                <!-- CATEGORIES SECTION: THỂ LOẠI / TÂM TRẠNG -->
-    
-                <!-- CATEGORIES -->
+                <!-- MAIN CONTENT: Dùng khối queue làm khung nội dung -->
                 <section
-                    class="home-section home-categories"
-                    aria-labelledby="categories-title"
+                    class="home-main"
+                    id="main-content"
+                    aria-label="Nội dung chính"
                 >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="categories-title"
+                    <!--  HERO CAROUSEL -->
+                    <!-- HERO -->
+                    <div
+                        class="hero-carousel"
+                        id="hero-carousel"
+                        aria-label="Album nổi bật"
+                    >
+                        <div
+                            class="q-banner"
+                            id="hero-slide-1"
+                            data-hero-index="0"
                         >
-                            Thể loại &amp; tâm trạng
-                        </h2>
-                        <p class="home-section-sub">
-                            Tìm playlist theo cảm xúc, hoạt động và thể loại âm nhạc.
-                        </p>
-                    </header>
-                    <div class="slider">
-                        <div class="slider-track categories-grid">
-                        <button class="category-card" type="button" data-category="chill" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">Chill</span>
-                            <span class="category-sub">
-                                Thư giãn • Chill &amp; Lo-fi
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="focus" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">Tập trung</span>
-                            <span class="category-sub">
-                                Focus • Study &amp; Work
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="workout" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">Tập luyện</span>
-                            <span class="category-sub">
-                                Workout • Năng động
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="acoustic" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">Acoustic</span>
-                            <span class="category-sub">
-                                Ghi-ta mộc • Ballad
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="edm" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">EDM</span>
-                            <span class="category-sub">
-                                Dance • Electronic
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="kpop" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">K-Pop</span>
-                            <span class="category-sub">
-                                K-Pop hits &amp; trending
-                            </span>
-                        </button>
-
-                        <button class="category-card" type="button" data-category="vpop" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-                            <div class="category-bg-overlay"></div>
-                            <span class="category-label">Việt Pop</span>
-                            <span class="category-sub">
-                                Nhạc trẻ Việt Nam
-                            </span>
-                        </button>
-
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&auto=format&fit=crop"
+                                        alt="DJ performing electronic music"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Midnight City</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=200&auto=format&fit=crop"
+                                            alt="Artist avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Neon Waves
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Album điện tử hiện đại kết hợp synthwave
+                                        và city pop.
+                                        <span>(Electronic • Synthwave)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Phát ngay
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i
+                                                class="fa-regular fa-bookmark"
+                                            ></i>
+                                            Lưu vào thư viện
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
 
-    
-                <!-- MADE FOR YOU -->
-                <section
-                    class="home-section home-made-for-you"
-                    aria-labelledby="made-for-you-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="made-for-you-title"
+                        <div
+                            class="q-banner hidden"
+                            id="hero-slide-2"
+                            data-hero-index="1"
                         >
-                            Dành cho bạn
-                        </h2>
-                    </header>
-
-                    <div class="slider">
-                        <div class="slider-track playlist-row">
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=400&auto=format&fit=crop"
-                                    alt="Daily Mix 1 playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Daily Mix 1"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&auto=format&fit=crop"
+                                        alt="Acoustic guitar and warm lights"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Acoustic Stories</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&auto=format&fit=crop"
+                                            alt="Artist avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Minh An
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Những bản guitar mộc mạc, nhẹ nhàng dành
+                                        cho buổi tối thư giãn.
+                                        <span>(Acoustic • Chill)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Phát ngay
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i class="fa-regular fa-heart"></i>
+                                            Thêm vào yêu thích
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Daily Mix 1</h3>
-                            <p class="playlist-meta">
-                                    The Weeknd, Dua Lipa, Harry Styles và hơn thế nữa
-                            </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&auto=format&fit=crop"
-                                    alt="Discover Weekly playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Discover Weekly"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Discover Weekly</h3>
-                            <p class="playlist-meta">
-                                    Bản mix hàng tuần của bạn với những ca khúc mới
-                            </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&auto=format&fit=crop"
-                                    alt="Release Radar playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Release Radar"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Release Radar</h3>
-                            <p class="playlist-meta">
-                                    Các bài hát mới từ nghệ sĩ bạn yêu thích
-                            </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1508973378898-89a67c77a5d1?w=400&auto=format&fit=crop"
-                                    alt="Time Capsule playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Time Capsule"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Time Capsule</h3>
-                            <p class="playlist-meta">
-                                    Những bài hát từ quá khứ mà bạn yêu thích
-                            </p>
-                    </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=400&auto=format&fit=crop"
-                                    alt="On Repeat playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát On Repeat"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">On Repeat</h3>
-                            <p class="playlist-meta">
-                                    Những bài hát bạn đang nghe nhiều nhất
-                            </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
-                                    alt="Daily Mix 2 playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Daily Mix 2"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Daily Mix 2</h3>
-                            <p class="playlist-meta">
-                                    Olivia Rodrigo, Justin Bieber, Taylor Swift và hơn thế nữa
-                                </p>
-                            </div>
-                        </article>
                         </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
 
-                <!-- NEW RELEASES -->
-                <section
-                    class="home-section home-new-releases"
-                    aria-labelledby="new-releases-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="new-releases-title"
+                        <div
+                            class="q-banner hidden"
+                            id="hero-slide-3"
+                            data-hero-index="2"
                         >
-                            Mới phát hành
-                        </h2>
-                    </header>
-
-                    <div class="slider">
-                        <div class="slider-track new-release-grid">
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&auto=format&fit=crop"
-                                    alt="Album cover for Aurora Lights"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát Aurora Lights"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop"
+                                        alt="Crowd at a live concert"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Live Moments</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1438109491414-7198515b166b?w=200&auto=format&fit=crop"
+                                            alt="Band avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Music Box Live
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Tổng hợp những bản live hay nhất, mang
+                                        lại cảm giác như bạn đang ở ngay trước
+                                        sân khấu.
+                                        <span>(Live • Pop • Rock)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Xem live
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                            Thêm vào playlist
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="album-title">Aurora Lights</h3>
-                            <p class="album-artist">Skyline Echo</p>
-                        </article>
-
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=400&auto=format&fit=crop"
-                                    alt="Album cover for City Stories"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát City Stories"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <h3 class="album-title">City Stories</h3>
-                            <p class="album-artist">Minh Thư</p>
-                        </article>
-
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://f4.bcbits.com/img/a1572550953_16.jpg"
-                                    alt="Album cover for Horizon"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát Horizon"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <h3 class="album-title">Horizon</h3>
-                            <p class="album-artist">Ocean Drive</p>
-                        </article>
-
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&auto=format&fit=crop"
-                                    alt="Album cover for Sunset Stories"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát Sunset Stories"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <h3 class="album-title">Sunset Stories</h3>
-                            <p class="album-artist">The Sundowners</p>
-                        </article>
-
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
-                                    alt="Album cover for Midnight Dreams"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát Midnight Dreams"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <h3 class="album-title">Midnight Dreams</h3>
-                            <p class="album-artist">Luna Eclipse</p>
-                        </article>
-
-                        <article class="album-card">
-                            <div class="album-thumb">
-                                <img
-                                    src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2019%2F11%2Fthe-weeknd-blinding-lights-single-stream-00.jpg?w=960&cbr=1&q=90&fit=max"
-                                    alt="Album cover for Neon Waves"
-                                />
-                                <button
-                                    class="album-play"
-                                    type="button"
-                                    title="Phát Neon Waves"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <h3 class="album-title">Neon Waves</h3>
-                            <p class="album-artist">Electronic Pulse</p>
-                        </article>
                         </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
 
-                <!-- TODAY'S BIGGEST HITS -->
-                <section
-                    class="home-section home-biggest-hits"
-                    aria-labelledby="biggest-hits-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="biggest-hits-title"
-                        >
-                            Hit hôm nay
-                        </h2>
-                    </header>
-
-                    <div class="slider">
-                        <div class="slider-track playlist-row">
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&auto=format&fit=crop"
-                                    alt="Today's Top Hits playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Today's Top Hits"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Today's Top Hits</h3>
-                                <p class="playlist-meta">
-                                    Blinding Lights là #1 trên 50 bài hát hàng đầu
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop"
-                                    alt="Global Top 50 playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Global Top 50"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Global Top 50</h3>
-                                <p class="playlist-meta">
-                                    Top 50 bài hát phổ biến nhất trên toàn thế giới
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop"
-                                    alt="Viral Hits playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Viral Hits"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Viral Hits</h3>
-                                <p class="playlist-meta">
-                                    Những bài hát đang lan truyền trên mạng xã hội
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=400&auto=format&fit=crop"
-                                    alt="Hot Country playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Hot Country"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Hot Country</h3>
-                                <p class="playlist-meta">
-                                    Những bài hát country đang thịnh hành nhất
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&auto=format&fit=crop"
-                                    alt="RapCaviar playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát RapCaviar"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">RapCaviar</h3>
-                                <p class="playlist-meta">
-                                    Những bản rap hay nhất và mới nhất
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&auto=format&fit=crop"
-                                    alt="Rock Classics playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Rock Classics"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Rock Classics</h3>
-                                <p class="playlist-meta">
-                                    Những bản rock kinh điển vượt thời gian
-                                </p>
-                            </div>
-                        </article>
-                        </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
-
-                <!-- BEST OF ARTISTS -->
-                <section
-                    class="home-section home-best-artists"
-                    aria-labelledby="best-artists-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="best-artists-title"
-                        >
-                            Tuyển tập nghệ sĩ
-                        </h2>
-                    </header>
-
-                    <div class="slider">
-                        <div class="slider-track artist-grid">
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&auto=format&fit=crop"
-                                    alt="Portrait of Hana"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">Hana</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1527489377706-5bf97e608852?w=300&auto=format&fit=crop"
-                                    alt="Portrait of Vũ Minh"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">Vũ Minh</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1517840933442-d2dc3f6f7e8e?w=300&auto=format&fit=crop"
-                                    alt="Portrait of DJ Stellar"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">DJ Stellar</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=300&auto=format&fit=crop"
-                                    alt="Portrait of The Night Owls"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">The Night Owls</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&auto=format&fit=crop"
-                                    alt="Portrait of Minh An"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">Minh An</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-
-                        <article class="artist-card">
-                            <div class="artist-avatar-wrap">
-                                <img
-                                    src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=300&auto=format&fit=crop"
-                                    alt="Portrait of Neon Waves"
-                                    class="artist-avatar"
-                                />
-                            </div>
-                            <h3 class="artist-name">Neon Waves</h3>
-                            <p class="artist-genre">Nghệ sĩ</p>
-                        </article>
-                        </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
-
-                <!-- MORE OF WHAT YOU LIKE -->
-                <section
-                    class="home-section home-more-like"
-                    aria-labelledby="more-like-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="more-like-title"
-                        >
-                            Thêm nội dung bạn thích
-                        </h2>
-                    </header>
-
-                    <div class="slider">
-                        <div class="slider-track playlist-row">
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=400&auto=format&fit=crop"
-                                    alt="Chill Hits playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Chill Hits"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Chill Hits</h3>
-                                <p class="playlist-meta">
-                                    Nhạc chill để thư giãn và tập trung
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&auto=format&fit=crop"
-                                    alt="Acoustic Morning playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Acoustic Morning"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Acoustic Morning</h3>
-                                <p class="playlist-meta">
-                                    Bắt đầu ngày mới một cách nhẹ nhàng
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&auto=format&fit=crop"
-                                    alt="Workout playlist cover"
-                                />
+                        <!-- Điều khiển carousel -->
+                        <div class="hero-dots" id="hero-dots">
                             <button
-                                    class="playlist-play"
-                                type="button"
-                                    title="Phát Workout"
-                            >
-                                    <i class="fa-solid fa-play"></i>
-                            </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Workout</h3>
-                                <p class="playlist-meta">
-                                    Tăng năng lượng cho buổi tập của bạn
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1508973378898-89a67c77a5d1?w=400&auto=format&fit=crop"
-                                    alt="Indie Pop playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát Indie Pop"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Indie Pop</h3>
-                                <p class="playlist-meta">
-                                    Khám phá những ca khúc indie mới lạ
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=400&auto=format&fit=crop"
-                                    alt="K-Pop Daebak playlist cover"
-                                />
-                                <button
-                                    class="playlist-play"
-                                    type="button"
-                                    title="Phát K-Pop Daebak"
-                                >
-                                    <i class="fa-solid fa-play"></i>
-                                </button>
-                            </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">K-Pop Daebak</h3>
-                                <p class="playlist-meta">
-                                    Những bản hit K-Pop đang thịnh hành
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="playlist-card">
-                            <div class="playlist-thumb">
-                                <img
-                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
-                                    alt="Lo-Fi Beats playlist cover"
-                                />
+                                class="hero-dot is-active"
+                                data-target="0"
+                                aria-label="Slide 1"
+                            ></button>
                             <button
-                                    class="playlist-play"
-                                type="button"
-                                    title="Phát Lo-Fi Beats"
+                                class="hero-dot"
+                                data-target="1"
+                                aria-label="Slide 2"
+                            ></button>
+                            <button
+                                class="hero-dot"
+                                data-target="2"
+                                aria-label="Slide 3"
+                            ></button>
+                        </div>
+                    </div>
+
+                    <!-- CATEGORIES SECTION: THỂ LOẠI / TÂM TRẠNG -->
+
+                    <!-- CATEGORIES -->
+                    <section
+                        class="home-section home-categories"
+                        aria-labelledby="categories-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="categories-title"
                             >
-                                    <i class="fa-solid fa-play"></i>
-                            </button>
+                                Thể loại &amp; tâm trạng
+                            </h2>
+                            <p class="home-section-sub">
+                                Tìm playlist theo cảm xúc, hoạt động và thể loại
+                                âm nhạc.
+                            </p>
+                        </header>
+                        <div class="slider">
+                            <div class="slider-track categories-grid">
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="chill"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #667eea 0%,
+                                            #764ba2 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Chill</span>
+                                    <span class="category-sub">
+                                        Thư giãn • Chill &amp; Lo-fi
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="focus"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #f093fb 0%,
+                                            #f5576c 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label"
+                                        >Tập trung</span
+                                    >
+                                    <span class="category-sub">
+                                        Focus • Study &amp; Work
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="workout"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #fa709a 0%,
+                                            #fee140 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label"
+                                        >Tập luyện</span
+                                    >
+                                    <span class="category-sub">
+                                        Workout • Năng động
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="acoustic"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #30cfd0 0%,
+                                            #330867 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Acoustic</span>
+                                    <span class="category-sub">
+                                        Ghi-ta mộc • Ballad
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="edm"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #a8edea 0%,
+                                            #fed6e3 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">EDM</span>
+                                    <span class="category-sub">
+                                        Dance • Electronic
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="kpop"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #ff9a9e 0%,
+                                            #fecfef 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">K-Pop</span>
+                                    <span class="category-sub">
+                                        K-Pop hits &amp; trending
+                                    </span>
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="vpop"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #ffecd2 0%,
+                                            #fcb69f 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Việt Pop</span>
+                                    <span class="category-sub">
+                                        Nhạc trẻ Việt Nam
+                                    </span>
+                                </button>
                             </div>
-                            <div class="playlist-content">
-                                <h3 class="playlist-title">Lo-Fi Beats</h3>
-                                <p class="playlist-meta">
-                                    Nhạc nền lo-fi để tập trung và thư giãn
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- MADE FOR YOU -->
+                    <section
+                        class="home-section home-made-for-you"
+                        aria-labelledby="made-for-you-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="made-for-you-title"
+                            >
+                                Dành cho bạn
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track playlist-row">
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=400&auto=format&fit=crop"
+                                            alt="Daily Mix 1 playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Daily Mix 1"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Daily Mix 1
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            The Weeknd, Dua Lipa, Harry Styles
+                                            và hơn thế nữa
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&auto=format&fit=crop"
+                                            alt="Discover Weekly playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Discover Weekly"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Discover Weekly
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Bản mix hàng tuần của bạn với những
+                                            ca khúc mới
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&auto=format&fit=crop"
+                                            alt="Release Radar playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Release Radar"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Release Radar
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Các bài hát mới từ nghệ sĩ bạn yêu
+                                            thích
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1508973378898-89a67c77a5d1?w=400&auto=format&fit=crop"
+                                            alt="Time Capsule playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Time Capsule"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Time Capsule
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bài hát từ quá khứ mà bạn yêu
+                                            thích
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=400&auto=format&fit=crop"
+                                            alt="On Repeat playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát On Repeat"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            On Repeat
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bài hát bạn đang nghe nhiều
+                                            nhất
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
+                                            alt="Daily Mix 2 playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Daily Mix 2"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Daily Mix 2
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Olivia Rodrigo, Justin Bieber,
+                                            Taylor Swift và hơn thế nữa
+                                        </p>
+                                    </div>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- NEW RELEASES -->
+                    <section
+                        class="home-section home-new-releases"
+                        aria-labelledby="new-releases-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="new-releases-title"
+                            >
+                                Mới phát hành
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track new-release-grid">
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&auto=format&fit=crop"
+                                            alt="Album cover for Aurora Lights"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Aurora Lights"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Aurora Lights</h3>
+                                    <p class="album-artist">Skyline Echo</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=400&auto=format&fit=crop"
+                                            alt="Album cover for City Stories"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát City Stories"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">City Stories</h3>
+                                    <p class="album-artist">Minh Thư</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://f4.bcbits.com/img/a1572550953_16.jpg"
+                                            alt="Album cover for Horizon"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Horizon"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Horizon</h3>
+                                    <p class="album-artist">Ocean Drive</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&auto=format&fit=crop"
+                                            alt="Album cover for Sunset Stories"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Sunset Stories"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Sunset Stories</h3>
+                                    <p class="album-artist">The Sundowners</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
+                                            alt="Album cover for Midnight Dreams"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Midnight Dreams"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Midnight Dreams</h3>
+                                    <p class="album-artist">Luna Eclipse</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2019%2F11%2Fthe-weeknd-blinding-lights-single-stream-00.jpg?w=960&cbr=1&q=90&fit=max"
+                                            alt="Album cover for Neon Waves"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Neon Waves"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Neon Waves</h3>
+                                    <p class="album-artist">Electronic Pulse</p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- TODAY'S BIGGEST HITS -->
+                    <section
+                        class="home-section home-biggest-hits"
+                        aria-labelledby="biggest-hits-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="biggest-hits-title"
+                            >
+                                Hit hôm nay
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track playlist-row">
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&auto=format&fit=crop"
+                                            alt="Today's Top Hits playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Today's Top Hits"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Today's Top Hits
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Blinding Lights là #1 trên 50 bài
+                                            hát hàng đầu
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&auto=format&fit=crop"
+                                            alt="Global Top 50 playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Global Top 50"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Global Top 50
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Top 50 bài hát phổ biến nhất trên
+                                            toàn thế giới
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&auto=format&fit=crop"
+                                            alt="Viral Hits playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Viral Hits"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Viral Hits
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bài hát đang lan truyền trên
+                                            mạng xã hội
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=400&auto=format&fit=crop"
+                                            alt="Hot Country playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Hot Country"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Hot Country
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bài hát country đang thịnh
+                                            hành nhất
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&auto=format&fit=crop"
+                                            alt="RapCaviar playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát RapCaviar"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            RapCaviar
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bản rap hay nhất và mới nhất
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=400&auto=format&fit=crop"
+                                            alt="Rock Classics playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Rock Classics"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Rock Classics
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bản rock kinh điển vượt thời
+                                            gian
+                                        </p>
+                                    </div>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- BEST OF ARTISTS -->
+                    <section
+                        class="home-section home-best-artists"
+                        aria-labelledby="best-artists-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="best-artists-title"
+                            >
+                                Tuyển tập nghệ sĩ
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track artist-grid">
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=300&auto=format&fit=crop"
+                                            alt="Portrait of Hana"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Hana</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1527489377706-5bf97e608852?w=300&auto=format&fit=crop"
+                                            alt="Portrait of Vũ Minh"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Vũ Minh</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1517840933442-d2dc3f6f7e8e?w=300&auto=format&fit=crop"
+                                            alt="Portrait of DJ Stellar"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">DJ Stellar</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=300&auto=format&fit=crop"
+                                            alt="Portrait of The Night Owls"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">The Night Owls</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&auto=format&fit=crop"
+                                            alt="Portrait of Minh An"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Minh An</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=300&auto=format&fit=crop"
+                                            alt="Portrait of Neon Waves"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Neon Waves</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- MORE OF WHAT YOU LIKE -->
+                    <section
+                        class="home-section home-more-like"
+                        aria-labelledby="more-like-title"
+                    >
+                        <header class="home-section-header">
+                            <h2 class="home-section-title" id="more-like-title">
+                                Thêm nội dung bạn thích
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track playlist-row">
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=400&auto=format&fit=crop"
+                                            alt="Chill Hits playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Chill Hits"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Chill Hits
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Nhạc chill để thư giãn và tập trung
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&auto=format&fit=crop"
+                                            alt="Acoustic Morning playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Acoustic Morning"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Acoustic Morning
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Bắt đầu ngày mới một cách nhẹ nhàng
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=400&auto=format&fit=crop"
+                                            alt="Workout playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Workout"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">Workout</h3>
+                                        <p class="playlist-meta">
+                                            Tăng năng lượng cho buổi tập của bạn
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1508973378898-89a67c77a5d1?w=400&auto=format&fit=crop"
+                                            alt="Indie Pop playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Indie Pop"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Indie Pop
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Khám phá những ca khúc indie mới lạ
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=400&auto=format&fit=crop"
+                                            alt="K-Pop Daebak playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát K-Pop Daebak"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            K-Pop Daebak
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Những bản hit K-Pop đang thịnh hành
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&auto=format&fit=crop"
+                                            alt="Lo-Fi Beats playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Lo-Fi Beats"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Lo-Fi Beats
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Nhạc nền lo-fi để tập trung và thư
+                                            giãn
+                                        </p>
+                                    </div>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- TOP CHARTS -->
+                    <section
+                        class="home-section home-charts"
+                        aria-labelledby="top-charts-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="top-charts-title"
+                            >
+                                Bảng xếp hạng
+                            </h2>
+                            <p class="home-section-sub">
+                                Top 10 bài hát được phát nhiều nhất trên toàn hệ
+                                thống.
+                            </p>
+                        </header>
+
+                        <div class="home-section-body charts-body">
+                            <table
+                                class="chart-table"
+                                aria-label="Top Songs Chart"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th>Bài hát</th>
+                                        <th>Nghệ sĩ</th>
+                                        <th>Album</th>
+                                        <th>Lượt nghe</th>
+                                        <th>Thời lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop"
+                                                    alt="Blinding Lights cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Blinding Lights</td>
+                                        <td>The Weeknd</td>
+                                        <td>After Hours</td>
+                                        <td>2.88M</td>
+                                        <td>3:20</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&auto=format&fit=crop"
+                                                    alt="Watermelon Sugar cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Watermelon Sugar</td>
+                                        <td>Harry Styles</td>
+                                        <td>Fine Line</td>
+                                        <td>1.90M</td>
+                                        <td>2:54</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&auto=format&fit=crop"
+                                                    alt="Levitating cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Levitating</td>
+                                        <td>Dua Lipa</td>
+                                        <td>Future Nostalgia</td>
+                                        <td>1.72M</td>
+                                        <td>3:23</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop"
+                                                    alt="Midnight Dreams cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Midnight Dreams</td>
+                                        <td>Luna Eclipse</td>
+                                        <td>Midnight Waves</td>
+                                        <td>950K</td>
+                                        <td>3:45</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&auto=format&fit=crop"
+                                                    alt="Stay cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Stay</td>
+                                        <td>The Kid LAROI, Justin Bieber</td>
+                                        <td>Single</td>
+                                        <td>1.40M</td>
+                                        <td>2:21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&auto=format&fit=crop"
+                                                    alt="Peaches cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Peaches</td>
+                                        <td>Justin Bieber</td>
+                                        <td>Justice</td>
+                                        <td>1.15M</td>
+                                        <td>3:18</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=200&auto=format&fit=crop"
+                                                    alt="drivers license cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>drivers license</td>
+                                        <td>Olivia Rodrigo</td>
+                                        <td>SOUR</td>
+                                        <td>1.25M</td>
+                                        <td>4:02</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=200&auto=format&fit=crop"
+                                                    alt="good 4 u cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>good 4 u</td>
+                                        <td>Olivia Rodrigo</td>
+                                        <td>SOUR</td>
+                                        <td>1.05M</td>
+                                        <td>2:58</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop"
+                                                    alt="Save Your Tears cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Save Your Tears</td>
+                                        <td>The Weeknd</td>
+                                        <td>After Hours</td>
+                                        <td>980K</td>
+                                        <td>3:36</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=200&auto=format&fit=crop"
+                                                    alt="Someone You Loved cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>Someone You Loved</td>
+                                        <td>Lewis Capaldi</td>
+                                        <td>Divinely Uninspired…</td>
+                                        <td>930K</td>
+                                        <td>3:02</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- FOOTER -->
+                    <footer class="home-footer" aria-label="Footer">
+                        <div class="home-footer-inner">
+                            <div class="home-footer-column">
+                                <h3>Music Box</h3>
+                                <p>
+                                    Nghe nhạc trực tuyến cùng bạn, mọi lúc mọi
+                                    nơi. Tạo playlist, theo dõi nghệ sĩ và khám
+                                    phá thế giới âm nhạc.
                                 </p>
                             </div>
-                        </article>
-                        </div>
-                        <button class="slider-btn prev" type="button" aria-label="Trước"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-btn next" type="button" aria-label="Tiếp"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </section>
-    
-                <!-- TOP CHARTS -->
-                <section
-                    class="home-section home-charts"
-                    aria-labelledby="top-charts-title"
-                >
-                    <header class="home-section-header">
-                        <h2
-                            class="home-section-title"
-                            id="top-charts-title"
-                        >
-                            Bảng xếp hạng
-                        </h2>
-                        <p class="home-section-sub">
-                            Top 10 bài hát được phát nhiều nhất trên toàn hệ thống.
-                        </p>
-                    </header>
-
-                    <div class="home-section-body charts-body">
-                        <table class="chart-table" aria-label="Top Songs Chart">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th></th>
-                                    <th>Bài hát</th>
-                                    <th>Nghệ sĩ</th>
-                                    <th>Album</th>
-                                    <th>Lượt nghe</th>
-                                    <th>Thời lượng</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop" alt="Blinding Lights cover" />
-                                        </div>
-                                    </td>
-                                    <td>Blinding Lights</td>
-                                    <td>The Weeknd</td>
-                                    <td>After Hours</td>
-                                    <td>2.88M</td>
-                                    <td>3:20</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&auto=format&fit=crop" alt="Watermelon Sugar cover" />
-                                        </div>
-                                    </td>
-                                    <td>Watermelon Sugar</td>
-                                    <td>Harry Styles</td>
-                                    <td>Fine Line</td>
-                                    <td>1.90M</td>
-                                    <td>2:54</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&auto=format&fit=crop" alt="Levitating cover" />
-                                        </div>
-                                    </td>
-                                    <td>Levitating</td>
-                                    <td>Dua Lipa</td>
-                                    <td>Future Nostalgia</td>
-                                    <td>1.72M</td>
-                                    <td>3:23</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop" alt="Midnight Dreams cover" />
-                                        </div>
-                                    </td>
-                                    <td>Midnight Dreams</td>
-                                    <td>Luna Eclipse</td>
-                                    <td>Midnight Waves</td>
-                                    <td>950K</td>
-                                    <td>3:45</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&auto=format&fit=crop" alt="Stay cover" />
-                                        </div>
-                                    </td>
-                                    <td>Stay</td>
-                                    <td>The Kid LAROI, Justin Bieber</td>
-                                    <td>Single</td>
-                                    <td>1.40M</td>
-                                    <td>2:21</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=200&auto=format&fit=crop" alt="Peaches cover" />
-                                        </div>
-                                    </td>
-                                    <td>Peaches</td>
-                                    <td>Justin Bieber</td>
-                                    <td>Justice</td>
-                                    <td>1.15M</td>
-                                    <td>3:18</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=200&auto=format&fit=crop" alt="drivers license cover" />
-                                        </div>
-                                    </td>
-                                    <td>drivers license</td>
-                                    <td>Olivia Rodrigo</td>
-                                    <td>SOUR</td>
-                                    <td>1.25M</td>
-                                    <td>4:02</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=200&auto=format&fit=crop" alt="good 4 u cover" />
-                                        </div>
-                                    </td>
-                                    <td>good 4 u</td>
-                                    <td>Olivia Rodrigo</td>
-                                    <td>SOUR</td>
-                                    <td>1.05M</td>
-                                    <td>2:58</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=200&auto=format&fit=crop" alt="Save Your Tears cover" />
-                                        </div>
-                                    </td>
-                                    <td>Save Your Tears</td>
-                                    <td>The Weeknd</td>
-                                    <td>After Hours</td>
-                                    <td>980K</td>
-                                    <td>3:36</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td class="chart-cover-cell">
-                                        <div class="chart-cover">
-                                            <img src="https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=200&auto=format&fit=crop" alt="Someone You Loved cover" />
-                                        </div>
-                                    </td>
-                                    <td>Someone You Loved</td>
-                                    <td>Lewis Capaldi</td>
-                                    <td>Divinely Uninspired…</td>
-                                    <td>930K</td>
-                                    <td>3:02</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-    
-                <!-- FOOTER -->
-                <footer
-                    class="home-footer"
-                    aria-label="Footer"
-                >
-                    <div class="home-footer-inner">
-                        <div class="home-footer-column">
-                            <h3>Music Box</h3>
-                            <p>
-                                Nghe nhạc trực tuyến cùng bạn, mọi lúc mọi nơi.
-                                Tạo playlist, theo dõi nghệ sĩ và khám phá thế giới âm nhạc.
-                            </p>
-                        </div>
-                        <div class="home-footer-column">
-                            <h4>Giới thiệu</h4>
-                            <ul>
-                                <li><a href="#">Về Music Box</a></li>
-                                <li><a href="#">Điều khoản sử dụng</a></li>
-                                <li><a href="#">Chính sách bảo mật</a></li>
-                            </ul>
-                        </div>
-                        <div class="home-footer-column">
-                            <h4>Cộng đồng</h4>
-                            <ul>
-                                <li><a href="#">Dành cho nghệ sĩ</a></li>
-                                <li><a href="#">Hỗ trợ &amp; giúp đỡ</a></li>
-                                <li><a href="#">Góp ý &amp; phản hồi</a></li>
-                            </ul>
-                        </div>
-                        <div class="home-footer-column">
-                            <h4>Kết nối</h4>
-                            <div class="home-footer-social">
-                                <a href="#" aria-label="Facebook">
-                                    <i class="fa-brands fa-facebook-f"></i>
-                                </a>
-                                <a href="#" aria-label="Instagram">
-                                    <i class="fa-brands fa-instagram"></i>
-                                </a>
-                                <a href="#" aria-label="YouTube">
-                                    <i class="fa-brands fa-youtube"></i>
-                                </a>
-                                <a href="#" aria-label="TikTok">
-                                    <i class="fa-brands fa-tiktok"></i>
-                                </a>
+                            <div class="home-footer-column">
+                                <h4>Giới thiệu</h4>
+                                <ul>
+                                    <li><a href="#">Về Music Box</a></li>
+                                    <li><a href="#">Điều khoản sử dụng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                </ul>
+                            </div>
+                            <div class="home-footer-column">
+                                <h4>Cộng đồng</h4>
+                                <ul>
+                                    <li><a href="#">Dành cho nghệ sĩ</a></li>
+                                    <li>
+                                        <a href="#">Hỗ trợ &amp; giúp đỡ</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Góp ý &amp; phản hồi</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="home-footer-column">
+                                <h4>Kết nối</h4>
+                                <div class="home-footer-social">
+                                    <a href="#" aria-label="Facebook">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" aria-label="Instagram">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="#" aria-label="YouTube">
+                                        <i class="fa-brands fa-youtube"></i>
+                                    </a>
+                                    <a href="#" aria-label="TikTok">
+                                        <i class="fa-brands fa-tiktok"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="home-footer-bottom">
-                        <span>
-                            © 2025 Music Box. All rights reserved.
-                        </span>
-                        <span>
-                            Made with ♫ for music lovers.
-                        </span>
-                    </div>
-                </footer>
-            </section>
+                        <div class="home-footer-bottom">
+                            <span>
+                                © 2025 Music Box. All rights reserved.
+                            </span>
+                            <span> Made with ♫ for music lovers. </span>
+                        </div>
+                    </footer>
+                </section>
+            </div>
         </div>
 
 
@@ -1458,21 +1779,49 @@
                         />
                     </div>
                     <div class="meta">
-                        <div class="title" id="title">
-                            <span>Blinding Lights</span>
-                            <i class="fa-solid fa-circle-check" aria-hidden="true" title="Đã xác minh" style="color:#1DB954; margin-left:8px; font-size: 0.9em;"></i>
+                        <div class="title" id="title">—</div>
+                        <div class="meta-actions">
+                            <button
+                                class="btn like-btn"
+                                id="like"
+                                title="Yêu thích"
+                            >
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="more-wrapper">
+                                <button
+                                    class="btn more-btn"
+                                    id="more"
+                                    title="Tùy chọn"
+                                >
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div
+                                    class="more-menu"
+                                    id="more-menu"
+                                    role="menu"
+                                    aria-hidden="true"
+                                >
+                                    <button
+                                        class="more-item"
+                                        id="download"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-download"></i>
+                                        <span>Tải về</span>
+                                    </button>
+                                    <button
+                                        class="more-item"
+                                        id="add-to-playlist"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-list-ul"></i>
+                                        <span>Thêm vào playlist</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button
-                            class="btn outline add-btn"
-                            id="add"
-                            title="Thêm vào playlist"
-                            type="button"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                        <div class="artist" id="artist">
-                            The Weeknd
-                        </div>
+                        <div class="artist" id="artist">—</div>
                     </div>
                 </div>
 
@@ -1570,7 +1919,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT -->
-    <script src="./assets/js/index.js"></script>
-</body>
+        <script src="./assets/js/app.js"></script>
+        <script src="./assets/js/index.js"></script>
+    </body>
 </html>
