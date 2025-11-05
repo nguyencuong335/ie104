@@ -105,47 +105,17 @@
                             title="Trang chủ"
                         >
                             <div
-                                class="logo-box"
+                                class="pl-cover"
                                 style="
-                                    background-image: url('./assets/imgs/logo.png');
+                                    background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?w=300&auto=format&fit=crop');
                                 "
                             ></div>
-                        </a>
-                    </div>
-                    <div class="header-center">
-                        <button
-                            class="nav-btn"
-                            id="nav-back"
-                            title="Quay lại"
-                            aria-label="Quay lại"
-                        >
-                            <i
-                                class="fa-solid fa-chevron-left"
-                                aria-hidden="true"
-                            ></i>
-                        </button>
-                        <button
-                            class="nav-btn"
-                            id="nav-forward"
-                            title="Tiến tới"
-                            aria-label="Tiến tới"
-                        >
-                            <i
-                                class="fa-solid fa-chevron-right"
-                                aria-hidden="true"
-                            ></i>
-                        </button>
-                        <div class="search" role="search">
-                            <i
-                                class="fa-solid fa-magnifying-glass"
-                                aria-hidden="true"
-                            ></i>
-                            <input
-                                id="search-input"
-                                type="search"
-                                placeholder="Tìm bài hát, nghệ sĩ..."
-                                aria-label="Tìm kiếm"
-                            />
+                            <div class="pl-meta">
+                                <div class="pl-name">My Chill Mix</div>
+                                <div class="pl-sub">
+                                    Playlist • 34 bài hát
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="header-right">
@@ -211,10 +181,19 @@
                             ><span>Playlist của bạn</span>
                         </button>
 
-                        <div class="section">
-                            <div class="section-sep"></div>
-                            <div class="section-label">THƯ VIỆN</div>
-                            <div class="section-sep"></div>
+                        <div class="pl-item">
+                            <div
+                                class="pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?w=300&auto=format&fit=crop');
+                                "
+                            ></div>
+                            <div class="pl-meta">
+                                <div class="pl-name">Lo-Fi Study</div>
+                                <div class="pl-sub">
+                                    Playlist • 52 bài hát
+                                </div>
+                            </div>
                         </div>
 
                         <button class="menu-btn liked">
@@ -239,62 +218,109 @@
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
-                            <div class="section-sep"></div>
                         </div>
 
-                        <div class="pl-list">
-                            <div class="pl-item">
-                                <div
-                                    class="pl-cover"
-                                    style="
-                                        background-image: url('https://images.unsplash.com/photo-1520975708797-6f065babc8be?q=80&w=300&auto=format&fit=crop');
-                                    "
-                                ></div>
-                                <div class="pl-meta">
-                                    <div class="pl-name">My Chill Mix</div>
-                                    <div class="pl-sub">
-                                        Playlist • 34 songs
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pl-item">
-                                <div
-                                    class="pl-cover"
-                                    style="
-                                        background-image: url('https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=300&auto=format&fit=crop');
-                                    "
-                                ></div>
-                                <div class="pl-meta">
-                                    <div class="pl-name">Suy tí thôi</div>
-                                    <div class="pl-sub">
-                                        Playlist • 100 songs
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pl-item">
-                                <div
-                                    class="pl-cover"
-                                    style="
-                                        background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=300&auto=format&fit=crop');
-                                    "
-                                ></div>
-                                <div class="pl-meta">
-                                    <div class="pl-name">IELTS</div>
-                                    <div class="pl-sub">
-                                        Playlist • 28 songs
-                                    </div>
+                        <div class="pl-item">
+                            <div
+                                class="pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1526481280695-3c687fd543c0?w=300&auto=format&fit=crop');
+                                "
+                            ></div>
+                            <div class="pl-meta">
+                                <div class="pl-name">Morning Acoustic</div>
+                                <div class="pl-sub">
+                                    Playlist • 25 bài hát
                                 </div>
                             </div>
                         </div>
-                    </nav>
-                </aside>
 
-                <!-- Queue card -->
-                <div class="queue hidden" id="queue">
-                    <div class="q-banner" id="np-banner">
+                        <div class="pl-item">
+                            <div
+                                class="pl-cover"
+                                style="
+                                    background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop');
+                                "
+                            ></div>
+                            <div class="pl-meta">
+                                <div class="pl-name">Night Drive</div>
+                                <div class="pl-sub">
+                                    Playlist • 31 bài hát
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- MAIN CONTENT: Dùng khối queue làm khung nội dung -->
+            <section
+                class="queue"
+                id="main-content"
+                aria-label="Nội dung chính"
+            >
+                <!--  HERO CAROUSEL -->
+                <!-- HERO -->
+                <div
+                    class="hero-carousel"
+                    id="hero-carousel"
+                    aria-label="Album nổi bật"
+                >
+                    <div class="q-banner" id="hero-slide-1" data-hero-index="0">
                         <div class="q-banner-inner">
                             <div class="q-banner-cover">
-                                <img id="b-cover" alt="Cover lớn" />
+                                <img
+                                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&auto=format&fit=crop"
+                                    alt="DJ performing electronic music"
+                                />
+                            </div>
+                            <div class="q-banner-text">
+                                <div class="b-title">Midnight City</div>
+                                <div class="b-artist">
+                                    <img
+                                        class="b-artist-avatar"
+                                        src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=200&auto=format&fit=crop"
+                                        alt="Artist avatar"
+                                    />
+                                    <span class="b-artist-name">
+                                        Neon Waves
+                                    </span>
+                                </div>
+                                <p class="hero-subtitle">
+                                    Album điện tử hiện đại kết hợp synthwave
+                                    và city pop. <span>(Electronic • Synthwave)</span>
+                                </p>
+                                <div class="hero-actions">
+                                    <button
+                                        class="btn hero-play"
+                                        type="button"
+                                    >
+                                        <i class="fa-solid fa-play"></i>
+                                        Phát ngay
+                                    </button>
+                                    <button
+                                        class="btn outline hero-save"
+                                        type="button"
+                                    >
+                                        <i class="fa-regular fa-bookmark"></i>
+                                        Lưu vào thư viện
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="q-banner hidden"
+                        id="hero-slide-2"
+                        data-hero-index="1"
+                    >
+                        <div class="q-banner-inner">
+                            <div class="q-banner-cover">
+                                <img
+                                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&auto=format&fit=crop"
+                                    alt="Acoustic guitar and warm lights"
+                                />
                             </div>
                             <div class="q-banner-text">
                                 <div class="b-title" id="b-title">—</div>
@@ -1738,12 +1764,19 @@
             </div>
         </div>
 
-        <!-- Player bar -->
-        <div class="player" role="region" aria-label="Trình phát nhạc">
+
+        <!-- PLAYER BAR (THANH PHÁT NHẠC) -->
+
+        <div class="player" role="region" aria-label="Trình phát nhạc" style="bottom: -6px;">
             <div class="bar">
+                <!-- Left: bài đang phát -->
                 <div class="left">
-                    <div class="cover">
-                        <img id="cover" alt="Bìa bài hát" />
+                    <div class="cover" style="width: 48px; height: 48px; border-radius: 6px;">
+                        <img
+                            id="cover"
+                            alt="Bìa bài hát"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeak26V_-fDOdGzPRy2m7-y_Ig8NasQ0H9Hw&s"
+                        />
                     </div>
                     <div class="meta">
                         <div class="title" id="title">—</div>
@@ -1792,28 +1825,52 @@
                     </div>
                 </div>
 
+                <!-- Center: controls -->
                 <div class="center">
                     <div class="controls">
-                        <button class="btn" id="shuffle" title="Shuffle (trộn)">
+                        <button
+                            class="btn"
+                            id="shuffle"
+                            title="Shuffle (trộn)"
+                            type="button"
+                        >
                             <i class="fa-solid fa-shuffle"></i>
                         </button>
-                        <button class="btn" id="prev" title="Prev">
+                        <button
+                            class="btn"
+                            id="prev"
+                            title="Prev"
+                            type="button"
+                        >
                             <i class="fa-solid fa-backward-step"></i>
                         </button>
                         <button
                             class="btn play"
                             id="play"
                             title="Phát/Tạm dừng"
+                            type="button"
+                            style="width:46px; height:46px; background:#fff;"
                         >
-                            <i id="play-icon" class="fa-solid fa-play"></i>
+                            <i
+                                id="play-icon"
+                                class="fa-solid fa-play"
+                                style="color:#000"
+                            ></i>
                         </button>
-                        <button class="btn" id="next" title="Next">
+                        <button
+                            class="btn"
+                            id="next"
+                            title="Next"
+                            type="button"
+                        >
                             <i class="fa-solid fa-forward-step"></i>
                         </button>
                         <button
                             class="btn"
                             id="repeat"
                             title="Repeat (off/all/one)"
+                            type="button"
+                            data-mode="off"
                         >
                             <i class="fa-solid fa-repeat"></i>
                         </button>
@@ -1828,12 +1885,23 @@
                             value="0"
                             aria-label="Tiến độ"
                         />
-                        <div class="time" id="duration">0:00</div>
+                        <div class="time" id="duration">3:18</div>
                     </div>
                 </div>
 
-                <div class="right" title="Âm lượng">
-                    <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
+                <!-- Right: extra controls + volume -->
+                <div class="right" title="Khu điều khiển bên phải">
+                    <button class="btn" id="lyrics" title="Lời bài hát" type="button">
+                        <i class="fa-solid fa-microphone-lines"></i>
+                    </button>
+                    <button class="btn" id="devices" title="Thiết bị khả dụng" type="button">
+                        <i class="fa-solid fa-display"></i>
+                    </button>
+                    <i
+                        id="vol-icon"
+                        class="fa-solid fa-volume-high fa-fw"
+                        title="Âm lượng"
+                    ></i>
                     <input
                         id="volume"
                         type="range"
@@ -1843,9 +1911,13 @@
                         value="0.8"
                         aria-label="Âm lượng"
                     />
+                    <button class="btn" id="fullscreen" title="Toàn màn hình" type="button">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
         <script src="./assets/js/app.js"></script>
         <script src="./assets/js/index.js"></script>
