@@ -122,40 +122,6 @@ body {
 .settings-btn {
     border-radius: 45px;
 }
-.profile-wrapper { position: relative; }
-.profile-menu {
-    position: absolute;
-    top: calc(100% + 8px); /* drop a bit below the button so it doesn't overlap */
-    right: 0;
-    display: none;
-    inline-size: 187px; /* width */
-    block-size: 88px; /* height */
-    padding: 4px 0;
-    flex-direction: column;
-    align-items: flex-start;
-    border-radius: 8px;
-    background: #F8FAFC;
-    box-shadow: 0 0 16px 0 rgba(0,0,0,0.50);
-    z-index: 50;
-    color: #135E88;
-}
-.profile-menu.open { display: inline-flex; }
-.profile-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 12px;
-    min-height: 40px;
-    line-height: 1;
-    background: transparent;
-    border: 0;
-    color: #135E88;
-    cursor: pointer;
-}
-.profile-item i { color: #135E88; font-size: 16px; line-height: 1; }
-.profile-item span { line-height: 1; }
-.profile-item:hover { background: rgba(20,129,185,0.08); }
 .nav-btn:hover,
 .profile-btn:hover,
 .settings-btn:hover {
@@ -384,8 +350,8 @@ body {
     border: 0;
     border-radius: 12px 12px 0 0;
     padding: 12px;
-    margin: 0 0 8px 0; /* thêm khoảng cách với phần dưới */
-    height: auto; /* để banner co giãn theo nội dung */
+    margin: 0;
+    height: 256px;
 }
 .q-banner-inner {
     display: grid;
@@ -397,7 +363,7 @@ body {
 .q-banner-cover {
     border-radius: 5px;
     overflow: hidden;
-    height: 220px; /* cố định tương ứng cột bìa; tránh đè nội dung dưới */
+    height: 100%;
 }
 .q-banner-cover img {
     width: 100%;
@@ -423,8 +389,8 @@ body {
     gap: 10px;
 }
 .b-artist-avatar {
-    width: 90px;
-    height: 90px;
+    width: 34px;
+    height: 34px;
     border-radius: 999px;
     object-fit: cover;
 }
@@ -436,37 +402,9 @@ body {
     letter-spacing: -0.56px;
     line-height: 1;
 }
-/* New banner artist row */
-.b-artist-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 8px;
-}
-.b-artist-block {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.b-artist-meta { display: flex; flex-direction: column; gap: 4px; }
-.b-artist-label {
-    font-family: "Inter", sans-serif;
-    font-size: 12px; line-height: 1; letter-spacing: 0.6px;
-    color: #6b7280; opacity: 0.9;
-}
 @media (max-width: 900px) {
-  .b-artist-row { gap: 12px; }
-}
-@media (max-width: 900px) {
-    /* Banner: ảnh vuông, hiển thị đầy đủ */
     .q-banner-cover {
-        height: auto !important;
-        aspect-ratio: 1 / 1;
-    }
-    .q-banner-cover img {
-        object-fit: contain !important;
-        background: #fff; /* nền trắng cho khoảng trống letterbox */
+        height: 120px;
     }
     .b-title {
         font-size: clamp(28px, 8vw, 56px);
@@ -477,11 +415,6 @@ body {
 .queue {
     width: 100%;
     border-radius: 12px 12px 0 0;
-}
-.queue.hidden { 
-    display: none !important; 
-}
-.queue {
     background: #fff;
     box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.1);
     margin-bottom: 0;
@@ -717,7 +650,7 @@ body {
     border-radius: 0;
     border: 0;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-    padding: 12px 0; /* vertical only; inner .bar will handle horizontal gutters */
+    padding: 12px 16px;
     margin: 0;
     z-index: 20;
 }
@@ -726,9 +659,6 @@ body {
     grid-template-columns: 1fr 1.6fr 1fr; /* cân đối ba cột trái - giữa - phải */
     align-items: center;
     gap: 14px;
-    width: calc(100vw - var(--gutter)); /* match .wrap width */
-    padding: 0 var(--pad); /* match inner padding like header/content */
-    margin: 0 auto; /* center inside full-width .player */
 }
 
 /* Left: cover + text */
@@ -737,12 +667,12 @@ body {
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 8px;
-    min-width: 0;
+    min-width: 380px;
     justify-self: start;
 }
 .cover {
-    width: 65px;
-    height: 65px;
+    width: 44px;
+    height: 44px;
     border-radius: 8px;
     overflow: hidden;
 }
@@ -752,106 +682,50 @@ body {
     object-fit: cover;
     display: block;
 }
+.title {
+    color: #135e88;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    /* letter-spacing: 1.44px; */
+    line-height: 1.25;
+    padding-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* Meta layout */
 .meta {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr auto;
     grid-template-areas:
-        "title"
-        "artist";
+        "title add"
+        "artist artist";
+    column-gap: 14px;
     row-gap: 2px;
     align-items: center;
-    justify-items: start;
+    justify-items: start; /* ensure text blocks align left */
     justify-content: start;
     min-width: 0;
-    position: relative;
-    padding-right: 72px;
 }
 .meta .title {
     grid-area: title;
     cursor: pointer;
     justify-self: start;
     text-align: left;
-    color: #135E88;
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 1.44px;
 }
 .meta .artist {
     grid-area: artist;
     justify-self: start;
     text-align: left;
-    color: #135E88;
-    font-family: "Inter", sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: 1.08px;
 }
-.meta .meta-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-.meta .like-btn,
-.meta .more-btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 0;
-    padding: 0;
-    background: transparent;
-    border: 0;
-}
-.meta .like-btn i,
-.meta .more-btn i { 
-    color: #135E88; 
-    font-size: 24px;
-}
-.more-wrapper { 
-    position: relative; 
-}
-.more-menu {
-    position: absolute;
-    top: -8px;
-    left: 0; /* align start with the button */
-    transform: translateY(-100%);
-    background: #F8FAFC;
-    border-radius: 10px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.16);
-    padding: 6px;
-    min-width: 180px;
-    display: none;
-    z-index: 30;
-    color: #135E88; /* text color */
-}
-.more-menu.open { 
-    display: block; 
-}
-.more-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: 0;
-    background: transparent;
-    padding: 8px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.more-item i { 
-    color: #135E88; 
-}
-.more-item:hover { 
-    background: rgba(20,129,185,0.08); 
+.meta .add-btn {
+    grid-area: add;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    justify-self: end; /* keep the add button to the right */
 }
 
 /* Center: controls + timeline */
@@ -919,11 +793,9 @@ body {
 
 .timeline {
     display: grid;
-    grid-template-columns: auto 296px auto;
+    grid-template-columns: 48px 1fr 48px;
     align-items: center;
     gap: 8px;
-    justify-content: center;
-    justify-items: center;
 }
 .time {
     color: #135e88;
@@ -941,27 +813,27 @@ input[type="range"] {
     background: transparent;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-    height: 3px;
+    height: 6px;
     background: var(--track);
     border-radius: 999px;
 }
 input[type="range"]::-moz-range-track {
-    height: 3px;
+    height: 6px;
     background: var(--track);
     border-radius: 999px;
 }
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--thumb);
     border: 2px solid #fff;
     margin-top: -4px;
 }
 input[type="range"]::-moz-range-thumb {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--thumb);
     border: 2px solid #fff;
@@ -1025,8 +897,8 @@ input[type="range"]::-moz-range-thumb {
 
 /* ================= Điều chỉnh thanh chạy nhạc ================= */
 #progress {
-    width: 296px;
-    height: 3px;
+    width: 100%;
+    height: 4px;
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
@@ -1040,15 +912,15 @@ input[type="range"]::-moz-range-thumb {
         249,
         0.2
     ); /* Light blue background for remaining portion */
-    height: 3px;
+    height: 4px;
     border-radius: 2px;
 }
 
 #progress::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    height: 10px;
-    width: 10px;
+    height: 12px;
+    width: 12px;
     background-color: #13a6e9;
     border-radius: 50%;
     border: none;
@@ -1075,13 +947,13 @@ input[type="range"]::-moz-range-thumb {
 /* Firefox specific styles */
 #progress::-moz-range-track {
     background: rgba(127, 212, 249, 0.2);
-    height: 3px;
+    height: 4px;
     border-radius: 2px;
 }
 
 #progress::-moz-range-thumb {
-    height: 10px;
-    width: 10px;
+    height: 12px;
+    width: 12px;
     background-color: #13a6e9;
     border-radius: 50%;
     border: none;
@@ -1157,144 +1029,4 @@ input[type="range"]::-moz-range-thumb {
   padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0);
   white-space: nowrap; border: 0;
-}
-
-/* ===== Mobile layout when Queue is open ===== */
-@media (max-width: 900px) {
-  /* Kích hoạt khi body có class hoặc khi .queue đang hiển thị */
-  body.queue-open .content, .content:has(.queue:not(.hidden)) { grid-template-columns: 1fr; }
-  body.queue-open .sidebar, .content:has(.queue:not(.hidden)) .sidebar { display: none !important; }
-  /* Header group target khi queue mở */
-  body.queue-open .header-left, .content:has(.queue:not(.hidden)) ~ .header-left { width: auto; }
-
-  /* Header: compact brand icon, smaller search, keep profile and settings */
-  body.queue-open .logo-box {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background-image: url('../imgs/music_box_icon.png') !important;
-    background-size: cover;
-  }
-  /* Fallback selector nếu không có body.queue-open (dùng :has) */
-  .wrap:has(.queue:not(.hidden)) .logo-box {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background-image: url('../imgs/music_box_icon.png') !important;
-    background-size: cover;
-  }
-  body.queue-open .header-center, .wrap:has(.queue:not(.hidden)) .header-center { gap: 8px; padding: 0 4px; }
-  body.queue-open .header-center .nav-btn, .wrap:has(.queue:not(.hidden)) .header-center .nav-btn { display: none; }
-  body.queue-open .search, .wrap:has(.queue:not(.hidden)) .search {
-    min-width: 0;
-    max-width: none;
-    height: 36px;
-    padding: 6px 12px;
-    border-radius: 18px;
-  }
-
-  /* Queue banner: large artwork on top, text below */
-  body.queue-open .q-banner, .wrap:has(.queue:not(.hidden)) .q-banner { height: auto; padding: 8px; }
-  body.queue-open .q-banner-inner, .wrap:has(.queue:not(.hidden)) .q-banner-inner {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: start;
-  }
-  body.queue-open .q-banner-cover, .wrap:has(.queue:not(.hidden)) .q-banner-cover { height: auto; aspect-ratio: 1/1; border-radius: 8px; }
-  body.queue-open .q-banner-cover img, .wrap:has(.queue:not(.hidden)) .q-banner-cover img { object-fit: contain; background: #fff; }
-  body.queue-open .b-title, .wrap:has(.queue:not(.hidden)) .b-title { font-size: clamp(22px, 9vw, 34px); letter-spacing: -1px; }
-  body.queue-open .b-artist, .wrap:has(.queue:not(.hidden)) .b-artist { padding: 6px 0 0; }
-
-  /* Queue list spacing */
-  body.queue-open .q-header, .wrap:has(.queue:not(.hidden)) .q-header { padding: 10px 12px 6px; }
-  body.queue-open .q-list, .wrap:has(.queue:not(.hidden)) .q-list { padding: 0 10px calc(10px + var(--player-h) + var(--player-safe)); }
-  body.queue-open .q-item, .wrap:has(.queue:not(.hidden)) .q-item { padding: 8px; gap: 10px; }
-  body.queue-open .q-time, .wrap:has(.queue:not(.hidden)) .q-time { font-size: 14px; min-width: 46px; }
-
-  /* Player: stack sections and center controls */
-  /* Hàng controls ở giữa, volume ở phải cùng một hàng */
-  body.queue-open .bar, .wrap:has(.queue:not(.hidden)) .bar {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-areas:
-      "top top top"
-      "spacer controls right"
-      "timeline timeline timeline";
-    gap: 8px;
-    width: calc(100vw - var(--gutter));
-    padding: 0 var(--pad);
-  }
-  /* 3 cột trong khối TOP: [cover] [title+artist] [like+more] */
-  body.queue-open .left, .wrap:has(.queue:not(.hidden)) .left {
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    grid-area: top;
-  }
-  /* Cho con của .center tham gia grid trực tiếp */
-  body.queue-open .center, .wrap:has(.queue:not(.hidden)) .center { display: contents; }
-  body.queue-open .controls, .wrap:has(.queue:not(.hidden)) .controls { grid-area: controls; justify-self: center; }
-  body.queue-open .timeline, .wrap:has(.queue:not(.hidden)) .timeline { grid-area: timeline; }
-  body.queue-open .right, .wrap:has(.queue:not(.hidden)) .right { grid-area: right; justify-content: flex-end; }
-  body.queue-open .cover, .wrap:has(.queue:not(.hidden)) .cover { width: 65px; height: 65px; }
-  body.queue-open .meta, .wrap:has(.queue:not(.hidden)) .meta { padding-right: 0; }
-  body.queue-open .meta .title, .wrap:has(.queue:not(.hidden)) .meta .title { font-size: 15px; letter-spacing: 0.5px; }
-  body.queue-open .meta .artist, .wrap:has(.queue:not(.hidden)) .meta .artist { font-size: 12px; opacity: 0.9; }
-  /* Đưa cụm nút sang cột phải, bỏ absolute */
-  body.queue-open .meta .meta-actions, .wrap:has(.queue:not(.hidden)) .meta .meta-actions {
-    position: static;
-    transform: none;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-  body.queue-open .center, .wrap:has(.queue:not(.hidden)) .center { gap: 6px; }
-  body.queue-open .timeline, .wrap:has(.queue:not(.hidden)) .timeline { grid-template-columns: auto 1fr auto; }
-  body.queue-open #progress, .wrap:has(.queue:not(.hidden)) #progress { width: 100%; }
-  body.queue-open .right input, .wrap:has(.queue:not(.hidden)) .right input { width: min(160px, 28vw); }
-}
-
-/* ===== Fallback: luôn áp dụng layout gọn khi <=900px ===== */
-@media (max-width: 900px) {
-  .content { grid-template-columns: 1fr; }
-  .sidebar { display: none !important; }
-  .header-left { width: auto; }
-  .logo-box {
-    width: 36px; height: 36px; border-radius: 10px;
-    background-image: url('../imgs/music_box_icon.png') !important;
-    background-size: cover;
-  }
-  .header-center { gap: 8px; padding: 0 4px; }
-  .header-center .nav-btn { display: none; }
-  .search { min-width: 0; max-width: none; height: 36px; padding: 6px 12px; border-radius: 18px; }
-
-  .bar {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-areas:
-      "top top top"
-      "spacer controls right"
-      "timeline timeline timeline";
-    gap: 8px; 
-    width: calc(100vw - var(--gutter)); 
-    padding: 0 var(--pad);
-  }
-  .left { grid-template-columns: auto 1fr auto; align-items: center; grid-area: top; }
-  .cover { width: 65px; height: 65px; }
-  .meta { padding-right: 0; }
-  .meta .title { font-size: 15px; letter-spacing: 0.5px; }
-  .meta .artist { font-size: 12px; opacity: 0.9; }
-  .meta .meta-actions {
-    position: static;
-    transform: none;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-  /* Cho con của .center tham gia grid trực tiếp */
-  .center { display: contents; }
-  .controls { grid-area: controls; justify-self: center; }
-  .timeline { grid-template-columns: auto 1fr auto; grid-area: timeline; }
-  #progress { width: 100%; }
-  .right { grid-area: right; justify-content: flex-end; }
-  .right input { width: min(180px, 34vw); }
 }
