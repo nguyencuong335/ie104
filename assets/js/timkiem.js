@@ -52,27 +52,76 @@
         } catch { return -1; }
     }
 
+    function formatDuration(song) {
+        // First try to get duration from the song object
+        if (song.duration) {
+            if (typeof song.duration === 'number') {
+                const mins = Math.floor(song.duration / 60);
+                const secs = Math.floor(song.duration % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            } else if (typeof song.duration === 'string') {
+                // If it's already in MM:SS format, return as is
+                if (/^\d+:\d{2}$/.test(song.duration)) {
+                    return song.duration;
+                }
+            }
+        }
+        
+        // If no duration is available, try to get it from MusicBox
+        if (window.MusicBox && typeof window.MusicBox.playlist === 'function') {
+            try {
+                const playlist = window.MusicBox.playlist();
+                const foundSong = playlist.find(s => 
+                    s.title === song.title && 
+                    s.artist === song.artist
+                );
+                if (foundSong && foundSong.duration) {
+                    if (typeof foundSong.duration === 'number') {
+                        const mins = Math.floor(foundSong.duration / 60);
+                        const secs = Math.floor(foundSong.duration % 60);
+                        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    }
+                    return foundSong.duration;
+                }
+            } catch (e) {
+                console.error('Error getting duration from MusicBox:', e);
+            }
+        }
+        
+        return '0:00';
+    }
+
     function renderSongs(songs) {
-        const grid = document.getElementById("top-songs-grid");
-        if (!grid) return;
-        grid.innerHTML = "";
-        songs.forEach((t) => {
-            const card = document.createElement("div");
-            card.className = "song-item";
-            card.innerHTML = `
-                <div class="song-cover" style="background-image:url('${t.cover}'); background-size: cover; background-position: center;"></div>
-                <div class="song-info">
-                  <div class="song-name">${t.title}</div>
-                  <div class="song-artist">${t.artist}</div>
-                </div>
-            `;
-            card.addEventListener("click", () => {
-                const idx = mapToPlaylistIndex(t);
-                if (idx >= 0 && window.MusicBox && typeof window.MusicBox.playAt === "function") {
-                    window.MusicBox.playAt(idx);
+        console.log('Song data:', songs); // Debug log
+        const container = document.querySelector('.top-songs-grid');
+        if (!container) return;
+
+        container.innerHTML = songs.slice(0, 4).map((song, i) => {
+            const songIndex = mapToPlaylistIndex(song);
+            const duration = formatDuration(song);
+            console.log(`Song ${i}:`, song.title, 'Duration:', song.duration, 'Formatted:', duration); // Debug log
+            
+            return `
+                <div class="top-song-item" data-index="${songIndex}">
+                    <div class="song-number">${i + 1}</div>
+                    <div class="song-cover" style="background-image: url('${song.cover || './assets/imgs/album-cover-1.jpg'}')"></div>
+                    <div class="song-details">
+                        <div class="song-title">${song.title || 'Unknown Song'}</div>
+                        <div class="song-artist">${song.artist || 'Unknown Artist'}</div>
+                    </div>
+                    <div class="song-duration">${duration}</div>
+                </div>`;
+        }).join('');
+
+        // Add click event listeners to song items
+        document.querySelectorAll('.top-song-item').forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', (e) => {
+                const index = parseInt(item.getAttribute('data-index'));
+                if (!isNaN(index) && index >= 0 && window.MusicBox && typeof window.MusicBox.playAt === 'function') {
+                    window.MusicBox.playAt(index);
                 }
             });
-            grid.appendChild(card);
         });
     }
 

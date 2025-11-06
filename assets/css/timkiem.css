@@ -6,7 +6,7 @@ body {
     height: auto !important;
     min-height: 100vh;
     overflow-y: auto !important; /* enable page scroll */
-} */
+
 
 .wrap {
     height: auto;
@@ -71,8 +71,84 @@ body {
   margin: 0 0 12px;
 }
 
-/* Top Result */
-.top-result-section { margin-bottom: 16px; }
+/* Main Layout */
+.results-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Left Column - Artist */
+.top-result-section {
+  margin: 0;
+  width: 100%;
+}
+
+/* Right Column - Top Songs */
+.top-songs-section {
+  margin: 0;
+  height: 100%;
+}
+
+/* Ensure albums section is not affected */
+.albums-section {
+  clear: both;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.albums-section .songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.albums-section .song-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.albums-section .song-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.albums-section .song-cover {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 8px;
+}
+
+.albums-section .song-info {
+  text-align: center;
+  width: 100%;
+}
+
+.albums-section .song-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.albums-section .song-artist {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .top-result-card {
   background: #e0f2fe;
   border-radius: 10px;
@@ -117,13 +193,102 @@ body {
   width: 116px; height: 116px; background: #d9d9d9; border-radius: 8px;
 }
 .song-info { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 116px; text-align: center; }
-.song-name {
+.song-name, .song-title {
   font-family: "Inter", sans-serif; font-weight: 700; font-size: 15px; line-height: 22px; color: #135e88;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .song-artist {
   font-family: "Inter", sans-serif; font-size: 12px; line-height: 16px; color: rgba(0, 0, 0, 0.7);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Top Songs Section */
+.top-songs-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-songs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.top-song-item {
+  display: grid;
+  grid-template-columns: 32px 48px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.top-song-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.song-number {
+  color: #7f8b99;
+  text-align: center;
+  font-size: 14px;
+}
+
+.top-song-item .song-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Song title styling for top songs and albums */
+.top-songs-section .song-title,
+.albums-section .song-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  color: #135e88;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+}
+
+.song-details {
+  min-width: 0;
+}
+
+.song-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.top-song-item .song-artist {
+  font-size: 12px;
+  color: #7f8b99;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-duration {
+  color: #7f8b99;
+  font-size: 14px;
+  padding: 0 8px;
 }
 
 /* Nút Đăng xuất trong sidebar (thêm nhận diện nhẹ) */
@@ -148,4 +313,9 @@ a:focus-visible {
   .content { grid-template-columns: 1fr; }
   .sidebar { position: static; max-height: none; overflow: visible; }
   .timkiem-main { max-height: calc(100vh - var(--player-h) - 16px); }
+  
+  .results-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
