@@ -20,7 +20,8 @@ body.page-nghe-gan-day {
   min-height: 0;
   overflow-y: auto;
   scrollbar-width: none;
-  padding-bottom: calc(var(--player-h, 96px) + 24px);
+  /* Chỉ chừa đúng khoảng cho player (động), cộng nhẹ 4px cho an toàn */
+  padding-bottom: calc(var(--player-bottom-space, calc(var(--player-h) + var(--player-safe))) + 4px);
 }
 .page-nghe-gan-day .page-header {
   margin-bottom: 18px;
@@ -103,8 +104,21 @@ body.page-nghe-gan-day {
 }
 
 /* When Queue is open, let global style.css take full control */
-body.queue-open.page-nghe-gan-day .content { overflow: auto; }
+body.queue-open.page-nghe-gan-day .content {
+  height: 100vh;
+  overflow: auto;
+}
 body.queue-open.page-nghe-gan-day .played-main { padding-bottom: 0; }
 /* Hide main list entirely when Queue is visible */
 body.queue-open.page-nghe-gan-day .played-main { display: none; }
 .page-nghe-gan-day .content:has(.queue:not(.hidden)) .played-main { display: none; }
+
+/* Override padding đáy từ global cho phần main trong trang này */
+.page-nghe-gan-day .content > main {
+  padding-bottom: calc(var(--player-bottom-space, calc(var(--player-h) + var(--player-safe))) + 4px) !important;
+}
+
+/* Giảm đệm đáy sidebar riêng cho trang này */
+.page-nghe-gan-day .sidebar {
+  padding-bottom: calc(8px + var(--player-bottom-space, calc(var(--player-h) + var(--player-safe)))) !important;
+}

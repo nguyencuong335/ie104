@@ -39,4 +39,21 @@
   [email, pass].forEach(i => i.addEventListener("blur", () => {
     if (i.value.trim()) i.classList.remove("invalid");
   }));
+
+  // ===== Hiệu ứng cho nút OAuth (Google / Facebook) =====
+  const oauthButtons = document.querySelectorAll('.oauth-btn');
+  oauthButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('loading')) return;
+      btn.classList.add('loading');
+      btn.setAttribute('aria-busy', 'true');
+      btn.setAttribute('disabled', 'true');
+      // mô phỏng chờ xác thực 1.2s
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        btn.removeAttribute('aria-busy');
+        btn.removeAttribute('disabled');
+      }, 1200);
+    });
+  });
 })();

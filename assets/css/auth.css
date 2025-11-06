@@ -84,9 +84,25 @@
   height: 52px;
 }
 
+/* Chuẩn hóa chiều cao và canh giữa cho select/date để đồng nhất với input */
+select.auth-input,
+input[type="date"].auth-input {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 52px; /* theo card.wide */
+  padding: 0 14px;
+  line-height: 52px;
+}
+
+/* Đảm bảo các ô luôn full width và cách đều trong lưới */
+.pair .auth-input { width: 100%; }
+
 .auth-card.wide .auth-btn.primary {
   height: 50px;
   margin-top: 16px;
+  width: 100%;
+  display: block;
+  margin-inline: 0 auto; /* center if narrower on small screens */
 }
 
 .auth-card.wide .auth-check {
@@ -204,7 +220,7 @@ form {
   aspect-ratio: 1/1;
   box-sizing: border-box;
   display: inline-block;
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   background: #FFF;
   position: relative;
@@ -218,10 +234,16 @@ form {
 .auth-check input:checked::after {
   content: "";
   position: absolute;
-  inset: 3px 5px 5px 3px;
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  transform: rotate(45deg);
+  /* Căn giữa dấu tick trong ô và xoay 45deg */
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 11px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  border-radius: 1px;
+  transform: translate(-50%, -55%) rotate(45deg);
+  transform-origin: center;
 }
 
 .auth-link {
@@ -314,6 +336,45 @@ form {
   font-weight: 600;
   color: #000;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform .08s ease, box-shadow .12s ease, background-color .15s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+
+.oauth-btn:hover {
+  background: rgba(255, 255, 255, .85);
+}
+
+.oauth-btn:active {
+  transform: scale(0.985);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.12);
+}
+
+/* Loading state */
+.oauth-btn.loading {
+  pointer-events: none;
+  color: transparent; /* ẩn chữ mà không làm thay đổi layout */
+}
+.oauth-btn.loading .oauth-ico {
+  opacity: 0;
+}
+.oauth-btn.loading::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--brand);
+  border-color: var(--brand) transparent var(--brand) transparent;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: oauth-spin .8s linear infinite;
+}
+
+@keyframes oauth-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .oauth-ico {
@@ -335,7 +396,7 @@ form {
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 24px;
+  gap: 22px 22px;
   margin-top: 6px;
 }
 
