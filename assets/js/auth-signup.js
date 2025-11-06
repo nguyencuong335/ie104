@@ -45,4 +45,20 @@
   fields.forEach(el => el.addEventListener("blur", () => {
     if ((el.value || "").toString().trim()) el.classList.remove("invalid");
   }));
+
+  // ===== Hiệu ứng cho nút OAuth (Google / Facebook) =====
+  const oauthButtons = document.querySelectorAll('.oauth-btn');
+  oauthButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('loading')) return;
+      btn.classList.add('loading');
+      btn.setAttribute('aria-busy', 'true');
+      btn.setAttribute('disabled', 'true');
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        btn.removeAttribute('aria-busy');
+        btn.removeAttribute('disabled');
+      }, 1200);
+    });
+  });
 })();

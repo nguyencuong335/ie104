@@ -76,6 +76,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ===== Highlight active sidebar item by current page =====
+  (function setActiveSidebar() {
+    try {
+      const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+      const map = {
+        "index.html": ".menu-btn.explore",
+        "hoso.html": ".menu-btn.your",
+        "yeuthich.html": ".menu-btn.liked",
+        "ngheganday.html": ".menu-btn.recent",
+      };
+      const sel = map[file] || (file === "" ? ".menu-btn.explore" : null);
+      const all = document.querySelectorAll(".menu .menu-btn");
+      all.forEach((b) => b.classList.remove("active"));
+      if (sel) {
+        const target = document.querySelector(sel);
+        if (target) target.classList.add("active");
+      }
+    } catch {}
+  })();
+
   // ===== Đồng bộ chiều cao player để sidebar/queue ăn khít bên trên
   function setPlayerSpacer() {
     const p = document.querySelector(".player");
@@ -161,6 +181,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // Follow state (banner button)
   const bFollow = document.getElementById("b-follow");
   let isFollowing = false;
+  // Normalize artist names so the follow state stays consistent across tracks of the same artist
+  function normArtist(name) {
+    return String(name || "").toLowerCase().trim().replace(/\s+/g, " ");
+  }
+  // Persist followed artists by name
+  function getFollowedArtists() {
+    try {
+      const arr = JSON.parse(localStorage.getItem('followed_artists') || '[]');
+      return new Set(Array.isArray(arr) ? arr.map(normArtist) : []);
+    } catch { return new Set(); }
+  }
+  function saveFollowedArtists(set) {
+    try { localStorage.setItem('followed_artists', JSON.stringify(Array.from(set))); } catch {}
+  }
+  function updateFollowUI(artistName) {
+    if (!bFollow) return;
+    const set = getFollowedArtists();
+    const key = normArtist(artistName);
+    isFollowing = !!(key && set.has(key));
+    bFollow.classList.toggle('is-following', isFollowing);
+    bFollow.textContent = isFollowing ? 'Đã theo dõi' : 'Theo dõi';
+    bFollow.setAttribute('aria-pressed', String(isFollowing));
+  }
 
   // Meta actions
   const likeBtn = document.getElementById("like");
@@ -211,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
     durationEl.textContent = "0:00";
     updateQueueActive();
 
-    // update follow button aria label
-    if (bFollow) bFollow.setAttribute("aria-pressed", String(isFollowing));
+    // update follow button state based on current artist
+    updateFollowUI(t.artist);
 
     // thông báo ra ngoài để trang khác sync
     try { window.dispatchEvent(new CustomEvent('musicbox:trackchange', { detail: { index } })); } catch {}
@@ -416,6 +459,21 @@ document.addEventListener("DOMContentLoaded", () => {
     addToPlBtn.addEventListener("click", () => {
       try { window.dispatchEvent(new CustomEvent('musicbox:addtoplaylist', { detail: { index } })); } catch {}
       hideMoreMenu();
+    });
+  }
+
+  // Toggle Follow button (per-artist)
+  if (bFollow) {
+    bFollow.addEventListener('click', () => {
+      try {
+        const t = playlist[index] || {};
+        const key = normArtist(t.artist || '');
+        if (!key) return;
+        const set = getFollowedArtists();
+        if (set.has(key)) set.delete(key); else set.add(key);
+        saveFollowedArtists(set);
+        updateFollowUI(t.artist || '');
+      } catch {}
     });
   }
 
