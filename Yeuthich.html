@@ -130,11 +130,23 @@
                         </div>
                     </div>
                     <div class="header-right">
-                        <button class="profile-btn" title="Hồ sơ">
-                            <i class="fa-regular fa-user"></i>
-                        </button>
-                        <button class="settings-btn" title="Cài đặt">
-                            <i class="fa-solid fa-gear"></i>
+                        <div class="profile-wrapper">
+                            <button class="profile-btn" id="profile-btn" title="Hồ sơ" aria-label="Hồ sơ">
+                                <i class="fa-regular fa-user" aria-hidden="true"></i>
+                            </button>
+                            <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true">
+                                <button class="profile-item" id="profile-open" role="menuitem">
+                                    <i class="fa-regular fa-user"></i>
+                                    <span>Hồ sơ</span>
+                                </button>
+                                <button class="profile-item" id="profile-logout" role="menuitem">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="settings-btn" title="Cài đặt" aria-label="Cài đặt">
+                            <i class="fa-solid fa-gear" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
@@ -168,11 +180,7 @@
                             ><span>Nghe gần đây</span>
                         </button>
 
-                        <!-- Đăng xuất -->
-                        <button class="menu-btn logout">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            <span>Đăng xuất</span>
-                        </button>
+                        
 
                         <div class="section">
                             <div class="section-sep"></div>
@@ -333,13 +341,47 @@
                     </div>
                     <div class="meta">
                         <div class="title" id="title">—</div>
-                        <button
-                            class="btn outline add-btn"
-                            id="add"
-                            title="Thêm (plus)"
-                        >
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
+                        <div class="meta-actions">
+                            <button
+                                class="btn like-btn"
+                                id="like"
+                                title="Yêu thích"
+                            >
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="more-wrapper">
+                                <button
+                                    class="btn more-btn"
+                                    id="more"
+                                    title="Tùy chọn"
+                                >
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div
+                                    class="more-menu"
+                                    id="more-menu"
+                                    role="menu"
+                                    aria-hidden="true"
+                                >
+                                    <button
+                                        class="more-item"
+                                        id="download"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-download"></i>
+                                        <span>Tải về</span>
+                                    </button>
+                                    <button
+                                        class="more-item"
+                                        id="add-to-playlist"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-list-ul"></i>
+                                        <span>Thêm vào playlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="artist" id="artist">—</div>
                     </div>
                 </div>
