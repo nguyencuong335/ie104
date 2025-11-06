@@ -1,19 +1,17 @@
 /* Nghe Gan Day page (renamed from played.css) */
 /* Layout overrides to allow scrolling under fixed player */
-html,
-body {
-  height: auto !important;
+body.page-nghe-gan-day {
   min-height: 100vh;
-  overflow-y: auto !important;
+  overflow-y: auto;
 }
-.wrap {
+.page-nghe-gan-day .wrap {
   height: auto;
 }
-.content {
-  overflow: visible !important;
+.page-nghe-gan-day .content {
+  overflow: visible;
   min-height: 0;
 }
-.played-main {
+.page-nghe-gan-day .played-main {
   padding: 24px 28px;
   background: #fff;
   border-radius: 12px 12px 0 0;
@@ -24,63 +22,63 @@ body {
   scrollbar-width: none;
   padding-bottom: calc(var(--player-h, 96px) + 24px);
 }
-.page-header {
+.page-nghe-gan-day .page-header {
   margin-bottom: 18px;
 }
-.page-header .title-xl {
+.page-nghe-gan-day .page-header .title-xl {
   font-size: 28px;
   font-weight: 800;
   color: #1f5f8b;
 }
-.page-header .sub-row {
+.page-nghe-gan-day .page-header .sub-row {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 8px;
 }
-.page-header .sub-row .dot {
+.page-nghe-gan-day .page-header .sub-row .dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #2ba6df;
   box-shadow: 0 0 0 4px rgba(43,166,223,0.15);
 }
-.page-header .title-lg {
+.page-nghe-gan-day .page-header .title-lg {
   font-size: 20px;
   font-weight: 700;
 }
 
-.played-table {
+.page-nghe-gan-day .played-table {
   background: rgba(255,255,255,0.7);
   border-radius: 14px;
   padding: 8px 6px;
 }
-.pt-head, .pt-row {
+.page-nghe-gan-day .pt-head, .page-nghe-gan-day .pt-row {
   display: grid;
   grid-template-columns: 48px 1.5fr 1fr 72px;
   align-items: center;
   column-gap: 12px;
   padding: 10px 12px;
 }
-.pt-head {
+.page-nghe-gan-day .pt-head {
   color: #7f8b99;
   font-weight: 700;
 }
-.pt-body {
+.page-nghe-gan-day .pt-body {
   display: block;
 }
-.pt-row {
+.page-nghe-gan-day .pt-row {
   border-radius: 10px;
 }
-.pt-row:hover {
+.page-nghe-gan-day .pt-row:hover {
   background: rgba(43,166,223,0.08);
 }
-.pt-col.track {
+.page-nghe-gan-day .pt-col.track {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.pt-cover {
+.page-nghe-gan-day .pt-cover {
   width: 42px;
   height: 42px;
   border-radius: 8px;
@@ -88,18 +86,25 @@ body {
   background-position: center;
   flex: 0 0 42px;
 }
-.pt-title {
+.page-nghe-gan-day .pt-title {
   color: #1666b2;
   font-weight: 700;
 }
-.pt-artist {
+.page-nghe-gan-day .pt-artist {
   color: #7f8b99;
   font-size: 14px;
 }
 
 @media (max-width: 900px) {
-  .pt-head, .pt-row {
+  .page-nghe-gan-day .pt-head, .page-nghe-gan-day .pt-row {
     grid-template-columns: 36px 1fr 100px;
   }
-  .pt-col.artist { display:none; }
+  .page-nghe-gan-day .pt-col.artist { display:none; }
 }
+
+/* When Queue is open, let global style.css take full control */
+body.queue-open.page-nghe-gan-day .content { overflow: auto; }
+body.queue-open.page-nghe-gan-day .played-main { padding-bottom: 0; }
+/* Hide main list entirely when Queue is visible */
+body.queue-open.page-nghe-gan-day .played-main { display: none; }
+.page-nghe-gan-day .content:has(.queue:not(.hidden)) .played-main { display: none; }

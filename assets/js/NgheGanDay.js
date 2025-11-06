@@ -1,6 +1,7 @@
 // Nghe Gan Day page logic (copied from played.js)
 // Build list using the same data rendered in Queue (.q-item)
 (function () {
+  if (!document.body || !document.body.classList.contains('page-nghe-gan-day')) return;
   function buildFromQueue() {
     const body = document.getElementById("played-body");
     if (!body) return false;
@@ -53,6 +54,7 @@
 
 // Keep Time column in sync with Queue times (which load async)
 (function () {
+  if (!document.body || !document.body.classList.contains('page-nghe-gan-day')) return;
   function handleMutation(muts) {
     muts.forEach(() => {
       const times = document.querySelectorAll('.q-time[id^="qtime-"]');
