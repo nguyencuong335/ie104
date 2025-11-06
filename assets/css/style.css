@@ -1,3 +1,58 @@
+/* When queue is open on small screens, hide main to avoid any gaps */
+@media (max-width: 900px) {
+  .content:has(.queue:not(.hidden)) .main-content { display: none; }
+  .content:has(.queue:not(.hidden)) .played-main { display: none; }
+}
+/* Guarantee horizontal volume stays within right edge on wide screens */
+@media (min-width: 1201px) {
+  .right { justify-self: end; min-width: 0; }
+  .right input {
+    width: auto;
+    max-width: clamp(100px, 14vw, 180px);
+  }
+}
+/* Fix freeze between 900–1200px: use popover volume instead of horizontal */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .right { position: relative; display: flex; align-items: center; gap: 8px; }
+  /* Desktop-like horizontal volume slider in this range */
+  .right input {
+    display: inline-block;
+    position: static;
+    width: clamp(120px, 16vw, 200px);
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: auto; /* keep default horizontal */
+  }
+  /* Ensure any mobile popover class does not change orientation */
+  .right.show-volume input {
+    position: static;
+    bottom: auto;
+    right: auto;
+    width: clamp(120px, 16vw, 200px);
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: auto;
+    padding: 0;
+    transform: none;
+  }
+  /* Tighten gaps/padding of the three sections in this range */
+  .bar { gap: clamp(4px, 1vw, 10px); padding: 0 6px; }
+  .left { gap: clamp(4px, 0.8vw, 8px); }
+  .center { gap: clamp(2px, 0.8vw, 6px); }
+  .controls { gap: clamp(4px, 1vw, 8px); }
+  .timeline { gap: clamp(2px, 0.8vw, 6px); }
+  .right { gap: clamp(4px, 1vw, 8px); }
+
+  /* iPad Pro fix: make bar columns flexible to avoid min-width overflow */
+  .bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cover { width: 56px; height: 56px; }
+  .meta { padding-right: 0; }
+  .meta .meta-actions { position: static; transform: none; justify-content: flex-end; }
+  /* Make timeline flexible so progress shrinks gracefully */
+  .timeline { grid-template-columns: auto minmax(180px, 42vw) auto; }
+  #progress { width: 100%; }
+}
+/* (Removed 1100px breakpoint to keep continuous responsiveness) */
 * {
     box-sizing: border-box;
 }
@@ -212,7 +267,7 @@ body {
     padding-bottom: 0;
     align-items: stretch;
     min-height: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* ===== Sidebar Menu ===== */
@@ -486,7 +541,7 @@ body {
     box-shadow: 0 -6px 14px rgba(0, 0, 0, 0.1);
     margin-bottom: 0;
     padding: 0;
-    padding-bottom: calc(var(--player-h) + var(--player-safe));
+    padding-bottom: max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe)));
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -508,6 +563,49 @@ body {
 .q-header {
     padding: 12px 14px 8px;
     margin: 0;
+}
+
+/* Ensure page lists are not hidden behind fixed player: add safe bottom space */
+.main-content,
+.played-main,
+.timkiem-main {
+  padding-bottom: calc(max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe))) + 24px);
+  overflow-y: auto; /* allow scrolling within main area */
+  min-height: 0; /* allow child to shrink in grid */
+  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+}
+.content:has(.queue:not(.hidden)) .main-content {
+  /* When queue is open, don't reserve bottom space for main */
+  padding-bottom: 0;
+}
+.content:has(.queue:not(.hidden)) .main-content::after {
+  display: none;
+}
+/* Apply same logic for pages using .played-main (NgheGanDay) */
+.content:has(.queue:not(.hidden)) .played-main {
+  padding-bottom: 0;
+}
+.content:has(.queue:not(.hidden)) .played-main::after {
+  display: none;
+}
+.content > main {
+  padding-bottom: calc(max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe))) + 24px);
+  overflow-y: auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+.main-content::after,
+.played-main::after,
+.timkiem-main::after {
+  content: "";
+  display: block;
+  height: var(--player-bottom-space, calc(var(--player-h) + var(--player-safe)));
+  width: 100%;
+}
+.content > main::after {
+  content: "";
+  display: block;
+  block-size: var(--player-bottom-space, calc(var(--player-h) + var(--player-safe)));
 }
 
 /* ===== Artist Bar ===== */
@@ -630,10 +728,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 0 14px calc(14px + var(--player-h) + var(--player-safe));
+    padding: 0 14px calc(14px + max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe))));
     flex: 1 1 auto;
     min-height: 0;
     overflow: visible;
+}
+.q-list::after {
+  content: "";
+  display: block;
+  height: max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe)));
+  width: 100%;
 }
 .q-list {
     scrollbar-width: none;
@@ -654,6 +758,7 @@ body {
     border: 1px solid transparent;
     background: transparent;
 }
+.q-meta { min-width: 0; }
 .q-item:hover {
     background: rgba(20, 129, 185, 0.06);
 }
@@ -689,6 +794,7 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 100%;
 }
 .q-artist {
     color: #135e88;
@@ -704,6 +810,8 @@ body {
     font: 700 16px/150% "Inter", sans-serif;
     min-width: 54px;
     text-align: right;
+    justify-self: end;
+    white-space: nowrap;
 }
 
 /* ===== Player (thanh phát mảnh) ===== */
@@ -720,18 +828,17 @@ body {
     padding: 12px 0; /* vertical only; inner .bar will handle horizontal gutters */
     margin: 0;
     z-index: 20;
+    overflow: visible; /* allow popovers (more menu, volume) to escape without clipping */
 }
 .bar {
     display: grid;
-    grid-template-columns: minmax(360px, 1.2fr) minmax(520px, 1.6fr) minmax(
-            220px,
-            0.8fr
-        );
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
-    gap: 14px;
-    width: calc(100vw - var(--gutter)); /* match .wrap width */
+    gap: clamp(6px, 2vw, 14px);
+    width: calc(100vw - var(--gutter)); /* respond smoothly with viewport */
     padding: 0 var(--pad); /* match inner padding like header/content */
     margin: 0 auto; /* center inside full-width .player */
+    box-sizing: border-box; /* include padding in total width */
 }
 
 /* Left: cover + text */
@@ -739,7 +846,7 @@ body {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
-    gap: 8px;
+    gap: clamp(6px, 1.5vw, 10px);
     min-width: 0;
     justify-self: start;
 }
@@ -799,7 +906,7 @@ body {
 .meta .meta-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: clamp(6px, 1.4vw, 12px);
     position: absolute;
     right: 0;
     top: 50%;
@@ -833,7 +940,7 @@ body {
     padding: 6px;
     min-width: 180px;
     display: none;
-    z-index: 30;
+    z-index: 1000; /* ensure it appears above player and page content */
     color: #135E88; /* text color */
 }
 .more-menu.open { 
@@ -860,15 +967,16 @@ body {
 /* Center: controls + timeline */
 .center {
     display: grid;
-    gap: 6px;
-    justify-self: stretch;
-    width: 100%;
+    gap: clamp(4px, 1.2vw, 8px);
+    justify-self: center; /* keep middle section centered */
+    width: auto;
+    max-width: 100%;
 }
 .controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: clamp(6px, 2vw, 10px);
 }
 .btn {
     width: 34px;
@@ -909,7 +1017,7 @@ body {
     display: grid;
     grid-template-columns: auto 296px auto;
     align-items: center;
-    gap: 8px;
+    gap: clamp(4px, 1.2vw, 8px); /* fluid gap */
     justify-content: center;
     justify-items: center;
 }
@@ -959,8 +1067,9 @@ input[type="range"]::-moz-range-thumb {
 .right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: clamp(6px, 2vw, 10px);
     justify-self: end;
+    min-width: 0; /* allow shrinking to keep inside container */
 }
 .right input {
     width: 120px;
@@ -971,6 +1080,33 @@ input[type="range"]::-moz-range-thumb {
     min-width: 1.6em;
     text-align: center;
     flex: none;
+}
+
+/* Responsive styles for volume: show vertical popover on tap */
+@media (max-width: 900px) {
+  .right { position: relative; display: flex; flex-direction: row; align-items: center; gap: 8px; }
+  /* Keep icon inline; hide slider by default to keep row height slim */
+  .right input { display: none; }
+  /* Show vertical slider above icon when toggled */
+  .right.show-volume input {
+    display: block;
+    position: absolute;
+    bottom: 36px; /* above the icon */
+    right: 0; /* stick to the icon at the end to avoid exceeding end point */
+    transform: none;
+    width: 28px;
+    height: 140px;
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    background: rgba(127, 212, 249, 0.2);
+    border-radius: 6px;
+    padding: 4px 0;
+    z-index: 6;
+  }
+}
+
+@media (max-width: 380px) {
+  .right.show-volume input { height: 120px; width: 26px; }
 }
 
 /* Repeat-one indicator */
@@ -1017,17 +1153,18 @@ input[type="range"]::-moz-range-thumb {
     height: 3px;
     -webkit-appearance: none;
     appearance: none;
-    background: transparent;
+    /* Paint the filled vs unfilled portions using CSS var updated by JS */
+    background: linear-gradient(
+        to right,
+        #13a6e9 var(--progress-value, 0%),
+        rgba(127, 212, 249, 0.2) var(--progress-value, 0%)
+    );
+    border-radius: 2px;
     cursor: pointer;
 }
 
 #progress::-webkit-slider-runnable-track {
-    background: rgba(
-        127,
-        212,
-        249,
-        0.2
-    ); /* Light blue background for remaining portion */
+    background: transparent; /* gradient is painted on input */
     height: 3px;
     border-radius: 2px;
 }
@@ -1044,21 +1181,18 @@ input[type="range"]::-moz-range-thumb {
     cursor: pointer;
 }
 
-/* This creates the filled portion of the progress bar */
-#progress::-webkit-slider-container {
-    background: linear-gradient(
-        to right,
-        #13a6e9 var(--progress-value, 0%),
-        rgba(127, 212, 249, 0.2) var(--progress-value, 0%)
-    );
+/* Firefox specific styles */
+#progress::-moz-range-track {
+    background: transparent; /* use range-progress for the filled part */
+    height: 3px;
     border-radius: 2px;
 }
 
-/* Firefox specific styles */
-#progress::-moz-range-track {
-    background: rgba(127, 212, 249, 0.2);
+/* Firefox left (filled) portion */
+#progress::-moz-range-progress {
+    background: #13a6e9;
     height: 3px;
-    border-radius: 2px;
+    border-radius: 2px 0 0 2px;
 }
 
 #progress::-moz-range-thumb {
@@ -1139,7 +1273,7 @@ input[type="range"]::-moz-range-thumb {
 /* ===== Mobile layout when Queue is open ===== */
 @media (max-width: 900px) {
   /* Kích hoạt khi body có class hoặc khi .queue đang hiển thị */
-  body.queue-open .content, .content:has(.queue:not(.hidden)) { grid-template-columns: 1fr; }
+  body.queue-open .content, .content:has(.queue:not(.hidden)) { grid-template-columns: 1fr; padding-bottom: var(--player-bottom-space);}
   body.queue-open .sidebar, .content:has(.queue:not(.hidden)) .sidebar { display: none !important; }
   /* Header group target khi queue mở */
   body.queue-open .header-left, .content:has(.queue:not(.hidden)) ~ .header-left { width: auto; }
@@ -1273,5 +1407,44 @@ input[type="range"]::-moz-range-thumb {
   .timeline { grid-template-columns: auto 1fr auto; grid-area: timeline; }
   #progress { width: 100%; }
   .right { grid-area: right; justify-content: flex-end; }
-  .right input { width: min(180px, 34vw); }
+  .right input { width: min(130px, 28vw); }
+  .time { min-width: 46px; }
+}
+
+/* Reduce outer gutters on very small screens to prevent visual overflow */
+@media (max-width: 420px) {
+  :root { --gutter: 18px; --pad: 10px; }
+}
+
+/* ===== Very small devices (e.g., iPhone SE ~375px) ===== */
+@media (max-width: 380px) {
+  .bar { gap: 6px; }
+  .left { gap: 6px; }
+  .cover { width: 56px; height: 56px; }
+  .meta .title { font-size: 14px; letter-spacing: 0.4px; }
+  .meta .artist { font-size: 11px; }
+
+  .controls { gap: 8px; }
+  .btn { width: 30px; height: 30px; }
+  .btn i { font-size: 14px; }
+  .btn.play { width: 36px; height: 36px; }
+  .btn.play i { font-size: 16px; }
+
+  .timeline { gap: 6px; }
+  .time { font-size: 14px; }
+  #progress { width: 100%; }
+
+  .right { gap: 6px; }
+  .right i { min-width: 1.4em; }
+  .right input { width: min(96px, 26vw); }
+  .time { min-width: 38px; }
+
+  /* Slimmer sliders to save vertical space */
+  #progress { height: 3px; }
+  #progress::-webkit-slider-thumb { width: 9px; height: 9px; margin-top: -3.5px; }
+  #progress::-moz-range-thumb { width: 9px; height: 9px; }
+
+  #volume { height: 3px; }
+  #volume::-webkit-slider-thumb { width: 10px; height: 10px; margin-top: -3.5px; }
+  #volume::-moz-range-thumb { width: 10px; height: 10px; }
 }

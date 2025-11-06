@@ -206,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bArtistAvatar.src = t.artistImg || t.cover;
 
     progress.value = 0;
+    try { progress.style.setProperty('--progress-value', '0%'); } catch {}
     currentTimeEl.textContent = "0:00";
     durationEl.textContent = "0:00";
     updateQueueActive();
@@ -360,15 +361,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   if (downloadBtn) {
-    downloadBtn.addEventListener("click", () => {
-      const t = playlist[index];
-      if (!t || !t.src) return;
-      const a = document.createElement("a");
-      a.href = t.src;
-      a.download = `${t.title || "baihat"}.mp3`;
-      document.body.appendChild(a);
-      a.click(); a.remove();
-      hideMoreMenu();
+    downloadBtn.addEventListener("click", async () => {
+      try {
+        const t = playlist[index] || {};
+        const url = t.src;
+        if (!url) return hideMoreMenu();
+        const safe = (s) => String(s || "")
+          .replace(/[\\/:*?"<>|]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+        const base = safe((t.title || "baihat") + (t.artist ? ` - ${t.artist}` : "")) || "baihat";
+        const ext = (() => {
+          try {
+            const p = new URL(url, location.href).pathname;
+            const seg = p.split("/").pop() || "";
+            const e = seg.includes(".") ? seg.split(".").pop() : "mp3";
+            return e.split("?")[0].split("#")[0] || "mp3";
+          } catch { return "mp3"; }
+        })();
+        const filename = `${base}.${ext}`;
+
+        // Try simple anchor first
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.rel = "noopener";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        // Fallback: fetch -> blob (if CORS permits)
+        setTimeout(async () => {
+          try {
+            const res = await fetch(url, { mode: "cors" });
+            if (!res.ok) return;
+            const blob = await res.blob();
+            const objUrl = URL.createObjectURL(blob);
+            const a2 = document.createElement("a");
+            a2.href = objUrl;
+            a2.download = filename;
+            a2.rel = "noopener";
+            document.body.appendChild(a2);
+            a2.click();
+            a2.remove();
+            URL.revokeObjectURL(objUrl);
+          } catch {}
+        }, 50);
+      } finally {
+        hideMoreMenu();
+      }
     });
   }
   if (addToPlBtn) {
@@ -383,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const val = isFinite(pct) ? Math.round(pct) : 0;
     progress.value = val;
     progress.setAttribute("aria-valuenow", String(val));
+    try { progress.style.setProperty('--progress-value', val + '%'); } catch {}
     currentTimeEl.textContent = fmt(audio.currentTime);
   });
   audio.addEventListener("ended", () => nextTrack(true));
@@ -401,6 +443,40 @@ document.addEventListener("DOMContentLoaded", () => {
       "fa-solid " +
       (audio.volume === 0 ? "fa-volume-xmark" : audio.volume < 0.5 ? "fa-volume-low" : "fa-volume-high");
   });
+
+  function toggleMobileVolume(e) {
+    if (window.innerWidth > 900) return;
+    const right = volIcon.closest('.right');
+    if (!right) return;
+    e.stopPropagation();
+    right.classList.toggle('show-volume');
+  }
+  function hideMobileVolume() {
+    const right = document.querySelector('.right.show-volume');
+    if (right) right.classList.remove('show-volume');
+  }
+  volIcon.addEventListener('click', toggleMobileVolume);
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth > 900) return;
+    const right = document.querySelector('.right');
+    if (right && (right.contains(e.target) || e.target === volIcon)) return;
+    hideMobileVolume();
+  }, true);
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) hideMobileVolume(); });
+
+  // ===== Keep bottom spacing in sync with actual player height =====
+  function updatePlayerBottomSpace() {
+    try {
+      const p = document.querySelector('.player');
+      if (!p) return;
+      const h = p.offsetHeight || 0;
+      document.documentElement.style.setProperty('--player-bottom-space', h + 'px');
+    } catch {}
+  }
+  // Initial measure and on resize/orientation
+  updatePlayerBottomSpace();
+  window.addEventListener('resize', updatePlayerBottomSpace);
+  window.addEventListener('orientationchange', updatePlayerBottomSpace);
 
   // ===== Init =====
   updateShuffleA11y();
