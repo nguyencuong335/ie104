@@ -435,6 +435,54 @@ body {
     height: 0;
 }
 
+/* ===== Responsive: collapsed sidebar (icons only) ===== */
+@media (max-width: 900px) {
+  /* Narrow the reserved sidebar width so layout reflows */
+  :root { --sidebar: 72px; }
+
+  /* Sidebar paddings tighter */
+  .sidebar { padding: 10px; }
+
+  /* Center icon buttons and hide text labels */
+  .menu-btn { justify-content: center; gap: 0; padding: 10px 8px; }
+  .menu-btn span { display: none; }
+  .menu-btn i { font-size: 18px; width: 24px; }
+
+  /* Show thin separators, hide labels only; center the add (+) button */
+  .section { display: block; margin: 8px 0; }
+  /* Replace only the first section label (THƯ VIỆN) with an icon */
+  .menu > .section > .section-label { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 32px; 
+    font-size: 0; /* hide original text */ 
+  }
+  .menu > .section > .section-label::before {
+    content: "\f02d"; /* fa-book */
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 900; /* solid */
+    font-size: 20px; 
+    color: #000; 
+    line-height: 1; 
+  }
+  /* Hide label inside playlist header block */
+  .section-header .section-label { display: none !important; }
+  .section-sep { display: block; height: 1px; background: rgba(0,0,0,0.08); margin: 8px 0; }
+  .section-header { display: flex; justify-content: center; padding: 6px 0; }
+  .section-header .icon-btn.add { display: inline-grid; place-items: center; }
+
+  /* Playlist: show covers only, center each item */
+  .pl-list { display: flex; flex-direction: column; gap: 10px; }
+  .pl-item { justify-content: center; padding: 6px; }
+  .pl-item .pl-meta { display: none; }
+  .pl-cover { width: 36px; height: 36px; border-radius: 8px; }
+
+  /* Header logo area follows the narrower sidebar */
+  .header-left { width: var(--sidebar); }
+  .logo-box { width: 42px; height: 20px; background-size: contain; }
+}
+
 /* ===== Banner (Now Playing) ===== */
 .q-banner {
     background: linear-gradient(93deg, #8cdbdb 0%, #fff 100%);
@@ -1396,9 +1444,11 @@ input[type="range"]::-moz-range-thumb {
 
 /* ===== Fallback: luôn áp dụng layout gọn khi <=900px ===== */
 @media (max-width: 900px) {
-  .content { grid-template-columns: 1fr; }
-  .sidebar { display: none !important; }
-  .header-left { width: auto; }
+  /* Giữ 2 cột: sidebar thu gọn + main */
+  .content { grid-template-columns: var(--sidebar) 1fr; padding-bottom: var(--player-bottom-space); }
+  .sidebar { display: flex !important; }
+  /* Make header's left column equal to sidebar width and center logo */
+  .header-left { width: var(--sidebar); justify-content: center; }
   .logo-box {
     width: 36px; height: 36px; border-radius: 10px;
     background-image: url('../imgs/music_box_icon.png') !important;

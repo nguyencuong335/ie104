@@ -1,12 +1,13 @@
 /* timkiem.html page-specific styles (main content only) */
 
-/* Page-level scroll overrides for timkiem only */
-/* html,
+/* Page-level scroll overrides for timkiem only
+html,
 body {
     height: auto !important;
     min-height: 100vh;
-    overflow-y: auto !important; /* enable page scroll */
-} */
+    overflow-y: auto !important;  enable page scroll
+}
+*/
 
 .wrap {
     height: auto;
@@ -145,7 +146,9 @@ a:focus-visible {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .content { grid-template-columns: 1fr; }
+  /* Giữ 2 cột: sidebar thu gọn + main (đồng bộ với style.css) */
+  .content { grid-template-columns: var(--sidebar) 1fr; }
+  /* Sidebar không sticky ở mobile để cuộn mượt hơn, nhưng vẫn hiển thị */
   .sidebar { position: static; max-height: none; overflow: visible; }
   .timkiem-main { max-height: calc(100vh - var(--player-h) - 16px); }
 }
