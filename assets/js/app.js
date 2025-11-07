@@ -148,6 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== State & Elements =====
   const audio = new Audio();
   let index = 0, isPlaying = false, shuffle = false, repeatMode = "off"; // 'off' | 'all' | 'one'
+  // Ad state
+  let isAdPlaying = false;
+  let adAfterCallback = null;
 
   const titleEl   = document.getElementById("title");
   const artistEl  = document.getElementById("artist");
@@ -231,6 +234,67 @@ document.addEventListener("DOMContentLoaded", () => {
   function setPlayUI(p) {
     playIcon.classList.toggle("fa-play", !p);
     playIcon.classList.toggle("fa-pause", p);
+  }
+
+  function setControlsDisabled(disabled) {
+    try {
+      [playBtn, prevBtn, nextBtn, shuffleBtn, repeatBtn].forEach((b) => {
+        if (!b) return;
+        b.disabled = !!disabled;
+        b.classList.toggle('disabled', !!disabled);
+      });
+      if (progress) progress.disabled = !!disabled;
+    } catch {}
+  }
+
+  function isPremiumOn() {
+    try { return localStorage.getItem("premium_enabled") === "true"; } catch { return false; }
+  }
+
+  // Ad assets
+  const adAssets = {
+    title: "Quảng cáo",
+    artist: "Tài trợ",
+    src: "./assets/quang_cao/songs_quang_cao/quang_cao.mp3",
+    cover: "./assets/quang_cao/imgs_banner_quang_cao/quang_cao.png",
+    artistImg: "./assets/quang_cao/imgs_logo_quang_cao/quang_cao.png",
+  };
+
+  function applyAdUI() {
+    try {
+      titleEl.textContent = adAssets.title;
+      artistEl.textContent = adAssets.artist;
+      coverEl.src = adAssets.cover;
+      bTitle.textContent = adAssets.title;
+      bArtistName.textContent = adAssets.artist;
+      bCover.src = adAssets.cover;
+      bArtistAvatar.src = adAssets.artistImg;
+      progress.value = 0;
+      progress.style.setProperty('--progress-value', '0%');
+      currentTimeEl.textContent = "0:00";
+      durationEl.textContent = "0:00";
+    } catch {}
+  }
+
+  function startAdThen(cb) {
+    isAdPlaying = true;
+    adAfterCallback = typeof cb === 'function' ? cb : null;
+    setControlsDisabled(true);
+    applyAdUI();
+    audio.src = adAssets.src;
+    audio.load();
+    play();
+  }
+
+  function endAdThenResume() {
+    isAdPlaying = false;
+    setControlsDisabled(false);
+    // Continue as requested
+    if (typeof adAfterCallback === 'function') {
+      const fn = adAfterCallback; adAfterCallback = null; fn();
+    } else {
+      nextTrack(true);
+    }
   }
 
   function loadTrack(i) {
@@ -343,11 +407,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Listeners =====
   playBtn.addEventListener("click", () => {
+    if (isAdPlaying) return; // cannot control during ad
     if (audio.src === "" && playlist.length > 0) loadTrack(index);
     isPlaying ? pause() : play();
   });
-  prevBtn.addEventListener("click", () => { if (playlist.length === 0) return; prevTrack(); });
-  nextBtn.addEventListener("click", () => { if (playlist.length === 0) return; nextTrack(false); });
+  prevBtn.addEventListener("click", () => { if (isAdPlaying) return; if (playlist.length === 0) return; prevTrack(); });
+  nextBtn.addEventListener("click", () => { if (isAdPlaying) return; if (playlist.length === 0) return; nextTrack(false); });
 
   shuffleBtn.addEventListener("click", () => {
     shuffle = !shuffle;
@@ -485,9 +550,20 @@ document.addEventListener("DOMContentLoaded", () => {
     try { progress.style.setProperty('--progress-value', val + '%'); } catch {}
     currentTimeEl.textContent = fmt(audio.currentTime);
   });
-  audio.addEventListener("ended", () => nextTrack(true));
+  audio.addEventListener("ended", () => {
+    if (isAdPlaying) { endAdThenResume(); }
+    else if (isPremiumOn()) { nextTrack(true); }
+    else { startAdThen(() => nextTrack(true)); }
+  });
+  // Prevent pausing ad
+  audio.addEventListener("pause", () => {
+    if (isAdPlaying) {
+      try { audio.play(); } catch {}
+    }
+  });
 
   progress.addEventListener("input", (e) => {
+    if (isAdPlaying) return; // block seeking during ad
     if (!isFinite(audio.duration)) return;
     const val = Number(e.target.value);
     progress.setAttribute("aria-valuenow", String(val));
@@ -640,13 +716,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== Settings button: vô hiệu hóa điều hướng/đăng xuất theo yêu cầu
-  const settingsBtn = document.querySelector(".settings-btn");
-  if (settingsBtn) {
-    const noop = (e) => { try { e.preventDefault(); } catch {} };
-    settingsBtn.addEventListener("click", noop);
-    settingsBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); });
-    settingsBtn.setAttribute("title", "Cài đặt");
+  // ===== Premium button: toggle crown yellow on click + persist
+  const premiumBtn = document.querySelector(".premium-btn");
+  const PREMIUM_KEY = "premium_enabled";
+  function applyPremiumState(on) {
+    if (!premiumBtn) return;
+    premiumBtn.setAttribute("aria-pressed", String(on));
+    premiumBtn.classList.toggle("active", on);
+    premiumBtn.setAttribute("title", on ? "Premium (on)" : "Premium");
+  }
+  // Initialize from storage
+  try {
+    const saved = localStorage.getItem(PREMIUM_KEY);
+    if (saved !== null) applyPremiumState(saved === "true");
+  } catch {}
+  // Click to toggle and save
+  if (premiumBtn) {
+    premiumBtn.addEventListener("click", () => {
+      const now = premiumBtn.getAttribute("aria-pressed") === "true" ? false : true;
+      applyPremiumState(now);
+      try { localStorage.setItem(PREMIUM_KEY, String(now)); } catch {}
+    });
   }
 
   // Logo link smooth

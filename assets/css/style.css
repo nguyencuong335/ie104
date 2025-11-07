@@ -156,7 +156,8 @@ body {
 }
 .nav-btn,
 .profile-btn,
-.settings-btn {
+.settings-btn,
+.premium-btn {
     display: flex;
     width: 45px;
     height: 45px;
@@ -174,7 +175,8 @@ body {
     transition: background-color 0.2s ease, box-shadow 0.2s ease,
         transform 0.12s ease;
 }
-.settings-btn {
+.settings-btn,
+.premium-btn {
     border-radius: 45px;
 }
 .profile-wrapper { position: relative; }
@@ -213,23 +215,30 @@ body {
 .profile-item:hover { background: rgba(20,129,185,0.08); }
 .nav-btn:hover,
 .profile-btn:hover,
-.settings-btn:hover {
+.settings-btn:hover,
+.premium-btn:hover {
     transform: translateY(-1px);
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.25);
 }
 .nav-btn:active,
 .profile-btn:active,
-.settings-btn:active {
+.settings-btn:active,
+.premium-btn:active {
     transform: translateY(1px);
 }
 .logo-box:hover { cursor: pointer; box-shadow: none; transform: none; }
 .logo-box:focus-visible { outline: 3px solid rgba(20,129,185,0.35); outline-offset: 2px; }
 .nav-btn i,
 .profile-btn i,
-.settings-btn i {
+.settings-btn i,
+.premium-btn i {
     color: #0f3f5f;
     font-size: 1.6rem;
 }
+
+/* Premium: turn crown icon yellow when active/toggled */
+.premium-btn[aria-pressed="true"] i,
+.premium-btn.active i { color: #facc15; }
 
 .search {
     display: flex;
