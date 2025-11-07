@@ -369,6 +369,8 @@ body {
     padding: 6px 0;
     display: block;
 }
+/* Center only the standalone section label (THƯ VIỆN) */
+.menu > .section > .section-label { text-align: center; }
 .section-header {
     display: flex;
     align-items: center;
@@ -809,7 +811,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 0 14px calc(14px + max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe))));
+    padding: 0 14px 14px; /* uniform bottom padding so last item spacing matches others */
     flex: 1 1 auto;
     min-height: 0;
     overflow: visible;
@@ -817,7 +819,7 @@ body {
 .q-list::after {
   content: "";
   display: block;
-  height: max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe)));
+  height: 0; /* avoid double bottom space; padding handles player spacing */
   width: 100%;
 }
 .q-list {
@@ -848,9 +850,9 @@ body {
     background: rgba(20, 129, 185, 0.08);
 }
 
-.q-item:last-child {
+/* .q-item:last-child {
     padding-bottom: calc(var(--player-h) + var(--player-safe));
-}
+} */
 
 .q-cover {
     width: 44px;
@@ -1412,7 +1414,7 @@ input[type="range"]::-moz-range-thumb {
 
   /* Queue list spacing */
   body.queue-open .q-header, .wrap:has(.queue:not(.hidden)) .q-header { padding: 10px 12px 6px; }
-  body.queue-open .q-list, .wrap:has(.queue:not(.hidden)) .q-list { padding: 0 10px calc(10px + var(--player-h) + var(--player-safe)); }
+  body.queue-open .q-list, .wrap:has(.queue:not(.hidden)) .q-list { padding: 0 10px 10px; }
   body.queue-open .q-item, .wrap:has(.queue:not(.hidden)) .q-item { padding: 8px; gap: 10px; }
   body.queue-open .q-time, .wrap:has(.queue:not(.hidden)) .q-time { font-size: 14px; min-width: 46px; }
 

@@ -138,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         wrap.appendChild(card);
         cards.push(card);
       }
+      // Helper: truncate display name to 40 chars with ellipsis
+      function trunc40(s){ const t = String(s||''); return t.length>40 ? (t.slice(0,37)+'...') : t; }
       // Update cards with playlist data
       cards.forEach((card, i) => {
         const pl = lists[i];
@@ -147,31 +149,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const cover = card.querySelector('.my-pl-cover');
         if (cover) cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
         const name = card.querySelector('.my-pl-name');
-        if (name) name.textContent = pl.name || 'Playlist';
+        if (name) name.textContent = trunc40(pl.name || 'Playlist');
         const sub = card.querySelector('.my-pl-sub');
         if (sub) sub.textContent = `${Array.isArray(pl.tracks) ? pl.tracks.length : 0} bài hát`;
-        // actions (edit/delete)
+        // actions (rename/change-cover/delete)
         let acts = card.querySelector('.my-pl-actions');
         if (!acts) {
           acts = document.createElement('div');
           acts.className = 'my-pl-actions';
-          const btnEdit = document.createElement('button');
-          btnEdit.className = 'btn tiny edit';
-          btnEdit.title = 'Đổi tên playlist';
-          btnEdit.setAttribute('aria-label', 'Đổi tên playlist');
-          btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i><span>Sửa</span>';
+          const btnRename = document.createElement('button');
+          btnRename.className = 'btn tiny edit';
+          btnRename.title = 'Đổi tên playlist';
+          btnRename.setAttribute('aria-label', 'Đổi tên playlist');
+          btnRename.innerHTML = '<i class="fa-solid fa-pen"></i>';
+          const btnCover = document.createElement('button');
+          btnCover.className = 'btn tiny cover';
+          btnCover.title = 'Đổi ảnh playlist';
+          btnCover.setAttribute('aria-label', 'Đổi ảnh playlist');
+          btnCover.innerHTML = '<i class="fa-regular fa-image"></i>';
           const btnDel = document.createElement('button');
           btnDel.className = 'btn tiny danger delete';
           btnDel.title = 'Xóa playlist';
           btnDel.setAttribute('aria-label', 'Xóa playlist');
-          btnDel.innerHTML = '<i class="fa-solid fa-trash"></i><span>Xóa</span>';
-          acts.appendChild(btnEdit);
+          btnDel.innerHTML = '<i class="fa-solid fa-trash"></i>';
+          acts.appendChild(btnRename);
+          acts.appendChild(btnCover);
           acts.appendChild(btnDel);
           card.appendChild(acts);
           // style controlled by CSS in Hoso.css (.my-pl-actions .btn.tiny)
           // stop navigation when clicking actions
           acts.addEventListener('click', (e)=> e.stopPropagation());
-          btnEdit.addEventListener('click', ()=>{
+          btnRename.addEventListener('click', ()=>{
             try {
               const lists2 = getUserPlaylists();
               const idx = lists2.findIndex(x=>x.id===pl.id);
@@ -179,11 +187,41 @@ document.addEventListener("DOMContentLoaded", () => {
               const curr = lists2[idx];
               const v = window.prompt('Đổi tên playlist', curr.name || 'Playlist');
               if (v==null) return;
-              const nameNew = v.trim().replace(/\s+/g,' ');
+              let nameNew = v.trim().replace(/\s+/g,' ');
               if (!nameNew) return;
+              if (nameNew.length > 40) { window.alert('Tên playlist tối đa 40 ký tự'); return; }
               curr.name = nameNew;
               setUserPlaylists(lists2);
               syncProfilePlaylists();
+            } catch {}
+          });
+          btnCover.addEventListener('click', ()=>{
+            try {
+              const lists2 = getUserPlaylists();
+              const idx = lists2.findIndex(x=>x.id===pl.id);
+              if (idx<0) return;
+              const input = document.createElement('input');
+              input.type = 'file'; input.accept = 'image/*'; input.style.display = 'none';
+              document.body.appendChild(input);
+              const finalize = (dataUrl)=>{
+                try {
+                  if (dataUrl) lists2[idx].cover = dataUrl;
+                  setUserPlaylists(lists2);
+                  // immediate UI update
+                  const coverEl = card.querySelector('.my-pl-cover');
+                  if (coverEl) coverEl.style.backgroundImage = `url('${lists2[idx].cover || ''}')`;
+                } catch {}
+                try { input.remove(); } catch {}
+              };
+              input.addEventListener('change', ()=>{
+                const file = input.files && input.files[0];
+                if (!file) { finalize(null); return; }
+                const reader = new FileReader();
+                reader.onload = ()=> finalize(typeof reader.result==='string' ? reader.result : null);
+                reader.onerror = ()=> finalize(null);
+                reader.readAsDataURL(file);
+              }, { once: true });
+              input.click();
             } catch {}
           });
           btnDel.addEventListener('click', ()=>{
@@ -451,10 +489,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {}
   }
   try { window.MusicBox = Object.assign(window.MusicBox || {}, {
-    setPlaylist: setPlaylist,
-    playAt: (i)=>{ try { loadTrack(i); play(); savePlayerState(true); } catch {} },
+    setPlaylist: (tracks, ctx)=>{ try { if (isAdPlaying) return; setPlaylist(tracks, ctx); } catch {} },
+    playAt: (i)=>{ try { if (isAdPlaying) return; loadTrack(i); play(); savePlayerState(true); } catch {} },
     pause: ()=>{ try { pause(); savePlayerState(true); } catch {} },
-    resume: ()=>{ try { play(); savePlayerState(true); } catch {} },
+    resume: ()=>{ try { if (isAdPlaying) return; play(); savePlayerState(true); } catch {} },
     isPlaying: ()=>{ try { return !!isPlaying; } catch { return false; } }
   }); } catch {}
 
@@ -463,16 +501,16 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const container = document.querySelector('.pl-list');
       if (!container) return;
-      if (container.children.length) return; // already present (hardcoded on some pages)
       const lists = getUserPlaylists();
       container.innerHTML = '';
-      lists.slice(0, 3).forEach((pl) => {
+      function trunc40(s){ const t = String(s||''); return t.length>40 ? (t.slice(0,37)+'...') : t; }
+      lists.slice(0, 4).forEach((pl) => {
         const row = document.createElement('div');
         row.className = 'pl-item';
         row.dataset.plId = pl.id;
         row.innerHTML = `
           <div class="pl-cover" style="background-image: url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}');"></div>
-          <div class="pl-meta"><div class="pl-name">${pl.name || 'Playlist'}</div><div class="pl-sub">Playlist • ${pl.tracks?.length || 0} songs</div></div>
+          <div class="pl-meta"><div class="pl-name">${trunc40(pl.name || 'Playlist')}</div><div class="pl-sub">Playlist • ${pl.tracks?.length || 0} songs</div></div>
         `;
         container.appendChild(row);
       });
@@ -494,6 +532,71 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSidebarPlaylists();
   wireSidebarPlaylists();
 
+  // Sidebar: Add new playlist
+  (function wireCreatePlaylist(){
+    try {
+      const addBtn = document.querySelector('.menu .icon-btn.add');
+      if (!addBtn) return;
+      function slugify(s){ return String(s||'').toLowerCase().trim().replace(/\s+/g,'_').replace(/[^a-z0-9_\-]/g,''); }
+      // local toast helpers (safe if already defined elsewhere)
+      (function ensureToastStyle(){
+        try{
+          if (document.getElementById('toast-style')) return;
+          const s = document.createElement('style');
+          s.id = 'toast-style';
+          s.textContent = `
+            .toast-wrap{position:fixed;left:50%;top:20px;transform:translateX(-50%);z-index:10000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+            .toast{min-width:240px;max-width:90vw;padding:10px 14px;border-radius:10px;color:#fff;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transform:translateY(-6px);transition:opacity .2s ease, transform .2s ease}
+            .toast.show{opacity:1;transform:translateY(0)}
+            .toast.success{background:#1f8b4c}
+            .toast.error{background:#a23b3b}
+          `;
+          document.head.appendChild(s);
+        }catch{}
+      })();
+      function getToastWrap(){ let w = document.querySelector('.toast-wrap'); if (!w) { w = document.createElement('div'); w.className = 'toast-wrap'; document.body.appendChild(w); } return w; }
+      function showToast(msg, type){ try{ const w = getToastWrap(); const el = document.createElement('div'); el.className = 'toast ' + (type==='error'?'error':'success'); el.textContent = String(msg||''); w.appendChild(el); requestAnimationFrame(()=> el.classList.add('show')); setTimeout(()=>{ try{ el.classList.remove('show'); setTimeout(()=> el.remove(), 200); }catch{} }, 1800); }catch{} }
+      addBtn.addEventListener('click', ()=>{
+        try {
+          const lists = getUserPlaylists();
+          let name = window.prompt('Tên playlist mới', 'Playlist mới');
+          if (name==null) return;
+          name = name.trim().replace(/\s+/g,' ');
+          if (!name) return;
+          if (name.length > 40) { try{ showToast('Tên tối đa 40 ký tự', 'error'); }catch{} return; }
+          let base = 'pl_' + slugify(name || 'new');
+          let id = base || ('pl_' + Date.now());
+          let i = 1;
+          const ids = new Set((lists||[]).map(p=>p && p.id));
+          while (ids.has(id)) { id = base + '_' + (++i); }
+          // Ask for cover via file picker (optional)
+          const input = document.createElement('input');
+          input.type = 'file'; input.accept = 'image/*'; input.style.display = 'none';
+          document.body.appendChild(input);
+          const fallbackCover = './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg';
+          const finalize = (cover)=>{
+            const pl = { id, name, cover: cover || fallbackCover, tracks: [] };
+            lists.push(pl);
+            setUserPlaylists(lists);
+            showToast('Tạo thành công', 'success');
+            try { input.remove(); } catch {}
+          };
+          input.addEventListener('change', ()=>{
+            const file = input.files && input.files[0];
+            if (!file) { finalize(null); return; }
+            const reader = new FileReader();
+            reader.onload = ()=>{ const dataUrl = typeof reader.result==='string' ? reader.result : null; finalize(dataUrl); };
+            reader.onerror = ()=> finalize(null);
+            reader.readAsDataURL(file);
+          }, { once: true });
+          // Open picker; if user cancels, still create with fallback after a short delay
+          input.click();
+          setTimeout(()=>{ try{ if (!input.files || !input.files.length) finalize(null); } catch {} }, 600);
+        } catch {}
+      });
+    } catch {}
+  })();
+
   // Sync sidebar playlist counts/names/covers to user data on all pages
   (function syncSidebarPlaylists() {
     try {
@@ -505,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const cover = it.querySelector('.pl-cover');
         if (cover) cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
         const name = it.querySelector('.pl-name');
-        if (name) name.textContent = pl.name || name.textContent;
+        if (name) { const t = String(pl.name||name.textContent); name.textContent = t.length>40 ? (t.slice(0,37)+'...') : t; }
         const sub = it.querySelector('.pl-sub');
         if (sub) sub.textContent = `Playlist • ${Array.isArray(pl.tracks) ? pl.tracks.length : 0} songs`;
       });
@@ -514,32 +617,166 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('playlists:changed', () => {
     try {
       const lists = getUserPlaylists();
-      const items = document.querySelectorAll('.pl-list .pl-item');
-      items.forEach((it, i) => {
-        const pl = lists[i]; if (!pl) return;
-        const sub = it.querySelector('.pl-sub');
-        if (sub) sub.textContent = `Playlist • ${Array.isArray(pl.tracks) ? pl.tracks.length : 0} songs`;
+      const container = document.querySelector('.pl-list');
+      if (!container) return;
+      // Re-render sidebar items to include new playlists
+      container.innerHTML = '';
+      function trunc40(s){ const t = String(s||''); return t.length>40 ? (t.slice(0,37)+'...') : t; }
+      lists.slice(0, 4).forEach((pl) => {
+        const row = document.createElement('div');
+        row.className = 'pl-item';
+        row.dataset.plId = pl.id;
+        row.innerHTML = `
+          <div class="pl-cover" style="background-image: url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}');"></div>
+          <div class="pl-meta"><div class="pl-name">${trunc40(pl.name || 'Playlist')}</div><div class="pl-sub">Playlist • ${(pl.tracks?.length || 0)} songs</div></div>
+        `;
+        row.addEventListener('click', () => {
+          try { go(`./playlist.html?id=${encodeURIComponent(pl.id)}`); }
+          catch { window.location.href = `./playlist.html?id=${encodeURIComponent(pl.id)}`; }
+        });
+        container.appendChild(row);
       });
     } catch {}
   });
 
-  // Demo: Add current track to first playlist when clicking more -> add-to-playlist
+  // Add-to-playlist: open a simple picker modal and add current track to chosen playlist
   (function wireAddToPlaylist() {
     try {
       const btn = document.getElementById('add-to-playlist');
       if (!btn) return;
+
+      // Ensure minimal styles for modal
+      (function ensurePickerStyle(){
+        try {
+          if (document.getElementById('pl-picker-style')) return;
+          const s = document.createElement('style');
+          s.id = 'pl-picker-style';
+          s.textContent = `
+            .pl-picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999}
+            .pl-picker{background:#111418;color:#fff;min-width:360px;max-width:520px;width:92vw;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.45);overflow:hidden}
+            .pl-picker .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700;font-size:16px}
+            .pl-picker .list{max-height:60vh;overflow:auto}
+            .pl-picker .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:12px 16px;cursor:pointer}
+            .pl-picker .row:hover{background:rgba(255,255,255,.06)}
+            .pl-picker .row .cover{width:44px;height:44px;border-radius:8px;background-size:cover;background-position:center}
+            .pl-picker .row .name{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:15px}
+            .pl-picker .row .count{opacity:.85;min-width:48px;text-align:right}
+            .pl-picker .btn{background:#2a2f36;color:#e5e7eb;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;line-height:1;box-sizing:border-box;white-space:nowrap}
+            .pl-picker .hd .close-btn{background:transparent;border:none;padding:0;color:#e5e7eb;cursor:pointer;border-radius:0}
+            .pl-picker .hd .close-btn:hover{color:#ffffff;text-decoration:underline;background:transparent;border-color:transparent}
+            .pl-picker .hd .close-btn:focus{outline:none;text-decoration:underline}
+            .pl-picker .btn:hover{background:#39414b;color:#fff}
+            .pl-picker .row.is-exist{opacity:.6;cursor:not-allowed}
+            .pl-picker .row .tag{font-size:12px;opacity:.9;background:#2a2f36;padding:2px 6px;border-radius:999px}
+            @media (max-width: 420px){ .pl-picker{min-width:300px} .pl-picker .row{grid-template-columns:auto 1fr auto} }
+          `;
+          document.head.appendChild(s);
+        } catch {}
+      })();
+
+      // Toast styles & helpers
+      (function ensureToastStyle(){
+        try{
+          if (document.getElementById('toast-style')) return;
+          const s = document.createElement('style');
+          s.id = 'toast-style';
+          s.textContent = `
+            .toast-wrap{position:fixed;left:50%;top:20px;transform:translateX(-50%);z-index:10000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+            .toast{min-width:240px;max-width:90vw;padding:10px 14px;border-radius:10px;color:#fff;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.3);opacity:0;transform:translateY(-6px);transition:opacity .2s ease, transform .2s ease}
+            .toast.show{opacity:1;transform:translateY(0)}
+            .toast.success{background:#1f8b4c}
+            .toast.error{background:#a23b3b}
+          `;
+          document.head.appendChild(s);
+        }catch{}
+      })();
+      function getToastWrap(){
+        let w = document.querySelector('.toast-wrap');
+        if (!w) { w = document.createElement('div'); w.className = 'toast-wrap'; document.body.appendChild(w); }
+        return w;
+      }
+      function showToast(msg, type){
+        try{
+          const w = getToastWrap();
+          const el = document.createElement('div');
+          el.className = 'toast ' + (type==='error'?'error':'success');
+          el.textContent = String(msg||'');
+          w.appendChild(el);
+          requestAnimationFrame(()=> el.classList.add('show'));
+          setTimeout(()=>{ try{ el.classList.remove('show'); setTimeout(()=> el.remove(), 200); }catch{} }, 1800);
+        }catch{}
+      }
+
+      function closePicker(ov){ try { if (ov && ov.parentNode) ov.parentNode.removeChild(ov); } catch {} }
+
+      function openPicker(trackId){
+        if (!trackId) return;
+        const lists = getUserPlaylists();
+        if (!Array.isArray(lists) || !lists.length) return;
+        const ov = document.createElement('div');
+        ov.className = 'pl-picker-overlay';
+        ov.innerHTML = `
+          <div class="pl-picker" role="dialog" aria-modal="true" aria-label="Chọn playlist">
+            <div class="hd"><span>Chọn playlist</span><button class="btn close-btn" data-act="close" aria-label="Đóng">Đóng</button></div>
+            <div class="list"></div>
+          </div>
+        `;
+        const listEl = ov.querySelector('.list');
+        lists.forEach(pl => {
+          const row = document.createElement('div');
+          row.className = 'row';
+          row.setAttribute('data-pl-id', pl.id);
+          const has = Array.isArray(pl.tracks) && pl.tracks.includes(trackId);
+          row.innerHTML = `
+            <div class="cover" style="background-image:url('${(pl.cover||'').replace(/"/g,'&quot;')}')"></div>
+            <div class="name">${(pl.name||'Playlist')}</div>
+            <div class="count">${Array.isArray(pl.tracks)?pl.tracks.length:0} bài</div>
+            ${has?'<span class="tag" style="margin-right:4px;">Đã có</span>':''}
+          `;
+          if (has) row.classList.add('is-exist');
+          listEl.appendChild(row);
+        });
+        document.body.appendChild(ov);
+
+        const onSelect = (plId)=>{
+          try {
+            const arr = getUserPlaylists();
+            const idx = arr.findIndex(x=>x && x.id===plId);
+            if (idx<0) { closePicker(ov); return; }
+            const target = arr[idx];
+            if (!Array.isArray(target.tracks)) target.tracks = [];
+            if (!target.tracks.includes(trackId)) target.tracks.push(trackId);
+            setUserPlaylists(arr);
+            showToast('Đã thêm vào '+(target.name||'playlist'), 'success');
+          } catch { showToast('Không thể thêm vào playlist', 'error'); }
+          closePicker(ov);
+        };
+
+        // Wire events
+        ov.addEventListener('click', (e)=>{
+          const t = e.target;
+          if (t instanceof Element) {
+            if (t.classList.contains('pl-picker-overlay')) { closePicker(ov); return; }
+            const act = t.getAttribute('data-act');
+            if (act === 'close') { closePicker(ov); return; }
+            const row = t.closest('.row');
+            if (row && row.classList.contains('is-exist')) { return; }
+            if (row && row.getAttribute('data-pl-id')) { onSelect(row.getAttribute('data-pl-id')); }
+          }
+        });
+        const onKey = (ev)=>{ if (ev.key === 'Escape') { ev.preventDefault(); closePicker(ov); window.removeEventListener('keydown', onKey, true); } };
+        window.addEventListener('keydown', onKey, true);
+      }
+
       btn.addEventListener('click', () => {
         try {
-          const lists = getUserPlaylists(); if (!lists.length) return;
-          const cur = lists[0];
-          // derive track id from current index in current playlist data source if available
           const current = playlist[index];
           const trackId = current && current.id ? current.id : null;
-          if (!trackId) return;
-          if (!Array.isArray(cur.tracks)) cur.tracks = [];
-          if (!cur.tracks.includes(trackId)) cur.tracks.push(trackId);
-          setUserPlaylists(lists);
-        } catch {}
+          if (!trackId) { showToast('Không thể thêm: bài không hợp lệ', 'error'); return; }
+          const lists = getUserPlaylists();
+          if (!Array.isArray(lists) || !lists.length) { showToast('Chưa có playlist nào', 'error'); return; }
+          openPicker(trackId);
+        } catch { showToast('Đã xảy ra lỗi', 'error'); }
       });
     } catch {}
   })();
@@ -599,6 +836,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isFinite(s)) return "0:00";
     const m = Math.floor(s / 60), ss = Math.floor(s % 60).toString().padStart(2, "0");
     return `${m}:${ss}`;
+  }
+  // Detect browser reload navigation (not cross-page navigation)
+  function isReloadNavigation(){
+    try {
+      const nav = performance.getEntriesByType && performance.getEntriesByType('navigation');
+      if (nav && nav[0] && typeof nav[0].type === 'string') return nav[0].type === 'reload';
+      // fallback (deprecated API)
+      if (performance && performance.navigation && typeof performance.navigation.type === 'number') return performance.navigation.type === 1;
+    } catch {}
+    return false;
   }
   function setPlayUI(p) {
     playIcon.classList.toggle("fa-play", !p);
@@ -692,11 +939,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       };
       if (isFinite(audio.duration)) applyTime(); else audio.addEventListener('loadedmetadata', applyTime, { once: true });
-      // Force paused on first visit OR right after login in this session
-      if (!FIRST_VISIT && !JUST_LOGGED_IN && s.isPlaying) {
-        play();
-      } else {
+      // Decide paused/playing on load
+      // Always paused on explicit reloads
+      if (isReloadNavigation()) {
+        pause();
         setPlayUI(false);
+      } else {
+        // Force paused on first visit OR right after login in this session
+        if (!FIRST_VISIT && !JUST_LOGGED_IN && s.isPlaying) {
+          play();
+        } else {
+          setPlayUI(false);
+        }
       }
       closeQueue();
       return true;
@@ -741,6 +995,7 @@ document.addEventListener("DOMContentLoaded", () => {
         queueListEl.setAttribute('aria-disabled', 'true');
       }
     } catch {}
+    try { document.body.classList.add('ad-locked'); } catch {}
   }
 
   function endAdThenResume() {
@@ -751,6 +1006,7 @@ document.addEventListener("DOMContentLoaded", () => {
         queueListEl.removeAttribute('aria-disabled');
       }
     } catch {}
+    try { document.body.classList.remove('ad-locked'); } catch {}
     // Continue as requested
     if (typeof adAfterCallback === 'function') {
       const fn = adAfterCallback; adAfterCallback = null; fn();
@@ -758,6 +1014,50 @@ document.addEventListener("DOMContentLoaded", () => {
       nextTrack(true);
     }
   }
+
+  // Globally block interactions that may start playback while an ad is playing
+  (function setupAdInteractionGuards(){
+    try {
+      // Visual cue styles when locked
+      if (!document.getElementById('ad-lock-style')) {
+        const s = document.createElement('style');
+        s.id = 'ad-lock-style';
+        s.textContent = `
+          body.ad-locked .player .controls .btn,
+          body.ad-locked #progress,
+          body.ad-locked #queue-list *,
+          body.ad-locked #pl-tbody tr,
+          body.ad-locked .song-card,
+          body.ad-locked .song-item { cursor:not-allowed !important; }
+        `;
+        document.head.appendChild(s);
+      }
+      const SELS = ['#play','#next','#prev','#shuffle','#repeat','#progress','#queue-list','#pl-tbody tr','.song-card','.song-item','.q-list','.q-item','.q-row'];
+      function isTrigger(el){
+        if (!(el instanceof Element)) return false;
+        for (const sel of SELS) { if (el.closest(sel)) return true; }
+        return false;
+      }
+      // Capture clicks
+      document.addEventListener('click', (e)=>{
+        try {
+          if (!isAdPlaying) return;
+          const t = e.target;
+          if (isTrigger(t)) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+        } catch {}
+      }, true);
+      // Capture Enter/Space on interactive elements
+      document.addEventListener('keydown', (e)=>{
+        try {
+          if (!isAdPlaying) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            const t = e.target;
+            if (isTrigger(t)) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+          }
+        } catch {}
+      }, true);
+    } catch {}
+  })();
 
   function loadTrack(i) {
     const t = playlist[i];

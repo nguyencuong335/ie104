@@ -149,28 +149,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
   height: 32px;
-  padding: 0 14px;
-  gap: 6px;
-  border-radius: 12px;
+  padding: 0;
+  border-radius: 10px;
   border: 1px solid rgba(2,6,23,0.12);
   background: #fff;
   color: #0f172a;
-  font-size: 13px;
-  font-weight: 600;
   box-sizing: border-box;
-  white-space: nowrap;
   cursor: pointer;
   transition: background .15s ease, border-color .15s ease, transform .06s ease, box-shadow .15s ease;
 }
 /* Force override global .btn sizing/grid from style.css */
-.my-playlists .my-pl-actions .btn.tiny { width: auto !important; height: 32px !important; display: inline-flex !important; }
-.my-playlists .my-pl-actions .btn.tiny i { font-size: 12px !important; margin-right: 6px; }
+.my-playlists .my-pl-actions .btn.tiny { width: 32px !important; height: 32px !important; display: inline-flex !important; }
+.my-playlists .my-pl-actions .btn.tiny i { font-size: 14px !important; margin: 0 !important; line-height: 1; }
 .my-pl-actions .btn.tiny:hover { background: #fff; box-shadow: 0 1px 2px rgba(2,6,23,0.12); border-color: rgba(2,6,23,0.18); }
 .my-pl-actions .btn.tiny:active { transform: translateY(1px); }
-.my-pl-actions .btn.tiny i { font-size: 12px; margin-right: 6px; }
+/* Colors per action */
 .my-pl-actions .btn.tiny.edit { border-color: #b9d6f2; color: #0b4a6f; }
 .my-pl-actions .btn.tiny.edit i { color: #0b4a6f; }
+.my-pl-actions .btn.tiny.cover { border-color: #cbd5e1; color: #0f172a; }
+.my-pl-actions .btn.tiny.cover i { color: #0f172a; }
 .my-pl-actions .btn.tiny.danger { background: #fff; border-color: #f3b0ab; color: #7a271a; }
 .my-pl-actions .btn.tiny.danger i { color: #b42318; }
 

@@ -13,13 +13,12 @@ body {
     height: 100vh;
 }
 .content {
-    /* Layout 2 cột: sidebar + main */
+    /* Đồng bộ với layout global */
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: var(--sidebar) 1fr;
     gap: 16px;
-    /* Phù hợp với global để không chặn vùng cuộn con (Queue) */
     overflow: auto;
-    min-height: 0; /* tránh co giãn sai trong grid */
+    min-height: 0;
 }
 
 /* Ẩn queue khi có class hidden (phòng khi bạn muốn rely on CSS) */
@@ -365,15 +364,15 @@ a:focus-visible {
 
 /* Responsive */
 @media (max-width: 900px) {
-  /* Giữ 2 cột: sidebar thu gọn + main (đồng bộ với style.css) */
+  /* Sidebar thu gọn + main (theo style.css) */
   .content { grid-template-columns: var(--sidebar) 1fr; }
-  /* Khi Queue hiển thị, ưu tiên 1 cột (tôn trọng rule global) */
+  /* Khi Queue hiển thị -> 1 cột (đồng bộ rule global) */
   .content:has(.queue:not(.hidden)) { grid-template-columns: 1fr !important; }
-  /* Sidebar không sticky ở mobile để cuộn mượt hơn, nhưng vẫn hiển thị */
-  .sidebar { position: static; max-height: none; overflow: visible; }
+  /* Sidebar không sticky ở mobile để cuộn mượt */
+  .sidebar { position: static; max-height: calc(100vh - var(--player-h) - 14px); overflow: auto; }
   .timkiem-main { max-height: calc(100vh - var(--player-h) - 16px); }
 
-  /* Mobile: stack results container to one column */
+  /* Mobile: xếp dọc kết quả */
   .results-container { grid-template-columns: 1fr; gap: 24px; }
 }
 

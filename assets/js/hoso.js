@@ -28,6 +28,17 @@
   const removeBtn = document.getElementById('avatar-remove');
   if (!avatarEl || !fileInput) return;
 
+  // Ensure small CSS for locked state
+  (function ensureAvatarLockStyle(){
+    try{
+      if (document.getElementById('avatar-lock-style')) return;
+      const s = document.createElement('style');
+      s.id = 'avatar-lock-style';
+      s.textContent = `.user-avatar.locked{cursor:not-allowed}`;
+      document.head.appendChild(s);
+    }catch{}
+  })();
+
   // Restore saved avatar
   try {
     const key = getUserKey();
@@ -35,10 +46,22 @@
     if (dataUrl) avatarEl.style.backgroundImage = `url('${dataUrl}')`;
   } catch {}
 
-  function openPicker() { try { fileInput.click(); } catch {} }
-  avatarEl.addEventListener('click', openPicker);
+  function isLocked(){ try { return !!localStorage.getItem(getUserKey()); } catch { return false; } }
+  function syncLock(){
+    try {
+      const locked = isLocked();
+      avatarEl.classList.toggle('locked', locked);
+      avatarEl.setAttribute('aria-disabled', String(!!locked));
+      if (locked) avatarEl.setAttribute('title','Đã có ảnh đại diện'); else avatarEl.removeAttribute('title');
+      if (removeBtn) removeBtn.disabled = !locked; // chỉ cho xóa khi đã có ảnh
+    } catch {}
+  }
+  syncLock();
+
+  function openPicker() { try { if (isLocked()) return; fileInput.click(); } catch {} }
+  avatarEl.addEventListener('click', (e)=>{ if (isLocked()) { e.preventDefault(); e.stopPropagation(); return; } openPicker(); });
   avatarEl.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (isLocked()) return; openPicker(); }
   });
 
   fileInput.addEventListener('change', () => {
@@ -51,6 +74,7 @@
         avatarEl.style.backgroundImage = `url('${dataUrl}')`;
         try { localStorage.setItem(getUserKey(), dataUrl); } catch {}
         try { window.dispatchEvent(new Event('avatar:changed')); } catch {}
+        syncLock();
       }
     };
     reader.readAsDataURL(file);
@@ -63,8 +87,9 @@
       const ok = window.confirm('Bạn có chắc muốn xóa ảnh đại diện không?');
       if (!ok) return;
       try { localStorage.removeItem(getUserKey()); } catch {}
-      avatarEl.style.backgroundImage = `url('${defaultAvatarUrl()}')`;
+      try { avatarEl.style.removeProperty('background-image'); } catch { avatarEl.style.backgroundImage = ''; }
       try { window.dispatchEvent(new Event('avatar:changed')); } catch {}
+      syncLock();
     });
   }
 })();
