@@ -390,6 +390,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ad state
   let isAdPlaying = false;
   let adAfterCallback = null;
+  // Show ad only once per track when repeating the same song
+  let adShownThisTrackCycle = false;
+  // Extra guard: remember which track ID has shown an ad in current cycle
+  let lastAdTrackId = null;
+  // Track identity of the currently loaded track to avoid resetting flags on same song
+  let currentTrackKey = null;
+  function getTrackKey(t){ try { return (t && (t.id || t.src || (t.title+"|"+t.artist))) || null; } catch { return null; } }
   // When logging out, force persisted state to paused
   let logoutInProgress = false;
 
@@ -1010,6 +1017,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startAdThen(cb) {
+    // Do not start ad in these cases
+    if (isAdPlaying) return;
+    if (isPremiumOn()) { if (typeof cb === 'function') cb(); else nextTrack(true); return; }
+    if (repeatMode === 'one' && adShownThisTrackCycle) { if (typeof cb === 'function') cb(); else nextTrack(true); return; }
     isAdPlaying = true;
     adAfterCallback = typeof cb === 'function' ? cb : null;
     setControlsDisabled(true);
@@ -1088,6 +1099,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadTrack(i) {
     const t = playlist[i];
+    // Only reset ad flags if the track identity actually changes
+    const nextKey = getTrackKey(t);
+    if (nextKey !== currentTrackKey) {
+      currentTrackKey = nextKey;
+      adShownThisTrackCycle = false;
+      lastAdTrackId = null;
+    }
     index = i;
     audio.src = t.src;
     audio.load();
@@ -1351,7 +1369,21 @@ document.addEventListener("DOMContentLoaded", () => {
   audio.addEventListener("ended", () => {
     if (isAdPlaying) { endAdThenResume(); }
     else if (isPremiumOn()) { nextTrack(true); }
-    else { startAdThen(() => nextTrack(true)); }
+    else {
+      // If repeating one song, show the ad only once for this track cycle
+      if (repeatMode === 'one') {
+        const currentId = (playlist && playlist[index] && playlist[index].id) ? playlist[index].id : null;
+        if (!adShownThisTrackCycle && currentId && currentId !== lastAdTrackId) {
+          adShownThisTrackCycle = true;
+          lastAdTrackId = currentId;
+          startAdThen(() => nextTrack(true));
+        } else {
+          nextTrack(true); // loop without showing ad again
+        }
+      } else {
+        startAdThen(() => nextTrack(true));
+      }
+    }
   });
   // Prevent pausing ad
   audio.addEventListener("pause", () => {
@@ -1554,6 +1586,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = premiumBtn.getAttribute("aria-pressed") === "true" ? false : true;
       applyPremiumState(now);
       try { localStorage.setItem(PREMIUM_KEY, String(now)); } catch {}
+      // If user turns on premium during an ad, stop ad immediately
+      try {
+        if (now === true && isAdPlaying) {
+          try { audio.pause(); } catch {}
+          // Clear any pending callback and resume normal flow without ad
+          const cb = adAfterCallback; adAfterCallback = null; isAdPlaying = false; setControlsDisabled(false); try { document.body.classList.remove('ad-locked'); } catch {}
+          if (typeof cb === 'function') cb(); else nextTrack(true);
+        }
+      } catch {}
     });
   }
 
