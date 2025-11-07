@@ -13,6 +13,21 @@
 
 /** Đăng xuất và chuyển về trang đăng nhập (giữ next để quay lại) */
 function signOut(redirect = true) {
+  // Persist paused player state so next app load won't auto-play
+  try {
+    logoutInProgress = true;
+    // Pause immediately in current session
+    try { if (window.__mbAudio) window.__mbAudio.pause(); } catch {}
+    try { pause(); setPlayUI(false); } catch {}
+    savePlayerState(true);
+    const KEY = 'player_state_v1';
+    const raw = localStorage.getItem(KEY);
+    let s = null; try { s = raw ? JSON.parse(raw) : null; } catch {}
+    const patch = s ? { ...s, isPlaying: false } : {
+      index: 0, currentTime: 0, isPlaying: false, volume: 0.8, shuffle: false, repeatMode: 'off', queueOpen: false, ts: Date.now()
+    };
+    localStorage.setItem(KEY, JSON.stringify(patch));
+  } catch {}
   try { localStorage.removeItem("auth_user"); } catch {}
   if (redirect) {
     const next = location.pathname + location.search + location.hash;
@@ -154,10 +169,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== State & Elements =====
   const audio = new Audio();
+  try { window.__mbAudio = audio; } catch {}
   let index = 0, isPlaying = false, shuffle = false, repeatMode = "off"; // 'off' | 'all' | 'one'
   // Ad state
   let isAdPlaying = false;
   let adAfterCallback = null;
+  // When logging out, force persisted state to paused
+  let logoutInProgress = false;
+
+  // First visit in this browser session -> force paused state
+  const FIRST_VISIT = (() => {
+    try {
+      const v = !sessionStorage.getItem('app_started');
+      sessionStorage.setItem('app_started', '1');
+      return v;
+    } catch { return false; }
+  })();
+
+  // If a new auth_user appears in this session, treat as just logged in
+  let JUST_LOGGED_IN = false;
+  try {
+    const uNow = localStorage.getItem('auth_user') || '';
+    const uSeen = sessionStorage.getItem('seen_auth_user') || '';
+    if (uNow && uNow !== uSeen) {
+      JUST_LOGGED_IN = true;
+      sessionStorage.setItem('seen_auth_user', uNow);
+    }
+  } catch {}
 
   const titleEl   = document.getElementById("title");
   const artistEl  = document.getElementById("artist");
@@ -264,20 +302,20 @@ document.addEventListener("DOMContentLoaded", () => {
   function savePlayerState(force = false) {
     if (isAdPlaying) return; // avoid saving ad as track
     const now = Date.now();
-    if (!force && now - lastStateSavedAt < 800) return; // throttle
+    if (!force && now - lastStateSavedAt < 500) return; // throttle
     lastStateSavedAt = now;
     try {
-      const state = {
+      const s = {
         index,
-        currentTime: isFinite(audio.currentTime) ? Math.max(0, Math.floor(audio.currentTime)) : 0,
-        isPlaying,
-        volume: Number(audio.volume),
-        shuffle,
+        currentTime: Math.max(0, Math.min(audio.currentTime || 0, isFinite(audio.duration) ? audio.duration - 0.2 : 1e9)),
+        isPlaying: logoutInProgress ? false : (!!isPlaying && !isAdPlaying),
+        volume: Number.isFinite(audio.volume) ? audio.volume : 0.8,
+        shuffle: !!shuffle,
         repeatMode,
-        queueOpen: queuePanel ? !queuePanel.classList.contains('hidden') : false,
-        ts: now,
+        queueOpen: document.body.classList.contains('queue-open'),
+        ts: now
       };
-      localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(state));
+      localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(s));
     } catch {}
   }
   function getSavedPlayerState() {
@@ -319,7 +357,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       };
       if (isFinite(audio.duration)) applyTime(); else audio.addEventListener('loadedmetadata', applyTime, { once: true });
-      if (s.isPlaying) play(); else setPlayUI(false);
+      // Force paused on first visit OR right after login in this session
+      if (!FIRST_VISIT && !JUST_LOGGED_IN && s.isPlaying) {
+        play();
+      } else {
+        pause();
+        setPlayUI(false);
+      }
       // restore queue visibility
       if (s.queueOpen != null) setQueueVisible(!!s.queueOpen);
       return true;
@@ -798,6 +842,20 @@ document.addEventListener("DOMContentLoaded", () => {
   if (profileLogout) {
     profileLogout.addEventListener("click", () => {
       closeProfileMenu();
+      // Persist paused state on logout via profile menu
+      try {
+        logoutInProgress = true;
+        try { if (window.__mbAudio) window.__mbAudio.pause(); } catch {}
+        try { pause(); setPlayUI(false); } catch {}
+        savePlayerState(true);
+        const KEY = 'player_state_v1';
+        const raw = localStorage.getItem(KEY);
+        let s = null; try { s = raw ? JSON.parse(raw) : null; } catch {}
+        const patch = s ? { ...s, isPlaying: false } : {
+          index: 0, currentTime: 0, isPlaying: false, volume: 0.8, shuffle: false, repeatMode: 'off', queueOpen: false, ts: Date.now()
+        };
+        localStorage.setItem(KEY, JSON.stringify(patch));
+      } catch {}
       try { localStorage.removeItem("auth_user"); } catch {}
       try { go("./landingpage.html"); } catch { window.location.href = "./landingpage.html"; }
     });
