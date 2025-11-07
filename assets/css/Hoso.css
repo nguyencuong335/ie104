@@ -40,10 +40,27 @@
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  background-color: #dfe8ef;
+  background-color: #e6edf3;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
+
+/* Empty state: show camera icon when no inline background-image is set */
+.user-avatar:not([style*="background-image"])::before {
+  content: "\f030"; /* fa-camera */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #6b7280;
+  font-size: 32px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide remove button when empty */
+.avatar-wrap:has(.user-avatar:not([style*="background-image"])) .avatar-remove { display: none; }
 
 .avatar-remove {
   position: absolute;
