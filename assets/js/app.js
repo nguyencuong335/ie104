@@ -123,11 +123,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Replace playlist contents in-place
       playlist.splice(0, playlist.length, ...data);
       renderQueue();
-      loadTrack(0);
-      audio.volume = Number(volume.value);
-      volume.setAttribute("aria-valuenow", String(audio.volume));
-      progress.setAttribute("aria-valuenow", "0");
-      setPlayUI(false);
+      // Try restore previous state
+      if (!restorePlayerState()) {
+        loadTrack(0);
+        audio.volume = Number(volume.value);
+        volume.setAttribute("aria-valuenow", String(audio.volume));
+        progress.setAttribute("aria-valuenow", "0");
+        setPlayUI(false);
+        try { updateVolumeSlider(); } catch {}
+      }
       console.assert(playlist.length >= 3, "Playlist phải có >= 3 bài");
       // simple smoke after data ready
       try { nextTrack(false); prevTrack(); } catch (err) { console.error("next/prev throw", err); }
@@ -136,11 +140,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // Fallback to built-in playlist
       playlist.splice(0, playlist.length, ...fallbackPlaylist);
       renderQueue();
-      loadTrack(0);
-      audio.volume = Number(volume.value);
-      volume.setAttribute("aria-valuenow", String(audio.volume));
-      progress.setAttribute("aria-valuenow", "0");
-      setPlayUI(false);
+      if (!restorePlayerState()) {
+        loadTrack(0);
+        audio.volume = Number(volume.value);
+        volume.setAttribute("aria-valuenow", String(audio.volume));
+        progress.setAttribute("aria-valuenow", "0");
+        setPlayUI(false);
+        try { updateVolumeSlider(); } catch {}
+      }
       console.warn("Đang sử dụng fallback playlist nội bộ");
     }
   }
@@ -251,6 +258,74 @@ document.addEventListener("DOMContentLoaded", () => {
     try { return localStorage.getItem("premium_enabled") === "true"; } catch { return false; }
   }
 
+  // ===== Persist player state across pages =====
+  const PLAYER_STATE_KEY = 'player_state_v1';
+  let lastStateSavedAt = 0;
+  function savePlayerState(force = false) {
+    if (isAdPlaying) return; // avoid saving ad as track
+    const now = Date.now();
+    if (!force && now - lastStateSavedAt < 800) return; // throttle
+    lastStateSavedAt = now;
+    try {
+      const state = {
+        index,
+        currentTime: isFinite(audio.currentTime) ? Math.max(0, Math.floor(audio.currentTime)) : 0,
+        isPlaying,
+        volume: Number(audio.volume),
+        shuffle,
+        repeatMode,
+        queueOpen: queuePanel ? !queuePanel.classList.contains('hidden') : false,
+        ts: now,
+      };
+      localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(state));
+    } catch {}
+  }
+  function getSavedPlayerState() {
+    try {
+      const raw = localStorage.getItem(PLAYER_STATE_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || typeof obj !== 'object') return null;
+      return obj;
+    } catch { return null; }
+  }
+  function restorePlayerState() {
+    const s = getSavedPlayerState();
+    if (!s) return false;
+    try {
+      // sanity checks
+      if (typeof s.index !== 'number' || s.index < 0 || s.index >= playlist.length) return false;
+      if (typeof s.volume === 'number') {
+        audio.volume = Math.min(1, Math.max(0, s.volume));
+        volume.value = String(audio.volume);
+        volume.setAttribute('aria-valuenow', String(audio.volume));
+        try { updateVolumeSlider(); } catch {}
+      }
+      if (s.shuffle === true || s.shuffle === false) {
+        shuffle = !!s.shuffle;
+        shuffleBtn.classList.toggle('active', shuffle);
+        updateShuffleA11y();
+      }
+      if (s.repeatMode === 'off' || s.repeatMode === 'all' || s.repeatMode === 'one') {
+        repeatMode = s.repeatMode;
+        repeatBtn.dataset.mode = repeatMode;
+        repeatBtn.classList.toggle('active', repeatMode !== 'off');
+        updateRepeatA11y();
+      }
+      loadTrack(s.index);
+      const applyTime = () => {
+        if (typeof s.currentTime === 'number' && isFinite(audio.duration)) {
+          audio.currentTime = Math.min(audio.duration - 0.2, Math.max(0, s.currentTime));
+        }
+      };
+      if (isFinite(audio.duration)) applyTime(); else audio.addEventListener('loadedmetadata', applyTime, { once: true });
+      if (s.isPlaying) play(); else setPlayUI(false);
+      // restore queue visibility
+      if (s.queueOpen != null) setQueueVisible(!!s.queueOpen);
+      return true;
+    } catch { return false; }
+  }
+
   // Ad assets
   const adAssets = {
     title: "Quảng cáo",
@@ -284,11 +359,21 @@ document.addEventListener("DOMContentLoaded", () => {
     audio.src = adAssets.src;
     audio.load();
     play();
+    try {
+      if (queueListEl) {
+        queueListEl.setAttribute('aria-disabled', 'true');
+      }
+    } catch {}
   }
 
   function endAdThenResume() {
     isAdPlaying = false;
     setControlsDisabled(false);
+    try {
+      if (queueListEl) {
+        queueListEl.removeAttribute('aria-disabled');
+      }
+    } catch {}
     // Continue as requested
     if (typeof adAfterCallback === 'function') {
       const fn = adAfterCallback; adAfterCallback = null; fn();
@@ -353,11 +438,13 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTrack(nextIndex());
     if (isPlaying || auto) play(); else setPlayUI(false);
     pushUIState();
+    savePlayerState(true);
   }
   function prevTrack() {
     loadTrack(prevIndex());
     if (isPlaying) play();
     pushUIState();
+    savePlayerState(true);
   }
 
   // ===== Queue rendering =====
@@ -375,7 +462,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="q-time" id="qtime-${i}">--:--</div>
       `;
-      row.addEventListener("click", () => { loadTrack(i); play(); pushUIState(); });
+      row.addEventListener("click", () => {
+        if (isAdPlaying) return; // block interaction during ad
+        loadTrack(i); play(); pushUIState(); savePlayerState(true);
+      });
       queueListEl.appendChild(row);
 
       // Prefetch duration
@@ -410,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isAdPlaying) return; // cannot control during ad
     if (audio.src === "" && playlist.length > 0) loadTrack(index);
     isPlaying ? pause() : play();
+    savePlayerState(true);
   });
   prevBtn.addEventListener("click", () => { if (isAdPlaying) return; if (playlist.length === 0) return; prevTrack(); });
   nextBtn.addEventListener("click", () => { if (isAdPlaying) return; if (playlist.length === 0) return; nextTrack(false); });
@@ -422,6 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
     repeatBtn.classList.toggle("active", repeatMode !== "off");
     updateShuffleA11y();
     updateRepeatA11y();
+    savePlayerState(true);
   });
 
   repeatBtn.addEventListener("click", () => {
@@ -429,6 +521,7 @@ document.addEventListener("DOMContentLoaded", () => {
     repeatBtn.dataset.mode = repeatMode;
     repeatBtn.classList.toggle("active", repeatMode !== "off");
     updateRepeatA11y();
+    savePlayerState(true);
   });
 
   audio.addEventListener("loadedmetadata", () => {
@@ -549,6 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
     progress.setAttribute("aria-valuenow", String(val));
     try { progress.style.setProperty('--progress-value', val + '%'); } catch {}
     currentTimeEl.textContent = fmt(audio.currentTime);
+    savePlayerState(false);
   });
   audio.addEventListener("ended", () => {
     if (isAdPlaying) { endAdThenResume(); }
@@ -568,6 +662,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const val = Number(e.target.value);
     progress.setAttribute("aria-valuenow", String(val));
     audio.currentTime = (val / 100) * audio.duration;
+    savePlayerState(true);
   });
   volume.addEventListener("input", (e) => {
     const v = Number(e.target.value);
@@ -576,6 +671,7 @@ document.addEventListener("DOMContentLoaded", () => {
     volIcon.className =
       "fa-solid " +
       (audio.volume === 0 ? "fa-volume-xmark" : audio.volume < 0.5 ? "fa-volume-low" : "fa-volume-high");
+    savePlayerState(true);
   });
 
   function toggleMobileVolume(e) {
@@ -635,6 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle a body state class so CSS can target small-screen layout when queue is open
     try { document.body.classList.toggle("queue-open", !!show); } catch {}
     if (!fromPop) pushUIState();
+    savePlayerState(true);
   }
   if (titleClickable) {
     titleClickable.style.cursor = "pointer";
@@ -655,7 +752,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTrack(s.index);
     if (isPlaying) play(); else setPlayUI(false);
     setQueueVisible(!!s.queueOpen, true);
+    savePlayerState(true);
   });
+
+  window.addEventListener('beforeunload', () => { savePlayerState(true); });
 
   // (disabled) Auto-open Queue on small screens was removed per request.
 
