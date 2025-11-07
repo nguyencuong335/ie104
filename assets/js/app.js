@@ -514,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const lists = getUserPlaylists();
       container.innerHTML = '';
       function trunc40(s){ const t = String(s||''); return t.length>40 ? (t.slice(0,37)+'...') : t; }
-      lists.slice(0, 4).forEach((pl) => {
+      lists.forEach((pl) => {
         const row = document.createElement('div');
         row.className = 'pl-item';
         row.dataset.plId = pl.id;
@@ -573,9 +573,11 @@ document.addEventListener("DOMContentLoaded", () => {
       })();
       function getToastWrap(){ let w = document.querySelector('.toast-wrap'); if (!w) { w = document.createElement('div'); w.className = 'toast-wrap'; document.body.appendChild(w); } return w; }
       function showToast(msg, type){ try{ const w = getToastWrap(); const el = document.createElement('div'); el.className = 'toast ' + (type==='error'?'error':'success'); el.textContent = String(msg||''); w.appendChild(el); requestAnimationFrame(()=> el.classList.add('show')); setTimeout(()=>{ try{ el.classList.remove('show'); setTimeout(()=> el.remove(), 200); }catch{} }, 1800); }catch{} }
+      const MAX_USER_PLAYLISTS = 5;
       addBtn.addEventListener('click', ()=>{
         try {
           const lists = getUserPlaylists();
+          if (Array.isArray(lists) && lists.length >= MAX_USER_PLAYLISTS) { try{ showToast(`Bạn chỉ có thể tạo tối đa ${MAX_USER_PLAYLISTS} playlist`, 'error'); }catch{} return; }
           let name = window.prompt('Tên playlist mới', 'Playlist mới');
           if (name==null) return;
           name = name.trim().replace(/\s+/g,' ');
@@ -592,6 +594,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.body.appendChild(input);
           const fallbackCover = './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg';
           const finalize = (cover)=>{
+            if (Array.isArray(lists) && lists.length >= MAX_USER_PLAYLISTS) { try{ showToast(`Bạn chỉ có thể tạo tối đa ${MAX_USER_PLAYLISTS} playlist`, 'error'); }catch{} try { input.remove(); } catch {} return; }
             const pl = { id, name, cover: cover || fallbackCover, tracks: [] };
             lists.push(pl);
             setUserPlaylists(lists);
@@ -639,7 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Re-render sidebar items to include new playlists
       container.innerHTML = '';
       function trunc40(s){ const t = String(s||''); return t.length>40 ? (t.slice(0,37)+'...') : t; }
-      lists.slice(0, 4).forEach((pl) => {
+      lists.forEach((pl) => {
         const row = document.createElement('div');
         row.className = 'pl-item';
         row.dataset.plId = pl.id;
