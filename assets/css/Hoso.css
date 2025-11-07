@@ -28,6 +28,12 @@
   margin-bottom: 32px;
 }
 
+.avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
 .user-avatar {
   width: 120px;
   height: 120px;
@@ -36,7 +42,26 @@
   background-position: center;
   background-color: #dfe8ef;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
+
+.avatar-remove {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.avatar-remove:hover { background: #f1f5f9; }
 
 .user-info {
   display: flex;
@@ -49,6 +74,11 @@
   font-size: 28px;
   font-weight: 700;
 }
+
+.user-name-row { display: flex; align-items: center; gap: 8px; }
+.name-edit-btn { border: none; background: transparent; cursor: pointer; padding: 6px; border-radius: 8px; }
+.name-edit-btn:hover { background: #eef2f7; }
+.user-name-input { font-size: 20px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 8px; max-width: 320px; }
 
 .follow-stats {
   font-size: 15px;

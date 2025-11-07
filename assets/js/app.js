@@ -220,6 +220,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const qTitle         = document.querySelector(".q-title");
   const playlistSection = document.querySelector(".playlist");
 
+  // ===== Header avatar sync =====
+  function getAvatarKey() {
+    try {
+      const u = JSON.parse(localStorage.getItem('auth_user') || 'null');
+      if (u && (u.id || u.email)) return `avatar_${u.id || u.email}`;
+    } catch {}
+    return 'avatar_guest';
+  }
+  function applyHeaderAvatar() {
+    try {
+      const btn = document.querySelector('.profile-btn');
+      if (!btn) return;
+      const data = localStorage.getItem(getAvatarKey());
+      if (data) {
+        btn.classList.add('has-avatar');
+        btn.style.backgroundImage = `url('${data}')`;
+      } else {
+        btn.classList.remove('has-avatar');
+        btn.style.backgroundImage = '';
+      }
+    } catch {}
+  }
+  applyHeaderAvatar();
+  window.addEventListener('avatar:changed', applyHeaderAvatar);
+
   // Banner elements
   const bTitle = document.getElementById("b-title");
   const bArtistName = document.getElementById("b-artist-name");

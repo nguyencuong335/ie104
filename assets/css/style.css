@@ -236,6 +236,13 @@ body {
     font-size: 1.6rem;
 }
 
+/* Show user avatar in header profile button */
+.profile-btn.has-avatar {
+    background-size: cover;
+    background-position: center;
+}
+.profile-btn.has-avatar i { opacity: 0; }
+
 /* Premium: turn crown icon yellow when active/toggled */
 .premium-btn[aria-pressed="true"] i,
 .premium-btn.active i { color: #facc15; }

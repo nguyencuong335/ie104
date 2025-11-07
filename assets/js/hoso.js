@@ -13,6 +13,123 @@
         document.head.appendChild(style);
     })();
 
+// ==== Avatar upload & persist ====
+(function () {
+  function getUserKey() {
+    try {
+      const u = JSON.parse(localStorage.getItem('auth_user') || 'null');
+      if (u && (u.id || u.email)) return `avatar_${u.id || u.email}`;
+    } catch {}
+    return 'avatar_guest';
+  }
+
+  const avatarEl = document.getElementById('user-avatar');
+  const fileInput = document.getElementById('avatar-file');
+  const removeBtn = document.getElementById('avatar-remove');
+  if (!avatarEl || !fileInput) return;
+
+  // Restore saved avatar
+  try {
+    const key = getUserKey();
+    const dataUrl = localStorage.getItem(key);
+    if (dataUrl) avatarEl.style.backgroundImage = `url('${dataUrl}')`;
+  } catch {}
+
+  function openPicker() { try { fileInput.click(); } catch {} }
+  avatarEl.addEventListener('click', openPicker);
+  avatarEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); }
+  });
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      if (typeof dataUrl === 'string') {
+        avatarEl.style.backgroundImage = `url('${dataUrl}')`;
+        try { localStorage.setItem(getUserKey(), dataUrl); } catch {}
+        try { window.dispatchEvent(new Event('avatar:changed')); } catch {}
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Remove avatar -> clear storage and restore default
+  function defaultAvatarUrl() { return "./assets/imgs/avatar.jpg"; }
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      const ok = window.confirm('Bạn có chắc muốn xóa ảnh đại diện không?');
+      if (!ok) return;
+      try { localStorage.removeItem(getUserKey()); } catch {}
+      avatarEl.style.backgroundImage = `url('${defaultAvatarUrl()}')`;
+      try { window.dispatchEvent(new Event('avatar:changed')); } catch {}
+    });
+  }
+})();
+
+// ==== Editable display name (persist per user) ====
+(function () {
+  function getNameKey() {
+    try {
+      const u = JSON.parse(localStorage.getItem('auth_user') || 'null');
+      if (u && (u.id || u.email)) return `displayname_${u.id || u.email}`;
+    } catch {}
+    return 'displayname_guest';
+  }
+
+  const nameEl = document.getElementById('user-name');
+  const inputEl = document.getElementById('user-name-input');
+  const editBtn = document.getElementById('name-edit-btn');
+  if (!nameEl || !inputEl || !editBtn) return;
+
+  // Restore saved name
+  try {
+    const saved = localStorage.getItem(getNameKey());
+    if (saved && saved.trim()) {
+      nameEl.textContent = saved;
+      inputEl.value = saved;
+    } else {
+      inputEl.value = nameEl.textContent.trim();
+    }
+  } catch { inputEl.value = nameEl.textContent.trim(); }
+
+  function startEdit() {
+    inputEl.value = nameEl.textContent.trim();
+    inputEl.hidden = false;
+    inputEl.focus();
+    inputEl.select();
+  }
+  function finishEdit(commit) {
+    inputEl.hidden = true;
+    if (!commit) return;
+    let v = inputEl.value.trim().replace(/\s+/g, ' ');
+    inputEl.setCustomValidity('');
+    // Validate: 2–40 chars, letters/numbers/spaces only
+    const isLenOk = v.length >= 2 && v.length <= 40;
+    const isCharsOk = /^([\p{L}\p{N}]+)([\p{L}\p{N}\s]*)$/u.test(v);
+    if (!isLenOk || !isCharsOk) {
+      inputEl.hidden = false;
+      inputEl.setCustomValidity('Tên phải từ 2-40 ký tự, chỉ gồm chữ, số và khoảng trắng.');
+      inputEl.reportValidity();
+      inputEl.focus();
+      inputEl.select();
+      return;
+    }
+    nameEl.textContent = v;
+    try { localStorage.setItem(getNameKey(), v); } catch {}
+  }
+
+  editBtn.addEventListener('click', startEdit);
+  nameEl.addEventListener('click', startEdit);
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') finishEdit(true);
+    else if (e.key === 'Escape') finishEdit(false);
+  });
+  inputEl.addEventListener('blur', () => finishEdit(true));
+})();
+
     // Helper: kiểm tra phần tử có "đang hiển thị" không
     function isVisible(el) {
         if (!el || el.hidden) return false;
