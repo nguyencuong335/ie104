@@ -50,9 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     signOut(true);
   });
 
-  // ===== Expose minimal API for other pages =====
+  // ===== Expose minimal API for other pages (mutable for later extensions) =====
   try {
-    window.MusicBox = Object.freeze({
+    window.MusicBox = Object.assign({}, window.MusicBox || {}, {
       playAt(i) { if (typeof i === "number" && i >= 0 && i < playlist.length) { loadTrack(i); play(); pushUIState(); } },
       currentIndex() { return index; },
       playlist() { return playlist.slice(); },
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "hoso.html": ".menu-btn.your",
         "yeuthich.html": ".menu-btn.liked",
         "ngheganday.html": ".menu-btn.recent",
+        "playlist.html": ".menu-btn.your",
       };
       const sel = map[file] || (file === "" ? ".menu-btn.explore" : null);
       const all = document.querySelectorAll(".menu .menu-btn");
@@ -107,6 +108,132 @@ document.addEventListener("DOMContentLoaded", () => {
       if (sel) {
         const target = document.querySelector(sel);
         if (target) target.classList.add("active");
+      }
+    } catch {}
+  })();
+
+  // ===== Profile page: sync 'Playlist đã tạo' =====
+  function syncProfilePlaylists() {
+    try {
+      const wrap = document.querySelector('.my-playlists');
+      if (!wrap) return; // not on profile page
+      const lists = getUserPlaylists();
+      // Update section title count
+      const titleEl = Array.from(document.querySelectorAll('.section-title'))
+        .find(el => /Playlist\s+đã\s+tạo/i.test(el.textContent));
+      if (titleEl) {
+        titleEl.textContent = `Playlist đã tạo (${lists.length})`;
+      }
+      // Ensure there are enough cards; reuse existing ones
+      let cards = Array.from(wrap.querySelectorAll('.my-pl-card'));
+      // Create missing cards if needed
+      while (cards.length < lists.length) {
+        const card = document.createElement('div');
+        card.className = 'my-pl-card';
+        card.innerHTML = `
+          <div class="my-pl-cover"></div>
+          <div class="my-pl-name"></div>
+          <div class="my-pl-sub"></div>
+        `;
+        wrap.appendChild(card);
+        cards.push(card);
+      }
+      // Update cards with playlist data
+      cards.forEach((card, i) => {
+        const pl = lists[i];
+        if (!pl) { card.style.display = 'none'; return; }
+        card.style.display = '';
+        card.dataset.plId = pl.id;
+        const cover = card.querySelector('.my-pl-cover');
+        if (cover) cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+        const name = card.querySelector('.my-pl-name');
+        if (name) name.textContent = pl.name || 'Playlist';
+        const sub = card.querySelector('.my-pl-sub');
+        if (sub) sub.textContent = `${Array.isArray(pl.tracks) ? pl.tracks.length : 0} bài hát`;
+        // actions (edit/delete)
+        let acts = card.querySelector('.my-pl-actions');
+        if (!acts) {
+          acts = document.createElement('div');
+          acts.className = 'my-pl-actions';
+          const btnEdit = document.createElement('button');
+          btnEdit.className = 'btn tiny edit';
+          btnEdit.title = 'Đổi tên playlist';
+          btnEdit.setAttribute('aria-label', 'Đổi tên playlist');
+          btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i><span>Sửa</span>';
+          const btnDel = document.createElement('button');
+          btnDel.className = 'btn tiny danger delete';
+          btnDel.title = 'Xóa playlist';
+          btnDel.setAttribute('aria-label', 'Xóa playlist');
+          btnDel.innerHTML = '<i class="fa-solid fa-trash"></i><span>Xóa</span>';
+          acts.appendChild(btnEdit);
+          acts.appendChild(btnDel);
+          card.appendChild(acts);
+          // style controlled by CSS in Hoso.css (.my-pl-actions .btn.tiny)
+          // stop navigation when clicking actions
+          acts.addEventListener('click', (e)=> e.stopPropagation());
+          btnEdit.addEventListener('click', ()=>{
+            try {
+              const lists2 = getUserPlaylists();
+              const idx = lists2.findIndex(x=>x.id===pl.id);
+              if (idx<0) return;
+              const curr = lists2[idx];
+              const v = window.prompt('Đổi tên playlist', curr.name || 'Playlist');
+              if (v==null) return;
+              const nameNew = v.trim().replace(/\s+/g,' ');
+              if (!nameNew) return;
+              curr.name = nameNew;
+              setUserPlaylists(lists2);
+              syncProfilePlaylists();
+            } catch {}
+          });
+          btnDel.addEventListener('click', ()=>{
+            try {
+              const ok = window.confirm('Xóa playlist này?');
+              if (!ok) return;
+              const lists2 = getUserPlaylists();
+              const idx = lists2.findIndex(x=>x.id===pl.id);
+              if (idx<0) return;
+              lists2.splice(idx,1);
+              setUserPlaylists(lists2);
+              syncProfilePlaylists();
+            } catch {}
+          });
+        }
+        // Wire click to navigate
+        card.onclick = () => {
+          try { go(`./playlist.html?id=${encodeURIComponent(pl.id)}`); }
+          catch { window.location.href = `./playlist.html?id=${encodeURIComponent(pl.id)}`; }
+        };
+      });
+    } catch {}
+  }
+  // Run once on load and on changes
+  syncProfilePlaylists();
+  window.addEventListener('playlists:changed', syncProfilePlaylists);
+
+  // Queue visibility helpers
+  function closeQueue() {
+    try {
+      document.body.classList.remove('queue-open');
+      document.querySelectorAll('.queue').forEach(q => q.classList.add('hidden'));
+    } catch {}
+  }
+  function openQueue() {
+    try {
+      document.body.classList.add('queue-open');
+      document.querySelectorAll('.queue').forEach(q => q.classList.remove('hidden'));
+    } catch {}
+  }
+  // Always hide Queue by default on page load (it will be shown explicitly elsewhere)
+  closeQueue();
+  // Inject global CSS guard for queue visibility
+  (function ensureQueueCSS(){
+    try {
+      if (!document.getElementById('queue-visibility-style')) {
+        const s = document.createElement('style');
+        s.id = 'queue-visibility-style';
+        s.textContent = `.queue{display:none !important;} body.queue-open .queue{display:block !important;}`;
+        document.head.appendChild(s);
       }
     } catch {}
   })();
@@ -123,6 +250,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Playlist =====
   let playlist = [];
+  let allSongs = [];
+  let currentPlaylistCtx = { type: 'global', id: null };
   const fallbackPlaylist = [
     { title: "Muộn Rồi Mà Sao Còn", artist: "Sơn Tùng M-TP", src: "./assets/music_data/songs/muon_roi_ma_sao_con.mp3", cover: "./assets/music_data/imgs_song/muon_roi_ma_sao_con.jpg", artistImg: "./assets/music_data/imgs_casi/son_tung_mtp.jpg" },
     { title: "Nơi Này Có Anh", artist: "Sơn Tùng M-TP", src: "./assets/music_data/songs/noi_nay_co_anh.mp3", cover: "./assets/music_data/imgs_song/noi_nay_co_anh.jpg", artistImg: "./assets/music_data/imgs_casi/son_tung_mtp.jpg" },
@@ -135,10 +264,21 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Failed to fetch songs.json");
       const data = await res.json();
       if (!Array.isArray(data) || data.length === 0) throw new Error("songs.json invalid or empty");
-      // Replace playlist contents in-place
-      playlist.splice(0, playlist.length, ...data);
-      renderQueue();
-      // Try restore previous state
+      // Keep full catalog separate from current queue
+      allSongs = data;
+      // If we are on index.html, always default to full catalog
+      const curFile = (location.pathname.split('/').pop() || '').toLowerCase();
+      if (curFile === 'index.html' || curFile === '') {
+        currentPlaylistCtx = { type: 'global', id: null };
+        playlist.splice(0, playlist.length, ...allSongs);
+        renderQueue();
+      } else if (!rehydratePlaylistFromSavedContext()) {
+        // Otherwise, default to full catalog
+        currentPlaylistCtx = { type: 'global', id: null };
+        playlist.splice(0, playlist.length, ...allSongs);
+        renderQueue();
+      }
+      // Try restore previous state on top
       if (!restorePlayerState()) {
         loadTrack(0);
         audio.volume = Number(volume.value);
@@ -153,8 +293,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Không thể tải playlist từ songs.json:", err);
       // Fallback to built-in playlist
-      playlist.splice(0, playlist.length, ...fallbackPlaylist);
-      renderQueue();
+      allSongs = fallbackPlaylist;
+      const curFile2 = (location.pathname.split('/').pop() || '').toLowerCase();
+      if (curFile2 === 'index.html' || curFile2 === '') {
+        currentPlaylistCtx = { type: 'global', id: null };
+        playlist.splice(0, playlist.length, ...allSongs);
+        renderQueue();
+      } else if (!rehydratePlaylistFromSavedContext()) {
+        currentPlaylistCtx = { type: 'global', id: null };
+        playlist.splice(0, playlist.length, ...allSongs);
+        renderQueue();
+      }
       if (!restorePlayerState()) {
         loadTrack(0);
         audio.volume = Number(volume.value);
@@ -165,6 +314,25 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       console.warn("Đang sử dụng fallback playlist nội bộ");
     }
+  }
+
+  function rehydratePlaylistFromSavedContext() {
+    try {
+      const s = getSavedPlayerState();
+      if (!s || !s.playlistCtx) return false;
+      if (s.playlistCtx.type === 'user' && Array.isArray(s.trackIds) && s.trackIds.length) {
+        // Map ids to allSongs
+        const map = new Map((allSongs || []).map(o => [o.id, o]));
+        const tracks = s.trackIds.map(id => map.get(id)).filter(Boolean);
+        if (tracks.length) {
+          currentPlaylistCtx = { type: 'user', id: s.playlistCtx.id || null };
+          playlist.splice(0, playlist.length, ...tracks);
+          renderQueue();
+          return true;
+        }
+      }
+      return false;
+    } catch { return false; }
   }
 
   // ===== State & Elements =====
@@ -244,6 +412,137 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   applyHeaderAvatar();
   window.addEventListener('avatar:changed', applyHeaderAvatar);
+
+  // ===== Playlists (user/demo) =====
+  function getUserPlaylists() {
+    try { return JSON.parse(localStorage.getItem('user_playlists_v1') || '[]'); } catch { return []; }
+  }
+  function setUserPlaylists(arr) {
+    try { localStorage.setItem('user_playlists_v1', JSON.stringify(arr)); try { window.dispatchEvent(new Event('playlists:changed')); } catch {} } catch {}
+  }
+  function ensureDemoPlaylists() {
+    const cur = getUserPlaylists();
+    if (Array.isArray(cur) && cur.length) return;
+    const demos = [
+      { id: 'pl_chill', name: 'My Chill Mix', cover: './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg', tracks: [
+        'son_tung_mtp/muon_roi_ma_sao_con','son_tung_mtp/noi_nay_co_anh','son_tung_mtp/chung_ta_cua_hien_tai','tlinh/gai_doc_than'
+      ]},
+      { id: 'pl_focus', name: 'Suy tí thôi', cover: './assets/imgs/danh_sach_da_tao/anh_playlist_2.jpg', tracks: [
+        'han_sara/dem_cuu','han_sara/do_anh_si','han_sara/giong_nhu_em','han_sara/xinh'
+      ]},
+      { id: 'pl_study', name: 'IELTS', cover: './assets/imgs/danh_sach_da_tao/anh_playlist_3.jpg', tracks: [
+        'truc_nhan/sang_mat_chua','truc_nhan/made_in_vietnam','truc_nhan/lon_roi_con_khoc_nhe'
+      ]},
+    ];
+    setUserPlaylists(demos);
+  }
+  ensureDemoPlaylists();
+
+  // Expose a way to set current playlist to the player and re-render queue
+  function setPlaylist(tracksArray, ctx) {
+    try {
+      if (!Array.isArray(tracksArray) || !tracksArray.length) return;
+      playlist.splice(0, playlist.length, ...tracksArray);
+      currentPlaylistCtx = ctx && ctx.type ? ctx : { type: 'global', id: null };
+      renderQueue();
+      loadTrack(0);
+      setPlayUI(false);
+      savePlayerState(true);
+    } catch {}
+  }
+  try { window.MusicBox = Object.assign(window.MusicBox || {}, {
+    setPlaylist: setPlaylist,
+    playAt: (i)=>{ try { loadTrack(i); play(); savePlayerState(true); } catch {} },
+    pause: ()=>{ try { pause(); savePlayerState(true); } catch {} },
+    resume: ()=>{ try { play(); savePlayerState(true); } catch {} },
+    isPlaying: ()=>{ try { return !!isPlaying; } catch { return false; } }
+  }); } catch {}
+
+  // Sidebar navigation to playlist page
+  function renderSidebarPlaylists() {
+    try {
+      const container = document.querySelector('.pl-list');
+      if (!container) return;
+      if (container.children.length) return; // already present (hardcoded on some pages)
+      const lists = getUserPlaylists();
+      container.innerHTML = '';
+      lists.slice(0, 3).forEach((pl) => {
+        const row = document.createElement('div');
+        row.className = 'pl-item';
+        row.dataset.plId = pl.id;
+        row.innerHTML = `
+          <div class="pl-cover" style="background-image: url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}');"></div>
+          <div class="pl-meta"><div class="pl-name">${pl.name || 'Playlist'}</div><div class="pl-sub">Playlist • ${pl.tracks?.length || 0} songs</div></div>
+        `;
+        container.appendChild(row);
+      });
+    } catch {}
+  }
+  function wireSidebarPlaylists() {
+    try {
+      const items = document.querySelectorAll('.pl-list .pl-item');
+      const demoIds = ['pl_chill','pl_focus','pl_study'];
+      items.forEach((it, i) => {
+        if (!it.dataset.plId) it.dataset.plId = demoIds[i] || `pl_${i+1}`;
+        it.addEventListener('click', () => {
+          const id = it.dataset.plId;
+          try { go(`./playlist.html?id=${encodeURIComponent(id)}`); } catch { window.location.href = `./playlist.html?id=${encodeURIComponent(id)}`; }
+        });
+      });
+    } catch {}
+  }
+  renderSidebarPlaylists();
+  wireSidebarPlaylists();
+
+  // Sync sidebar playlist counts/names/covers to user data on all pages
+  (function syncSidebarPlaylists() {
+    try {
+      const lists = getUserPlaylists();
+      const items = document.querySelectorAll('.pl-list .pl-item');
+      items.forEach((it, i) => {
+        const pl = lists[i]; if (!pl) return;
+        it.dataset.plId = pl.id;
+        const cover = it.querySelector('.pl-cover');
+        if (cover) cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+        const name = it.querySelector('.pl-name');
+        if (name) name.textContent = pl.name || name.textContent;
+        const sub = it.querySelector('.pl-sub');
+        if (sub) sub.textContent = `Playlist • ${Array.isArray(pl.tracks) ? pl.tracks.length : 0} songs`;
+      });
+    } catch {}
+  })();
+  window.addEventListener('playlists:changed', () => {
+    try {
+      const lists = getUserPlaylists();
+      const items = document.querySelectorAll('.pl-list .pl-item');
+      items.forEach((it, i) => {
+        const pl = lists[i]; if (!pl) return;
+        const sub = it.querySelector('.pl-sub');
+        if (sub) sub.textContent = `Playlist • ${Array.isArray(pl.tracks) ? pl.tracks.length : 0} songs`;
+      });
+    } catch {}
+  });
+
+  // Demo: Add current track to first playlist when clicking more -> add-to-playlist
+  (function wireAddToPlaylist() {
+    try {
+      const btn = document.getElementById('add-to-playlist');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        try {
+          const lists = getUserPlaylists(); if (!lists.length) return;
+          const cur = lists[0];
+          // derive track id from current index in current playlist data source if available
+          const current = playlist[index];
+          const trackId = current && current.id ? current.id : null;
+          if (!trackId) return;
+          if (!Array.isArray(cur.tracks)) cur.tracks = [];
+          if (!cur.tracks.includes(trackId)) cur.tracks.push(trackId);
+          setUserPlaylists(lists);
+        } catch {}
+      });
+    } catch {}
+  })();
 
   // Banner elements
   const bTitle = document.getElementById("b-title");
@@ -338,7 +637,10 @@ document.addEventListener("DOMContentLoaded", () => {
         shuffle: !!shuffle,
         repeatMode,
         queueOpen: document.body.classList.contains('queue-open'),
-        ts: now
+        ts: now,
+        playlistCtx: currentPlaylistCtx,
+        trackIds: (playlist||[]).map(t => t && t.id).filter(Boolean),
+        currentId: (playlist && playlist[index] && playlist[index].id) ? playlist[index].id : null
       };
       localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(s));
     } catch {}
@@ -375,7 +677,15 @@ document.addEventListener("DOMContentLoaded", () => {
         repeatBtn.classList.toggle('active', repeatMode !== 'off');
         updateRepeatA11y();
       }
-      loadTrack(s.index);
+      // Decide which index to load: prefer mapping by currentId if present
+      let targetIndex = s.index;
+      try {
+        if (s.currentId) {
+          const found = (playlist || []).findIndex(t => t && t.id === s.currentId);
+          if (found >= 0) targetIndex = found;
+        }
+      } catch {}
+      loadTrack(targetIndex);
       const applyTime = () => {
         if (typeof s.currentTime === 'number' && isFinite(audio.duration)) {
           audio.currentTime = Math.min(audio.duration - 0.2, Math.max(0, s.currentTime));
@@ -386,11 +696,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!FIRST_VISIT && !JUST_LOGGED_IN && s.isPlaying) {
         play();
       } else {
-        pause();
         setPlayUI(false);
       }
-      // restore queue visibility
-      if (s.queueOpen != null) setQueueVisible(!!s.queueOpen);
+      closeQueue();
       return true;
     } catch { return false; }
   }
@@ -479,8 +787,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try { window.dispatchEvent(new CustomEvent('musicbox:trackchange', { detail: { index } })); } catch {}
   }
 
-  function play()  { audio.play();  isPlaying = true;  setPlayUI(true); }
-  function pause() { audio.pause(); isPlaying = false; setPlayUI(false); }
+  function play()  { audio.play();  isPlaying = true;  setPlayUI(true);  try { window.dispatchEvent(new Event('musicbox:statechange')); } catch {} }
+  function pause() { audio.pause(); isPlaying = false; setPlayUI(false); try { window.dispatchEvent(new Event('musicbox:statechange')); } catch {} }
 
   function nextIndex() {
     if (shuffle) {
