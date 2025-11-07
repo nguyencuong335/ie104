@@ -156,7 +156,8 @@ body {
 }
 .nav-btn,
 .profile-btn,
-.settings-btn {
+.settings-btn,
+.premium-btn {
     display: flex;
     width: 45px;
     height: 45px;
@@ -174,7 +175,8 @@ body {
     transition: background-color 0.2s ease, box-shadow 0.2s ease,
         transform 0.12s ease;
 }
-.settings-btn {
+.settings-btn,
+.premium-btn {
     border-radius: 45px;
 }
 .profile-wrapper { position: relative; }
@@ -213,23 +215,37 @@ body {
 .profile-item:hover { background: rgba(20,129,185,0.08); }
 .nav-btn:hover,
 .profile-btn:hover,
-.settings-btn:hover {
+.settings-btn:hover,
+.premium-btn:hover {
     transform: translateY(-1px);
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.25);
 }
 .nav-btn:active,
 .profile-btn:active,
-.settings-btn:active {
+.settings-btn:active,
+.premium-btn:active {
     transform: translateY(1px);
 }
 .logo-box:hover { cursor: pointer; box-shadow: none; transform: none; }
 .logo-box:focus-visible { outline: 3px solid rgba(20,129,185,0.35); outline-offset: 2px; }
 .nav-btn i,
 .profile-btn i,
-.settings-btn i {
+.settings-btn i,
+.premium-btn i {
     color: #0f3f5f;
     font-size: 1.6rem;
 }
+
+/* Show user avatar in header profile button */
+.profile-btn.has-avatar {
+    background-size: cover;
+    background-position: center;
+}
+.profile-btn.has-avatar i { opacity: 0; }
+
+/* Premium: turn crown icon yellow when active/toggled */
+.premium-btn[aria-pressed="true"] i,
+.premium-btn.active i { color: #facc15; }
 
 .search {
     display: flex;
@@ -345,7 +361,7 @@ body {
 }
 .section-label {
     color: #000;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 0.14em;
@@ -353,6 +369,8 @@ body {
     padding: 6px 0;
     display: block;
 }
+/* Center only the standalone section label (THƯ VIỆN) */
+.menu > .section > .section-label { text-align: center; }
 .section-header {
     display: flex;
     align-items: center;
@@ -413,8 +431,12 @@ body {
 .pl-cover {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    aspect-ratio: 1 / 1; /* keep square under any layout pressure */
+    border-radius: 8px; /* slight rounding while staying square */
     background: lightgray 50% / cover no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .pl-name {
     color: #000;
@@ -433,6 +455,54 @@ body {
 .sidebar::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+/* ===== Responsive: collapsed sidebar (icons only) ===== */
+@media (max-width: 900px) {
+  /* Narrow the reserved sidebar width so layout reflows */
+  :root { --sidebar: 72px; }
+
+  /* Sidebar paddings tighter */
+  .sidebar { padding: 10px; }
+
+  /* Center icon buttons and hide text labels */
+  .menu-btn { justify-content: center; gap: 0; padding: 10px 8px; }
+  .menu-btn span { display: none; }
+  .menu-btn i { font-size: 18px; width: 24px; }
+
+  /* Show thin separators, hide labels only; center the add (+) button */
+  .section { display: block; margin: 8px 0; }
+  /* Replace only the first section label (THƯ VIỆN) with an icon */
+  .menu > .section > .section-label { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 32px; 
+    font-size: 0; /* hide original text */ 
+  }
+  .menu > .section > .section-label::before {
+    content: "\f02d"; /* fa-book */
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 900; /* solid */
+    font-size: 20px; 
+    color: #000; 
+    line-height: 1; 
+  }
+  /* Hide label inside playlist header block */
+  .section-header .section-label { display: none !important; }
+  .section-sep { display: block; height: 1px; background: rgba(0,0,0,0.08); margin: 8px 0; }
+  .section-header { display: flex; justify-content: center; padding: 6px 0; }
+  .section-header .icon-btn.add { display: inline-grid; place-items: center; }
+
+  /* Playlist: show covers only, center each item */
+  .pl-list { display: flex; flex-direction: column; gap: 10px; }
+  .pl-item { justify-content: center; padding: 6px; }
+  .pl-item .pl-meta { display: none; }
+  .pl-cover { width: 36px; height: 36px; aspect-ratio: 1 / 1; border-radius: 8px; background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+  /* Header logo area follows the narrower sidebar */
+  .header-left { width: var(--sidebar); }
+  .logo-box { width: 42px; height: 20px; background-size: contain; }
 }
 
 /* ===== Banner (Now Playing) ===== */
@@ -745,7 +815,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 0 14px calc(14px + max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe))));
+    padding: 0 14px 14px; /* uniform bottom padding so last item spacing matches others */
     flex: 1 1 auto;
     min-height: 0;
     overflow: visible;
@@ -753,7 +823,7 @@ body {
 .q-list::after {
   content: "";
   display: block;
-  height: max(var(--player-bottom-space, 0px), calc(var(--player-h) + var(--player-safe)));
+  height: 0; /* avoid double bottom space; padding handles player spacing */
   width: 100%;
 }
 .q-list {
@@ -784,9 +854,9 @@ body {
     background: rgba(20, 129, 185, 0.08);
 }
 
-.q-item:last-child {
+/* .q-item:last-child {
     padding-bottom: calc(var(--player-h) + var(--player-safe));
-}
+} */
 
 .q-cover {
     width: 44px;
@@ -1348,7 +1418,7 @@ input[type="range"]::-moz-range-thumb {
 
   /* Queue list spacing */
   body.queue-open .q-header, .wrap:has(.queue:not(.hidden)) .q-header { padding: 10px 12px 6px; }
-  body.queue-open .q-list, .wrap:has(.queue:not(.hidden)) .q-list { padding: 0 10px calc(10px + var(--player-h) + var(--player-safe)); }
+  body.queue-open .q-list, .wrap:has(.queue:not(.hidden)) .q-list { padding: 0 10px 10px; }
   body.queue-open .q-item, .wrap:has(.queue:not(.hidden)) .q-item { padding: 8px; gap: 10px; }
   body.queue-open .q-time, .wrap:has(.queue:not(.hidden)) .q-time { font-size: 14px; min-width: 46px; }
 
@@ -1396,9 +1466,11 @@ input[type="range"]::-moz-range-thumb {
 
 /* ===== Fallback: luôn áp dụng layout gọn khi <=900px ===== */
 @media (max-width: 900px) {
-  .content { grid-template-columns: 1fr; }
-  .sidebar { display: none !important; }
-  .header-left { width: auto; }
+  /* Giữ 2 cột: sidebar thu gọn + main */
+  .content { grid-template-columns: var(--sidebar) 1fr; padding-bottom: var(--player-bottom-space); }
+  .sidebar { display: flex !important; }
+  /* Make header's left column equal to sidebar width and center logo */
+  .header-left { width: var(--sidebar); justify-content: center; }
   .logo-box {
     width: 36px; height: 36px; border-radius: 10px;
     background-image: url('../imgs/music_box_icon.png') !important;

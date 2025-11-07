@@ -28,15 +28,57 @@
   margin-bottom: 32px;
 }
 
+.avatar-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
 .user-avatar {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  background-color: #dfe8ef;
+  background-color: #e6edf3;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
 }
+
+/* Empty state: show camera icon when no inline background-image is set */
+.user-avatar:not([style*="background-image"])::before {
+  content: "\f030"; /* fa-camera */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #6b7280;
+  font-size: 32px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide remove button when empty */
+.avatar-wrap:has(.user-avatar:not([style*="background-image"])) .avatar-remove { display: none; }
+
+.avatar-remove {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.avatar-remove:hover { background: #f1f5f9; }
 
 .user-info {
   display: flex;
@@ -49,6 +91,11 @@
   font-size: 28px;
   font-weight: 700;
 }
+
+.user-name-row { display: flex; align-items: center; gap: 8px; }
+.name-edit-btn { border: none; background: transparent; cursor: pointer; padding: 6px; border-radius: 8px; }
+.name-edit-btn:hover { background: #eef2f7; }
+.user-name-input { font-size: 20px; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 8px; max-width: 320px; }
 
 .follow-stats {
   font-size: 15px;
@@ -95,6 +142,39 @@
   font-size: 13px;
   opacity: 0.7;
 }
+
+/* Playlist card actions (edit/delete) */
+.my-pl-actions { display: flex; gap: 10px; margin-top: 8px; }
+.my-pl-actions .btn.tiny {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(2,6,23,0.12);
+  background: #fff;
+  color: #0f172a;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease, box-shadow .15s ease;
+}
+/* Force override global .btn sizing/grid from style.css */
+.my-playlists .my-pl-actions .btn.tiny { width: 32px !important; height: 32px !important; display: inline-flex !important; }
+.my-playlists .my-pl-actions .btn.tiny i { font-size: 14px !important; margin: 0 !important; line-height: 1; }
+.my-pl-actions .btn.tiny:hover { background: #fff; box-shadow: 0 1px 2px rgba(2,6,23,0.12); border-color: rgba(2,6,23,0.18); }
+.my-pl-actions .btn.tiny:active { transform: translateY(1px); }
+/* Colors per action */
+.my-pl-actions .btn.tiny.edit { border-color: #b9d6f2; color: #0b4a6f; }
+.my-pl-actions .btn.tiny.edit i { color: #0b4a6f; }
+.my-pl-actions .btn.tiny.cover { border-color: #cbd5e1; color: #0f172a; }
+.my-pl-actions .btn.tiny.cover i { color: #0f172a; }
+.my-pl-actions .btn.tiny.danger { background: #fff; border-color: #f3b0ab; color: #7a271a; }
+.my-pl-actions .btn.tiny.danger i { color: #b42318; }
+
+/* Subtle hover on card */
+.my-pl-card:hover .my-pl-cover { box-shadow: 0 4px 12px rgba(2, 6, 23, 0.12); }
 
 /* Nút Đăng xuất trong sidebar (thêm nhận diện nhẹ) */
 .menu .menu-btn.logout {

@@ -2,22 +2,35 @@
 
 (function searchArtistAndRender() {
     function normalize(s) {
-        return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        return (s || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim();
     }
 
     function getQuery() {
-        try { return new URLSearchParams(location.search).get("q") || ""; } catch { return ""; }
+        try {
+            return new URLSearchParams(location.search).get("q") || "";
+        } catch {
+            return "";
+        }
     }
 
     async function getAllSongs() {
         try {
-            if (window.MusicBox && typeof window.MusicBox.playlist === "function") {
+            if (
+                window.MusicBox &&
+                typeof window.MusicBox.playlist === "function"
+            ) {
                 const pl = window.MusicBox.playlist();
                 if (Array.isArray(pl) && pl.length) return pl;
             }
         } catch {}
         try {
-            const res = await fetch("./assets/music_data/songs.json", { cache: "no-store" });
+            const res = await fetch("./assets/music_data/songs.json", {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (Array.isArray(data)) return data;
         } catch {}
@@ -25,11 +38,13 @@
     }
 
     function pickArtist(artists, qNorm) {
-        const list = artists.map(name => ({ name, norm: normalize(name) }));
+        const list = artists.map((name) => ({ name, norm: normalize(name) }));
         if (!qNorm) return list[0]?.name || "";
-        const exact = list.find(a => a.norm === qNorm);
+        const exact = list.find((a) => a.norm === qNorm);
         if (exact) return exact.name;
-        const contains = list.find(a => a.norm.includes(qNorm) || qNorm.includes(a.norm));
+        const contains = list.find(
+            (a) => a.norm.includes(qNorm) || qNorm.includes(a.norm)
+        );
         if (contains) return contains.name;
         return list[0]?.name || "";
     }
@@ -38,87 +53,172 @@
         const card = document.querySelector(".top-result-card");
         const imgBox = card?.querySelector(".artist-image");
         const nameEl = card?.querySelector(".artist-name");
-        if (imgBox) imgBox.style.backgroundImage = `url('${artistImgUrl || ""}')`;
+        if (imgBox)
+            imgBox.style.backgroundImage = `url('${artistImgUrl || ""}')`;
         if (nameEl) nameEl.textContent = artistName || "—";
     }
 
     function mapToPlaylistIndex(track) {
         try {
-            if (!window.MusicBox || typeof window.MusicBox.playlist !== "function") return -1;
+            if (
+                !window.MusicBox ||
+                typeof window.MusicBox.playlist !== "function"
+            )
+                return -1;
             const list = window.MusicBox.playlist();
             const tNorm = normalize(track.title);
             const aNorm = normalize(track.artist);
-            return list.findIndex(p => normalize(p.title) === tNorm && normalize(p.artist) === aNorm);
-        } catch { return -1; }
+            return list.findIndex(
+                (p) =>
+                    normalize(p.title) === tNorm &&
+                    normalize(p.artist) === aNorm
+            );
+        } catch {
+            return -1;
+        }
     }
 
     function formatDuration(song) {
         // First try to get duration from the song object
         if (song.duration) {
-            if (typeof song.duration === 'number') {
+            if (typeof song.duration === "number") {
                 const mins = Math.floor(song.duration / 60);
                 const secs = Math.floor(song.duration % 60);
-                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            } else if (typeof song.duration === 'string') {
+                return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+            } else if (typeof song.duration === "string") {
                 // If it's already in MM:SS format, return as is
                 if (/^\d+:\d{2}$/.test(song.duration)) {
                     return song.duration;
                 }
             }
         }
-        
+
         // If no duration is available, try to get it from MusicBox
-        if (window.MusicBox && typeof window.MusicBox.playlist === 'function') {
+        if (window.MusicBox && typeof window.MusicBox.playlist === "function") {
             try {
                 const playlist = window.MusicBox.playlist();
-                const foundSong = playlist.find(s => 
-                    s.title === song.title && 
-                    s.artist === song.artist
+                const foundSong = playlist.find(
+                    (s) => s.title === song.title && s.artist === song.artist
                 );
                 if (foundSong && foundSong.duration) {
-                    if (typeof foundSong.duration === 'number') {
+                    if (typeof foundSong.duration === "number") {
                         const mins = Math.floor(foundSong.duration / 60);
                         const secs = Math.floor(foundSong.duration % 60);
-                        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                        return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
                     }
                     return foundSong.duration;
                 }
             } catch (e) {
-                console.error('Error getting duration from MusicBox:', e);
+                console.error("Error getting duration from MusicBox:", e);
             }
         }
-        
-        return '0:00';
+
+        return "0:00";
+    }
+
+    // Asynchronously ensure durations after initial render
+    async function ensureDurations(songs) {
+        // Try to use MusicBox playlist if ready
+        let pl = [];
+        try {
+            if (window.MusicBox && typeof window.MusicBox.playlist === "function") {
+                pl = window.MusicBox.playlist();
+            }
+        } catch {}
+
+        const byKey = new Map();
+        if (Array.isArray(pl)) {
+            pl.forEach((p) => {
+                const key = (p.title + "\u0000" + p.artist).toLowerCase();
+                byKey.set(key, p);
+            });
+        }
+
+        const items = document.querySelectorAll(".top-song-item");
+        songs.slice(0, 4).forEach((song, i) => {
+            const row = items[i];
+            if (!row) return;
+            const durEl = row.querySelector(".song-duration");
+            if (!durEl) return;
+            // If already filled, skip
+            if (durEl.textContent && durEl.textContent !== "0:00") return;
+
+            const key = (String(song.title) + "\u0000" + String(song.artist)).toLowerCase();
+            const match = byKey.get(key);
+            if (match && match.src) {
+                const a = new Audio(match.src);
+                a.addEventListener("loadedmetadata", () => {
+                    const mins = Math.floor(a.duration / 60);
+                    const secs = Math.floor(a.duration % 60).toString().padStart(2, "0");
+                    durEl.textContent = `${mins}:${secs}`;
+                });
+                return;
+            }
+
+            // Fallback: use song.src directly if present
+            if (song.src) {
+                const a = new Audio(song.src);
+                a.addEventListener("loadedmetadata", () => {
+                    const mins = Math.floor(a.duration / 60);
+                    const secs = Math.floor(a.duration % 60).toString().padStart(2, "0");
+                    durEl.textContent = `${mins}:${secs}`;
+                });
+            }
+        });
     }
 
     function renderSongs(songs) {
-        console.log('Song data:', songs); // Debug log
-        const container = document.querySelector('.top-songs-grid');
+        console.log("Song data:", songs); // Debug log
+        const container = document.querySelector(".top-songs-grid");
         if (!container) return;
 
-        container.innerHTML = songs.slice(0, 4).map((song, i) => {
-            const songIndex = mapToPlaylistIndex(song);
-            const duration = formatDuration(song);
-            console.log(`Song ${i}:`, song.title, 'Duration:', song.duration, 'Formatted:', duration); // Debug log
-            
-            return `
+        container.innerHTML = songs
+            .slice(0, 4)
+            .map((song, i) => {
+                const songIndex = mapToPlaylistIndex(song);
+                const duration = formatDuration(song);
+                console.log(
+                    `Song ${i}:`,
+                    song.title,
+                    "Duration:",
+                    song.duration,
+                    "Formatted:",
+                    duration
+                ); // Debug log
+
+                return `
                 <div class="top-song-item" data-index="${songIndex}">
                     <div class="song-number">${i + 1}</div>
-                    <div class="song-cover" style="background-image: url('${song.cover || './assets/imgs/album-cover-1.jpg'}')"></div>
+                    <div class="song-cover" style="background-image: url('${
+                        song.cover || "./assets/imgs/album-cover-1.jpg"
+                    }')"></div>
                     <div class="song-details">
-                        <div class="song-title">${song.title || 'Unknown Song'}</div>
-                        <div class="song-artist">${song.artist || 'Unknown Artist'}</div>
+                        <div class="song-title">${
+                            song.title || "Unknown Song"
+                        }</div>
+                        <div class="song-artist">${
+                            song.artist || "Unknown Artist"
+                        }</div>
                     </div>
                     <div class="song-duration">${duration}</div>
                 </div>`;
-        }).join('');
+            })
+            .join("");
+
+        // After rendering, ensure durations are populated asynchronously
+        ensureDurations(songs);
 
         // Add click event listeners to song items
-        document.querySelectorAll('.top-song-item').forEach(item => {
-            item.style.cursor = 'pointer';
-            item.addEventListener('click', (e) => {
-                const index = parseInt(item.getAttribute('data-index'));
-                if (!isNaN(index) && index >= 0 && window.MusicBox && typeof window.MusicBox.playAt === 'function') {
+        document.querySelectorAll(".top-song-item").forEach((item) => {
+            item.style.cursor = "pointer";
+            item.addEventListener("click", (e) => {
+                const index = parseInt(item.getAttribute("data-index"));
+                if (
+                    !isNaN(index) &&
+                    index >= 0 &&
+                    window.MusicBox &&
+                    typeof window.MusicBox.playAt === "function"
+                ) {
                     window.MusicBox.playAt(index);
                 }
             });
@@ -134,10 +234,13 @@
 
         const all = await getAllSongs();
         if (!all.length) return;
-        const artistSet = Array.from(new Set(all.map(s => s.artist)));
+        const artistSet = Array.from(new Set(all.map((s) => s.artist)));
         const pickedArtist = pickArtist(artistSet, qNorm);
-        const artistSongs = all.filter(s => normalize(s.artist) === normalize(pickedArtist)).slice(0, 12);
-        const artistImg = artistSongs[0]?.artistImg || artistSongs[0]?.cover || "";
+        const artistSongs = all
+            .filter((s) => normalize(s.artist) === normalize(pickedArtist))
+            .slice(0, 12);
+        const artistImg =
+            artistSongs[0]?.artistImg || artistSongs[0]?.cover || "";
 
         renderArtistHeader(pickedArtist, artistImg);
         renderSongs(artistSongs);
