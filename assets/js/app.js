@@ -147,7 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
         card.style.display = '';
         card.dataset.plId = pl.id;
         const cover = card.querySelector('.my-pl-cover');
-        if (cover) cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+        if (cover) {
+          cover.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+          cover.style.backgroundSize = 'cover';
+          cover.style.backgroundPosition = 'center';
+          cover.style.backgroundRepeat = 'no-repeat';
+        }
         const name = card.querySelector('.my-pl-name');
         if (name) name.textContent = trunc40(pl.name || 'Playlist');
         const sub = card.querySelector('.my-pl-sub');
@@ -209,7 +214,12 @@ document.addEventListener("DOMContentLoaded", () => {
                   setUserPlaylists(lists2);
                   // immediate UI update
                   const coverEl = card.querySelector('.my-pl-cover');
-                  if (coverEl) coverEl.style.backgroundImage = `url('${lists2[idx].cover || ''}')`;
+                  if (coverEl) {
+                    coverEl.style.backgroundImage = `url('${lists2[idx].cover || ''}')`;
+                    coverEl.style.backgroundSize = 'cover';
+                    coverEl.style.backgroundPosition = 'center';
+                    coverEl.style.backgroundRepeat = 'no-repeat';
+                  }
                 } catch {}
                 try { input.remove(); } catch {}
               };
@@ -509,9 +519,16 @@ document.addEventListener("DOMContentLoaded", () => {
         row.className = 'pl-item';
         row.dataset.plId = pl.id;
         row.innerHTML = `
-          <div class="pl-cover" style="background-image: url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}');"></div>
+          <div class="pl-cover"></div>
           <div class="pl-meta"><div class="pl-name">${trunc40(pl.name || 'Playlist')}</div><div class="pl-sub">Playlist • ${pl.tracks?.length || 0} songs</div></div>
         `;
+        const cov = row.querySelector('.pl-cover');
+        if (cov) {
+          cov.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+          cov.style.backgroundSize = 'cover';
+          cov.style.backgroundPosition = 'center';
+          cov.style.backgroundRepeat = 'no-repeat';
+        }
         container.appendChild(row);
       });
     } catch {}
@@ -627,9 +644,16 @@ document.addEventListener("DOMContentLoaded", () => {
         row.className = 'pl-item';
         row.dataset.plId = pl.id;
         row.innerHTML = `
-          <div class="pl-cover" style="background-image: url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}');"></div>
+          <div class="pl-cover"></div>
           <div class="pl-meta"><div class="pl-name">${trunc40(pl.name || 'Playlist')}</div><div class="pl-sub">Playlist • ${(pl.tracks?.length || 0)} songs</div></div>
         `;
+        const cov2 = row.querySelector('.pl-cover');
+        if (cov2) {
+          cov2.style.backgroundImage = `url('${pl.cover || './assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg'}')`;
+          cov2.style.backgroundSize = 'cover';
+          cov2.style.backgroundPosition = 'center';
+          cov2.style.backgroundRepeat = 'no-repeat';
+        }
         row.addEventListener('click', () => {
           try { go(`./playlist.html?id=${encodeURIComponent(pl.id)}`); }
           catch { window.location.href = `./playlist.html?id=${encodeURIComponent(pl.id)}`; }

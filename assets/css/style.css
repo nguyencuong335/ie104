@@ -361,7 +361,7 @@ body {
 }
 .section-label {
     color: #000;
-    font-family: "Poppins", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
     letter-spacing: 0.14em;
@@ -431,8 +431,12 @@ body {
 .pl-cover {
     width: 40px;
     height: 40px;
-    border-radius: 10px;
+    aspect-ratio: 1 / 1; /* keep square under any layout pressure */
+    border-radius: 8px; /* slight rounding while staying square */
     background: lightgray 50% / cover no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .pl-name {
     color: #000;
@@ -494,7 +498,7 @@ body {
   .pl-list { display: flex; flex-direction: column; gap: 10px; }
   .pl-item { justify-content: center; padding: 6px; }
   .pl-item .pl-meta { display: none; }
-  .pl-cover { width: 36px; height: 36px; border-radius: 8px; }
+  .pl-cover { width: 36px; height: 36px; aspect-ratio: 1 / 1; border-radius: 8px; background-size: cover; background-position: center; background-repeat: no-repeat; }
 
   /* Header logo area follows the narrower sidebar */
   .header-left { width: var(--sidebar); }
