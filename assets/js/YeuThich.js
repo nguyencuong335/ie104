@@ -55,3 +55,88 @@
     window.addEventListener('musicbox:trackchange', (e) => { if(e && e.detail) highlight(e.detail.index); });
   });
 })();
+
+// Module thêm bài hát vào trang Yêu Thích
+(() => {
+  const likeBtn = document.getElementById('like');
+  const ytTbody = document.getElementById('yt-body');
+  const playlistCover = document.querySelector('.playlist-cover img');
+  const playlistSub = document.querySelector('.playlist .playlist-sub');
+
+  if (!likeBtn || !ytTbody) return;
+
+  // Lấy danh sách hiện tại từ localStorage
+  function loadLiked() {
+    try {
+      const data = localStorage.getItem('liked_songs');
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLiked(list) {
+    try {
+      localStorage.setItem('liked_songs', JSON.stringify(list));
+    } catch {}
+  }
+
+  // Hàm render lại bảng Yêu Thích
+  function renderLiked() {
+    const list = loadLiked();
+    ytTbody.innerHTML = '';
+    list.forEach((t, i) => {
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-track-index', String(i));
+      tr.innerHTML = `
+        <td>${i + 1}</td>
+        <td class="song-title"><img src="${t.cover || ''}" alt="${t.title || ''}"><span>${t.title || ''}</span></td>
+        <td>—</td>
+        <td>${t.artist || ''}</td>
+        <td>${t.duration || '--:--'}</td>`;
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', () => {
+        if (window.MusicBox && typeof window.MusicBox.playAt === 'function') {
+          const playlist = window.MusicBox.playlist();
+          const idx = playlist.findIndex(x => x.id === t.id);
+          if (idx >= 0) window.MusicBox.playAt(idx);
+        }
+      });
+      ytTbody.appendChild(tr);
+    });
+
+    // Update số lượng bài
+    if (playlistSub) playlistSub.textContent = `Playlist • ${list.length} bài hát`;
+    // Update cover nếu có bài đầu tiên
+    const first = list[0];
+    if (playlistCover && first && first.cover) playlistCover.src = first.cover;
+  }
+
+  // Click trái tim
+  likeBtn.addEventListener('click', () => {
+    const current = {
+      id: window.currentTrackId || Date.now(),
+      title: document.getElementById('title')?.textContent || '—',
+      artist: document.getElementById('artist')?.textContent || '—',
+      cover: document.getElementById('cover')?.src || '',
+      duration: document.getElementById('progress')?.max || '--:--',
+    };
+
+    let liked = loadLiked();
+    // Kiểm tra nếu đã có thì bỏ thích
+    if (!liked.some(s => s.id === current.id)) {
+      liked.push(current);
+      saveLiked(liked);
+      renderLiked();
+      likeBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
+    } else {
+      liked = liked.filter(s => s.id !== current.id);
+      saveLiked(liked);
+      renderLiked();
+      likeBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+    }
+  });
+
+  // Render khi load trang
+  document.addEventListener('DOMContentLoaded', renderLiked);
+})();
