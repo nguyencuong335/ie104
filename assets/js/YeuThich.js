@@ -56,7 +56,7 @@
   });
 })();
 
-// Module thêm bài hát vào trang Yêu Thích
+// Module thêm bài hát vào trang Yêu Thích với nút xóa từng dòng
 (() => {
   const likeBtn = document.getElementById('like');
   const ytTbody = document.getElementById('yt-body');
@@ -65,7 +65,6 @@
 
   if (!likeBtn || !ytTbody) return;
 
-  // Lấy danh sách hiện tại từ localStorage
   function loadLiked() {
     try {
       const data = localStorage.getItem('liked_songs');
@@ -81,7 +80,6 @@
     } catch {}
   }
 
-  // Hàm render lại bảng Yêu Thích
   function renderLiked() {
     const list = loadLiked();
     ytTbody.innerHTML = '';
@@ -93,15 +91,32 @@
         <td class="song-title"><img src="${t.cover || ''}" alt="${t.title || ''}"><span>${t.title || ''}</span></td>
         <td>—</td>
         <td>${t.artist || ''}</td>
-        <td>${t.duration || '--:--'}</td>`;
+        <td>${t.duration || '--:--'}</td>
+        <td><button class="remove-btn">Xóa</button></td>`; // Thêm nút Xóa
       tr.style.cursor = 'pointer';
-      tr.addEventListener('click', () => {
+
+      // Click vào dòng để play nhạc, nhưng bỏ qua nút Xóa
+      tr.addEventListener('click', (e) => {
+        if (e.target.classList.contains('remove-btn')) return;
         if (window.MusicBox && typeof window.MusicBox.playAt === 'function') {
           const playlist = window.MusicBox.playlist();
           const idx = playlist.findIndex(x => x.id === t.id);
           if (idx >= 0) window.MusicBox.playAt(idx);
         }
       });
+
+      // Click nút Xóa
+      tr.querySelector('.remove-btn').addEventListener('click', () => {
+        let liked = loadLiked();
+        liked = liked.filter(s => s.id !== t.id);
+        saveLiked(liked);
+        renderLiked();
+        // Nếu bài đang chơi bị xóa, cập nhật icon trái tim
+        if (window.currentTrackId === t.id && likeBtn.querySelector('i')) {
+          likeBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+        }
+      });
+
       ytTbody.appendChild(tr);
     });
 
@@ -112,7 +127,7 @@
     if (playlistCover && first && first.cover) playlistCover.src = first.cover;
   }
 
-  // Click trái tim
+  // Click trái tim để thêm/bỏ thích
   likeBtn.addEventListener('click', () => {
     const current = {
       id: window.currentTrackId || Date.now(),
@@ -123,7 +138,6 @@
     };
 
     let liked = loadLiked();
-    // Kiểm tra nếu đã có thì bỏ thích
     if (!liked.some(s => s.id === current.id)) {
       liked.push(current);
       saveLiked(liked);
@@ -137,6 +151,5 @@
     }
   });
 
-  // Render khi load trang
   document.addEventListener('DOMContentLoaded', renderLiked);
 })();
