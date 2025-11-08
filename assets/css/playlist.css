@@ -61,12 +61,20 @@
   .user-header#pl-header { margin: -24px -24px 0; padding: 14px 24px 8px; }
   .avatar-wrap, #pl-cover { width: 110px; height: 110px; }
   .user-name { font-size: 22px; }
-  /* Mobile grid: # | Title | Time; hide Artist */
-  :root { --pl-grid: 36px 1fr 100px; }
-  .pl-head { grid-template-columns: var(--pl-grid); }
-  .pl-head .pl-artist-col { display: none; }
-  .song-list tbody tr { grid-template-columns: var(--pl-grid); padding: 10px 12px; }
-  .song-list tbody td:nth-child(3) { display: none; }
-  .pl-cover { width: 36px; height: 36px; flex: 0 0 36px; }
-  .pl-title { font-size: 1.5rem; }
+  /* Mobile grid: stack 2 rows — line 1: Title(with cover); line 2: Artist */
+  :root { --pl-grid: minmax(0,1fr); }
+  /* Hide header to avoid wrapping; only body rows are shown */
+  .pl-head { display: none; }
+  .song-list tbody tr { grid-template-columns: var(--pl-grid); grid-template-rows: auto auto; padding: 8px 12px; row-gap: 0; column-gap: 10px; align-items: start; }
+  /* Hide index and time cells */
+  .song-list tbody td:nth-child(1),
+  .song-list tbody td:nth-child(4) { display: none; }
+  /* Ensure track cell uses full width on row 1 */
+  .song-list tbody td:nth-child(2) { min-width: 0; grid-column: 1; grid-row: 1; padding-bottom: 0 !important; }
+  /* Artist goes to row 2 below title, full width */
+  .song-list tbody td:nth-child(3) { display: block; grid-column: 1; grid-row: 2; min-width: 0; overflow: visible; text-overflow: clip; white-space: normal; font-size: 1.2rem; line-height: 1.1; color: #6b7280; margin-left: 0; margin-top: 0; }
+  .pl-cell-track { gap: 12px; min-width: 0; align-items: center; }
+  /* Make cover taller than combined title+artist */
+  .pl-cover { width: 56px; height: 56px; flex: 0 0 56px; }
+  .pl-title { font-size: 1.5rem; line-height: 1.1; max-width: 100%; white-space: normal; overflow: visible; text-overflow: clip; margin: 0; }
 }
