@@ -1,19 +1,29 @@
-.pl-head { display: grid; grid-template-columns: var(--pl-grid); align-items: center; column-gap: var(--pl-gap); padding: 10px 12px; color: #7f8b99; font-weight: 700; border-bottom: 1px solid rgba(0,0,0,.06); font-family: "Inter", sans-serif; }
-.pl-head .pl-title-col { padding-left: 0; }
-.pl-head .pl-time-col { text-align: right; }
-:root { --player-h: 96px; --pl-grid: 48px 1.55fr 1fr 72px; --pl-gap: 12px; }
+.pl-head { display: grid; grid-template-columns: var(--pl-grid); align-items: center; column-gap: var(--pl-gap); padding: 8px 4px; color: #7f8b99; font-weight: 700; border-bottom: 1px solid rgba(0,0,0,.06); font-family: "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 1.5rem; min-width: 0; box-sizing: border-box; }
+.pl-head > * { padding: 0; margin: 0; }
+/* .pl-head .pl-title-col { padding-left: calc(var(--pl-cover) + var(--pl-gap)); } */
+.pl-head .pl-artist-col { padding-left: 0; }
+.pl-head .pl-time-col { text-align: right; padding-right: 8px; }
+.pl-head .pl-hash { text-align: center; }
+:root { --player-h: 96px; --pl-grid: 40px 1.5fr 1fr 60px; --pl-gap: 12px; --pl-cover: 42px; --pl-banner-size: clamp(220px, 28vh, 320px); }
 .main-content { flex: 1; padding: 20px 36px 32px; background: #F9F8FD; border-radius: 12px; box-shadow: 0 4px 4px 5px rgba(0, 0, 0, 0.12); overflow: hidden auto; height: 100%; min-height: 0; scrollbar-width: none; padding-bottom: calc(var(--player-h, 96px) + 24px); word-wrap: break-word; overflow-wrap: anywhere; }
 .user-header { display: flex; align-items: center; gap: 24px; margin-bottom: 0; }
 .user-header#pl-header { 
   background: linear-gradient(93deg, #8cdbdb 0%, #ffffff 100%);
   /* pull header out to cover main-content padding so gradient spans full width */
-  margin: -20px -36px 0;
-  padding: 16px 36px 10px;
+  margin: -20px -36px 16px; /* add bottom space so cover won't overlap list */
+  padding: 16px 36px 12px;
   border-radius: 12px 12px 0 0;
   box-shadow: none;
+  display: grid;
+  grid-template-columns: var(--pl-banner-size) 1fr; /* artwork column ties to variable */
+  gap: 20px;
+  align-items: center;
+  overflow: hidden; /* keep cover inside banner */
+  /* Make banner tall enough to fully contain the square cover (padding top+bottom = 28px) */
+  min-height: calc(var(--pl-banner-size) + 28px);
 }
-.avatar-wrap { position: relative; width: 140px; height: 140px; }
-#pl-cover { width: 140px; height: 140px; border-radius: 16px; background-size: cover; background-position: center; background-color: #e6edf3; box-shadow: 0 6px 16px rgba(0,0,0,.12); }
+.avatar-wrap { position: relative; width: var(--pl-banner-size); height: auto; }
+#pl-cover { width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 6px; background-size: cover; background-position: center; background-color: #e6edf3; box-shadow: 0 8px 18px rgba(0,0,0,.12); }
 .user-info { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
 .user-name { font-size: 28px; font-weight: 800; color: #135e88; letter-spacing: -0.4px; }
 .user-name-row { display: flex; align-items: center; gap: 10px; }
@@ -23,20 +33,40 @@
 .song-list { width: 100%; border-collapse: collapse; table-layout: fixed; background: transparent; border-radius: 0; box-shadow: none; margin-top: 0; font-family: "Inter", sans-serif; }
 .song-list thead { display: none; }
 .song-list thead th { background: transparent; color: #7f8b99; font-weight: 700; padding: 8px 14px; border-bottom: 1px solid rgba(0,0,0,.06); }
-.song-list tbody tr { display: grid; grid-template-columns: var(--pl-grid); align-items: center; column-gap: var(--pl-gap); padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.06); }
-.song-list tbody tr > *:last-child { padding-right: 0; }
+.song-list tbody tr { display: grid; grid-template-columns: var(--pl-grid); align-items: center; column-gap: var(--pl-gap); padding: 8px 4px; border-bottom: 1px solid rgba(0,0,0,.06); }
+.song-list tbody tr > *:last-child { padding-right: 8px; }
 .song-list tbody td { padding: 0; border-bottom: 0; }
+
+/* New div-grid playlist body (matches Nghe Gan Day) */
+.pl-body { width: 100%; }
+.pl-body .pl-row { display: grid; grid-template-columns: var(--pl-grid); align-items: center; column-gap: var(--pl-gap); padding: 8px 4px; border-bottom: 1px solid rgba(0,0,0,.06); border-radius: 10px; min-width: 0; box-sizing: border-box; }
+.pl-body .pl-row:hover { background: rgba(43,166,223,0.08); }
+.pl-body .pl-row.is-current { background: rgba(43,166,223,0.16); }
+.pl-body .pl-row .pl-idx { display: flex; align-items: center; justify-content: center; }
+.pl-body .pl-row .pl-time { text-align: right; padding-right: 8px; font-variant-numeric: tabular-nums; -webkit-font-feature-settings: "tnum"; font-feature-settings: "tnum"; }
+/* Hover swap: show trash only on hover, hide number */
+.pl-body .pl-row .pl-idx .pl-num { display: inline; }
+.pl-body .pl-row .pl-idx .del { display: none; }
+.pl-body .pl-row:hover .pl-idx .pl-num { display: none; }
+.pl-body .pl-row:hover .pl-idx .del { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; }
 .song-list tbody td:nth-child(2) { color: #1666b2; font-family: "Inter", sans-serif; font-weight: 700; font-size: 1.6rem; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-bottom: 2px; }
-.song-list tbody td:nth-child(3) { color: #7f8b99; font-family: "Inter", sans-serif; font-weight: 400; font-size: 1.4rem; line-height: 1; }
+.song-list tbody td:nth-child(3) { color: #7f8b99; font-family: "Inter", sans-serif; font-weight: 400; font-size: 1.4rem; line-height: 1; text-align: left; padding-left: 0; }
+.song-list tbody td:nth-child(3),
+.song-list tbody td:nth-child(4) {
+  padding-left: 0;
+  padding-right: 0;
+}
 .pl-cell-track { display: flex; align-items: center; gap: 12px; }
 .pl-cell-track { min-width: 0; }
-.pl-title { color: #1666b2; font-weight: 700; font-size: 1.6rem; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pl-cover { width: 42px; height: 42px; border-radius: 8px; background-size: cover; background-position: center; flex: 0 0 42px; }
+.pl-title { color: #1666b2; font-weight: 700; font-size: 1.6rem; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: "Inter", sans-serif; }
+.pl-artist { color: #7f8b99; font-family: "Inter", sans-serif; font-weight: 400; font-size: 14px; line-height: 1.2; }
+.pl-cover { display:block; width: var(--pl-cover); height: auto; aspect-ratio: 1 / 1; border-radius: 8px; background-size: cover; background-position: center; flex: 0 0 var(--pl-cover); }
 .song-list tbody tr { border-radius: 10px; }
 .song-list tbody tr:hover { background: rgba(43,166,223,0.08); }
 .song-list tbody tr.is-current { background: rgba(43,166,223,0.16); }
 .song-list tbody tr:last-child td { border-bottom: 0; }
-.song-list td:nth-child(4) { text-align: right; }
+.song-list td:nth-child(4) { text-align: right; padding-right: 8px; }
+.pl-head .pl-time-col { padding-right: 0; }
 .song-list tbody td.pl-idx { position: relative; display: flex; align-items: center; justify-content: center; }
 .song-list tbody td.pl-idx .pl-num { display: inline; }
 .song-list tbody td.pl-idx .del { display: none; }
@@ -58,23 +88,32 @@
 .song-play.btn.play i { color: #fff; font-size: 1.4rem; transform: translateX(1px); }
 @media (max-width: 900px) {
   .main-content { padding: 24px; border-radius: 12px; }
-  .user-header#pl-header { margin: -24px -24px 0; padding: 14px 24px 8px; }
-  .avatar-wrap, #pl-cover { width: 110px; height: 110px; }
+  .user-header#pl-header { 
+    margin: -24px -24px 0; 
+    padding: 8px 24px; 
+    grid-template-columns: 1fr; 
+    gap: 8px; 
+    align-items: start;
+    min-height: auto; /* let content define height on mobile */
+  }
+  .avatar-wrap { width: auto; height: auto; }
+  #pl-cover { width: 100%; height: 100%; aspect-ratio: 1 / 1; border-radius: 8px; object-fit: cover; }
   .user-name { font-size: 22px; }
-  /* Mobile grid: stack 2 rows — line 1: Title(with cover); line 2: Artist */
-  :root { --pl-grid: minmax(0,1fr); }
-  /* Hide header to avoid wrapping; only body rows are shown */
-  .pl-head { display: none; }
-  .song-list tbody tr { grid-template-columns: var(--pl-grid); grid-template-rows: auto auto; padding: 8px 12px; row-gap: 0; column-gap: 10px; align-items: start; }
-  /* Hide index and time cells */
-  .song-list tbody td:nth-child(1),
-  .song-list tbody td:nth-child(4) { display: none; }
-  /* Ensure track cell uses full width on row 1 */
-  .song-list tbody td:nth-child(2) { min-width: 0; grid-column: 1; grid-row: 1; padding-bottom: 0 !important; }
-  /* Artist goes to row 2 below title, full width */
-  .song-list tbody td:nth-child(3) { display: block; grid-column: 1; grid-row: 2; min-width: 0; overflow: visible; text-overflow: clip; white-space: normal; font-size: 1.2rem; line-height: 1.1; color: #6b7280; margin-left: 0; margin-top: 0; }
-  .pl-cell-track { gap: 12px; min-width: 0; align-items: center; }
-  /* Make cover taller than combined title+artist */
-  .pl-cover { width: 56px; height: 56px; flex: 0 0 56px; }
-  .pl-title { font-size: 1.5rem; line-height: 1.1; max-width: 100%; white-space: normal; overflow: visible; text-overflow: clip; margin: 0; }
+
+  /* Giống NgheGanDay: 3 cột (#, Title, Time), 1 hàng; ẩn Artist */
+  .pl-head, .pl-body .pl-row {
+    grid-template-columns: 30px 1fr 50px;
+    padding: 8px 2px;
+    column-gap: 6px;
+    font-size: 14px;
+    align-items: center;
+  }
+  .pl-head .pl-artist-col { display: none; }
+  .pl-body .pl-row .pl-artist { display: none; }
+
+  .pl-cover { display:block; width: 32px; height: auto; min-width: 32px; aspect-ratio: 1 / 1; flex: 0 0 32px; }
+  .pl-cell-track { min-width: 0; max-width: 100%; overflow: hidden; align-items: center; }
+  .pl-title { font-size: 13px; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .pl-body .pl-row .pl-idx { padding-left: 2px; text-align: center; min-width: 30px; display: flex; align-items: center; justify-content: center; }
+  .pl-body .pl-row .pl-time { text-align: right; padding-right: 8px; white-space: nowrap; min-width: 36px; font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.5px; font-variant-numeric: tabular-nums; -webkit-font-feature-settings: "tnum"; font-feature-settings: "tnum"; }
 }
