@@ -50,7 +50,7 @@ button {
 
 .home-section-title {
   font-family: "Poppins", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 8px;
   letter-spacing: -0.5px;
@@ -59,7 +59,7 @@ button {
 
 .home-section-sub {
   font-family: "Inter", "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: #666;
   font-weight: 400;
 }
@@ -148,7 +148,7 @@ body.queue-open .home-main,
 }
 
 #hero-carousel .b-title {
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   font-weight: 800;
   margin-bottom: 12px;
 }
@@ -290,7 +290,7 @@ body.queue-open .home-main,
 .category-label {
   position: relative;
   z-index: 2;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 800;
   margin-bottom: 8px;
   display: block;
@@ -411,7 +411,7 @@ body.dark-mode .playlist-card:hover {
 }
 
 .playlist-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 6px;
   color: var(--text-color);
@@ -419,7 +419,7 @@ body.dark-mode .playlist-card:hover {
 }
 
 .playlist-meta {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #777;
   margin-bottom: 8px;
   font-weight: 500;
@@ -483,11 +483,11 @@ body.dark-mode .track-index {
 
 .track-title {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .track-artist {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #777;
 }
 
@@ -597,18 +597,18 @@ body.dark-mode .track-index {
 
 .album-title {
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   margin-bottom: 3px;
 }
 
 .album-artist {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #777;
   margin-bottom: 4px;
 }
 
 .album-meta {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #555;
 }
 

@@ -40,28 +40,29 @@
     let tracks = trackIds.map(tid=> map.get(tid)).filter(Boolean);
     if (countEl) countEl.textContent = `${tracks.length} bài hát`;
 
-    // Render table
-    const tbody = qs('#pl-tbody');
-    if (tbody) tbody.innerHTML = '';
+    // Render list (div-grid like NgheGanDay)
+    const bodyWrap = qs('#pl-body');
+    if (bodyWrap) bodyWrap.innerHTML = '';
     const pendingDur = [];
     tracks.forEach((t, i)=>{
-      const tr = document.createElement('tr');
-      tr.setAttribute('data-index', String(i));
-      tr.innerHTML = `
-        <td class="pl-idx" style="padding:8px; width:48px;">
+      const row = document.createElement('div');
+      row.className = 'pl-row';
+      row.setAttribute('data-index', String(i));
+      row.innerHTML = `
+        <div class="pl-idx">
           <span class="pl-num">${i+1}</span>
           <button class="btn tiny del first" title="Xóa khỏi playlist" aria-label="Xóa khỏi playlist">
             <i class="fa-solid fa-trash"></i>
           </button>
-        </td>
-        <td class="pl-cell-track" style="padding:8px; max-width: 520px;">
+        </div>
+        <div class="pl-cell-track">
           <div class="pl-cover" style="background-image:url('${t.cover || ''}')"></div>
           <div class="pl-title" title="${t.title}">${t.title}</div>
-        </td>
-        <td style="padding:8px; color:#7f8b99;">${t.artist || ''}</td>
-        <td style="padding:8px; text-align:right;" id="pl-dur-${i}">--:--</td>
+        </div>
+        <div class="pl-artist">${t.artist || ''}</div>
+        <div class="pl-time" id="pl-dur-${i}">--:--</div>
       `;
-      if (tbody) tbody.appendChild(tr);
+      if (bodyWrap) bodyWrap.appendChild(row);
       // Prefetch duration
       try {
         const a = new Audio(t.src);
@@ -106,13 +107,13 @@
             }
           }
         }
-        // Rerender table quickly: remove the row and reindex numbers
-        const row = qs(`#pl-tbody tr[data-index="${indexToRemove}"]`);
+        // Rerender quickly: remove the row and reindex numbers
+        const row = qs(`#pl-body .pl-row[data-index="${indexToRemove}"]`);
         if (row) row.remove();
         // update remaining data-index and order number
-        qsa('#pl-tbody tr').forEach((r, idx)=>{
+        qsa('#pl-body .pl-row').forEach((r, idx)=>{
           r.setAttribute('data-index', String(idx));
-          const numCell = r.querySelector('td:first-child'); if (numCell) numCell.textContent = String(idx+1);
+          const numSpan = r.querySelector('.pl-idx .pl-num'); if (numSpan) numSpan.textContent = String(idx+1);
         });
       } catch{}
     }
@@ -128,12 +129,12 @@
     function markCurrentRow() {
       try {
         if (!isThisPlaylistActive()) { // clear highlight if another context is active
-          document.querySelectorAll('#pl-tbody tr').forEach(tr => tr.classList.remove('is-current'));
+          document.querySelectorAll('#pl-body .pl-row').forEach(tr => tr.classList.remove('is-current'));
           return;
         }
         const cur = typeof window.MusicBox?.currentIndex === 'function' ? window.MusicBox.currentIndex() : -1;
-        document.querySelectorAll('#pl-tbody tr').forEach(tr => tr.classList.remove('is-current'));
-        const row = document.querySelector(`#pl-tbody tr[data-index="${cur}"]`);
+        document.querySelectorAll('#pl-body .pl-row').forEach(tr => tr.classList.remove('is-current'));
+        const row = document.querySelector(`#pl-body .pl-row[data-index="${cur}"]`);
         if (row) {
           row.classList.add('is-current');
           // auto scroll into view nicely
@@ -145,7 +146,7 @@
     // sync once after setting playlist
     markCurrentRow();
     // click hàng để phát bài
-    qsa('#pl-tbody tr').forEach(row=>{
+    qsa('#pl-body .pl-row').forEach(row=>{
       row.style.cursor = 'pointer';
       row.addEventListener('click', ()=>{
         const idx = Number(row.getAttribute('data-index'))||0;
@@ -155,11 +156,11 @@
         }
         if (typeof window.MusicBox?.playAt === 'function') window.MusicBox.playAt(idx);
         // optimistic highlight
-        document.querySelectorAll('#pl-tbody tr').forEach(tr => tr.classList.remove('is-current'));
+        document.querySelectorAll('#pl-body .pl-row').forEach(tr => tr.classList.remove('is-current'));
         row.classList.add('is-current');
       });
       // handle delete button inside the row (stop propagation)
-      const delBtn = row.querySelector('td.pl-idx button.btn.tiny.del.first');
+      const delBtn = row.querySelector('.pl-idx button.btn.tiny.del.first');
       if (delBtn) {
         delBtn.addEventListener('click', (e)=>{ e.stopPropagation(); const rmIdx = Number(row.getAttribute('data-index'))||0; deleteAt(rmIdx); });
       }
