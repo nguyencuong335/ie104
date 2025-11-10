@@ -1,69 +1,10 @@
-// YeuThich page module – fully scoped, no globals leaked
+// Module trang Yêu Thích: render từ localStorage và cho phép xóa từng bài
 (() => {
-  // Only run on Yeuthich page
-  if (!document.body || !document.body.classList.contains('page-yeuthich')) return;
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const api = window.MusicBox;
-    if (!api || typeof api.playlist !== 'function') return;
-    const list = api.playlist();
-    const tbody = document.getElementById('yt-body');
-    const coverEl = document.querySelector('.playlist-cover img');
-    const subs = document.querySelectorAll('.playlist-sub');
-
-    if (coverEl && list[0] && list[0].cover) coverEl.src = list[0].cover;
-    if (subs && subs[0]) subs[0].textContent = 'Playlist • ' + list.length + ' bài hát';
-
-    const fmt = (sec) => { if(!isFinite(sec)) return '--:--'; const m=Math.floor(sec/60), s=Math.floor(sec%60).toString().padStart(2,'0'); return m+':'+s; };
-
-    if (tbody) tbody.innerHTML = '';
-    list.forEach((t, i) => {
-      const tr = document.createElement('tr');
-      tr.setAttribute('data-track-index', String(i));
-      tr.setAttribute('role', 'button');
-      tr.setAttribute('tabindex', '0');
-      tr.innerHTML = `
-        <td>${i + 1}</td>
-        <td class="song-title"><img src="${t.cover || ''}" alt="${t.title || ''}"><span>${t.title || ''}</span></td>
-        <td>—</td>
-        <td>${t.artist || ''}</td>
-        <td id="dur-${i}">--:--</td>`;
-
-      const play = () => { if (window.MusicBox && typeof window.MusicBox.playAt==='function') window.MusicBox.playAt(i); };
-      tr.addEventListener('click', play);
-      tr.addEventListener('keydown', (e) => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); play(); }});
-      tr.style.cursor = 'pointer';
-      tbody && tbody.appendChild(tr);
-
-      // Fetch duration like queue
-      try {
-        const a = new Audio(t.src);
-        a.addEventListener('loadedmetadata', () => {
-          const d = document.getElementById('dur-'+i);
-          if (d) d.textContent = fmt(a.duration);
-        });
-      } catch {}
-    });
-
-    // Optional: highlight current playing row
-    const highlight = (ix) => {
-      document.querySelectorAll('.song-list tbody tr').forEach((r) => r.classList.remove('is-playing'));
-      const active = document.querySelector('.song-list tbody tr[data-track-index="'+ix+'"]');
-      if (active) active.classList.add('is-playing');
-    };
-    if (typeof api.currentIndex === 'function') highlight(api.currentIndex());
-    window.addEventListener('musicbox:trackchange', (e) => { if(e && e.detail) highlight(e.detail.index); });
-  });
-})();
-
-// Module thêm bài hát vào trang Yêu Thích với nút xóa từng dòng
-(() => {
-  const likeBtn = document.getElementById('like');
   const ytTbody = document.getElementById('yt-body');
   const playlistCover = document.querySelector('.playlist-cover img');
   const playlistSub = document.querySelector('.playlist .playlist-sub');
 
-  if (!likeBtn || !ytTbody) return;
+  if (!ytTbody) return;
 
   function loadLiked() {
     try {
@@ -77,10 +18,11 @@
   function saveLiked(list) {
     try {
       localStorage.setItem('liked_songs', JSON.stringify(list));
+      try { window.dispatchEvent(new Event('liked:changed')); } catch {}
     } catch {}
   }
 
-  function renderLiked() {
+  async function renderLiked() {
     const list = loadLiked();
     ytTbody.innerHTML = '';
     list.forEach((t, i) => {
@@ -89,10 +31,8 @@
       tr.innerHTML = `
         <td>${i + 1}</td>
         <td class="song-title"><img src="${t.cover || ''}" alt="${t.title || ''}"><span>${t.title || ''}</span></td>
-        <td>—</td>
         <td>${t.artist || ''}</td>
-        <td>${t.duration || '--:--'}</td>
-        <td><button class="remove-btn">Xóa</button></td>`; // Thêm nút Xóa
+        <td><span class="dur">${t.duration || '--:--'}</span> <button class="remove-btn" title="Xóa">Xóa</button></td>`; // Nút Xóa nằm trong cột Thời lượng
       tr.style.cursor = 'pointer';
 
       // Click vào dòng để play nhạc, nhưng bỏ qua nút Xóa
@@ -100,7 +40,7 @@
         if (e.target.classList.contains('remove-btn')) return;
         if (window.MusicBox && typeof window.MusicBox.playAt === 'function') {
           const playlist = window.MusicBox.playlist();
-          const idx = playlist.findIndex(x => x.id === t.id);
+          const idx = Array.isArray(playlist) ? playlist.findIndex(x => x && x.id === t.id) : -1;
           if (idx >= 0) window.MusicBox.playAt(idx);
         }
       });
@@ -111,10 +51,6 @@
         liked = liked.filter(s => s.id !== t.id);
         saveLiked(liked);
         renderLiked();
-        // Nếu bài đang chơi bị xóa, cập nhật icon trái tim
-        if (window.currentTrackId === t.id && likeBtn.querySelector('i')) {
-          likeBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
-        }
       });
 
       ytTbody.appendChild(tr);
@@ -125,31 +61,51 @@
     // Update cover nếu có bài đầu tiên
     const first = list[0];
     if (playlistCover && first && first.cover) playlistCover.src = first.cover;
+
+    // Render 'Kết hợp từ các nghệ sĩ' chỉ cho nghệ sĩ có trong yêu thích
+    try {
+      const wrap = document.querySelector('.artist-list');
+      const section = wrap ? wrap.closest('.artist-section') : null;
+      if (wrap) {
+        // Lấy danh sách nghệ sĩ duy nhất
+        const normalize = (s)=> String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+        const artistMap = new Map();
+        list.forEach(it => {
+          const name = String(it.artist||'').trim(); if (!name) return;
+          if (!artistMap.has(name)) artistMap.set(name, { name, cover: it.cover || '' });
+        });
+        // Thử lấy ảnh nghệ sĩ từ songs.json nếu có
+        let catalog = [];
+        try {
+          const res = await fetch('./assets/music_data/songs.json', { cache: 'no-store' });
+          const data = await res.json();
+          if (Array.isArray(data)) catalog = data;
+        } catch {}
+        function findArtistImg(name){
+          const n = normalize(name);
+          const hit = catalog.find(s => normalize(s.artist) === n);
+          return (hit && (hit.artistImg || hit.cover)) || null;
+        }
+        wrap.innerHTML = '';
+        artistMap.forEach((val) => {
+          const img = findArtistImg(val.name) || val.cover || '';
+          const el = document.createElement('div');
+          el.className = 'artist';
+          el.innerHTML = `
+            <img src="${img}" alt="${val.name}">
+            <span>${val.name}</span>
+          `;
+          wrap.appendChild(el);
+        });
+        // Toggle section visibility based on whether there are artists
+        if (section) {
+          section.style.display = artistMap.size ? '' : 'none';
+        }
+      }
+    } catch {}
   }
 
-  // Click trái tim để thêm/bỏ thích
-  likeBtn.addEventListener('click', () => {
-    const current = {
-      id: window.currentTrackId || Date.now(),
-      title: document.getElementById('title')?.textContent || '—',
-      artist: document.getElementById('artist')?.textContent || '—',
-      cover: document.getElementById('cover')?.src || '',
-      duration: document.getElementById('progress')?.max || '--:--',
-    };
-
-    let liked = loadLiked();
-    if (!liked.some(s => s.id === current.id)) {
-      liked.push(current);
-      saveLiked(liked);
-      renderLiked();
-      likeBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
-    } else {
-      liked = liked.filter(s => s.id !== current.id);
-      saveLiked(liked);
-      renderLiked();
-      likeBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
-    }
-  });
-
+  // Render khi trang load và khi có thay đổi danh sách thích
   document.addEventListener('DOMContentLoaded', renderLiked);
+  window.addEventListener('liked:changed', renderLiked);
 })();

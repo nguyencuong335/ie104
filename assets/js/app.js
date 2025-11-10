@@ -1119,6 +1119,10 @@ document.addEventListener("DOMContentLoaded", () => {
     bCover.src = t.cover;
     bArtistAvatar.src = t.artistImg || t.cover;
 
+    // Expose current track id for other modules and sync like UI
+    try { window.currentTrackId = t && (t.id || null); } catch {}
+    try { updateLikeUI(); } catch {}
+
     progress.value = 0;
     try { progress.style.setProperty('--progress-value', '0%'); } catch {}
     currentTimeEl.textContent = "0:00";
@@ -1250,15 +1254,54 @@ document.addEventListener("DOMContentLoaded", () => {
     durationEl.textContent = fmt(audio.duration);
   });
 
-  // ===== Like button & More (ellipsis) menu =====
+  // ===== Like button & Favorites (localStorage: liked_songs) =====
+  function getLikedList() {
+    try { const raw = localStorage.getItem('liked_songs'); return raw ? JSON.parse(raw) : []; } catch { return []; }
+  }
+  function setLikedList(list) {
+    try { localStorage.setItem('liked_songs', JSON.stringify(list)); try { window.dispatchEvent(new Event('liked:changed')); } catch {} } catch {}
+  }
+  function isLiked(id) {
+    if (!id) return false; const list = getLikedList(); return Array.isArray(list) && list.some(x => x && x.id === id);
+  }
+  function updateLikeUI() {
+    if (!likeBtn) return;
+    const icon = likeBtn.querySelector('i'); if (!icon) return;
+    const cur = playlist[index] || {};
+    const liked = isLiked(cur.id);
+    icon.classList.toggle('fa-solid', !!liked);
+    icon.classList.toggle('fa-regular', !liked);
+    icon.classList.add('fa-heart');
+    likeBtn.classList.toggle('active', !!liked);
+  }
+  function toggleLikeCurrent() {
+    const cur = playlist[index] || null; if (!cur) return;
+    let list = getLikedList();
+    const exists = cur.id && Array.isArray(list) ? list.findIndex(x => x && x.id === cur.id) : -1;
+    if (exists >= 0) {
+      list.splice(exists, 1);
+    } else {
+      const item = {
+        id: cur.id || (cur.src || (cur.title + '|' + cur.artist)),
+        title: cur.title || '—',
+        artist: cur.artist || '—',
+        cover: cur.cover || '',
+        duration: durationEl && durationEl.textContent ? durationEl.textContent : '--:--',
+      };
+      // Deduplicate by id
+      list = Array.isArray(list) ? list.filter(x => x && x.id !== item.id) : [];
+      list.push(item);
+    }
+    setLikedList(list);
+    updateLikeUI();
+  }
   if (likeBtn) {
-    likeBtn.addEventListener("click", () => {
-      const icon = likeBtn.querySelector("i");
-      const isSolid = icon.classList.toggle("fa-solid");
-      icon.classList.toggle("fa-regular", !isSolid);
-      icon.classList.add("fa-heart");
-      likeBtn.classList.toggle("active", isSolid);
-    });
+    likeBtn.addEventListener('click', () => { toggleLikeCurrent(); });
+    // Sync UI when storage changes (e.g., removed from favorites page)
+    window.addEventListener('liked:changed', () => { updateLikeUI(); });
+    window.addEventListener('musicbox:trackchange', () => { updateLikeUI(); });
+    // Initialize icon state on first load
+    updateLikeUI();
   }
   function hideMoreMenu() {
     if (!moreMenu) return;
