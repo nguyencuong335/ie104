@@ -687,21 +687,21 @@ document.addEventListener("DOMContentLoaded", () => {
           s.id = 'pl-picker-style';
           s.textContent = `
             .pl-picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:9999}
-            .pl-picker{background:#111418;color:#fff;min-width:360px;max-width:520px;width:92vw;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.45);overflow:hidden}
-            .pl-picker .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);font-weight:700;font-size:16px}
+            .pl-picker{background:#F8FAFC;color:#135E88;min-width:360px;max-width:520px;width:92vw;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.15);overflow:hidden;border:1px solid #e5e7eb}
+            .pl-picker .hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e5e7eb;font-weight:700;font-size:16px;color:#135E88}
             .pl-picker .list{max-height:60vh;overflow:auto}
             .pl-picker .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:12px 16px;cursor:pointer}
-            .pl-picker .row:hover{background:rgba(255,255,255,.06)}
+            .pl-picker .row:hover{background:#E0F2FE}
             .pl-picker .row .cover{width:44px;height:44px;border-radius:8px;background-size:cover;background-position:center}
             .pl-picker .row .name{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:15px}
             .pl-picker .row .count{opacity:.85;min-width:48px;text-align:right}
-            .pl-picker .btn{background:#2a2f36;color:#e5e7eb;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;line-height:1;box-sizing:border-box;white-space:nowrap}
-            .pl-picker .hd .close-btn{background:transparent;border:none;padding:0;color:#e5e7eb;cursor:pointer;border-radius:0}
-            .pl-picker .hd .close-btn:hover{color:#ffffff;text-decoration:underline;background:transparent;border-color:transparent}
+            .pl-picker .btn{background:#ffffff;color:#135E88;border:1px solid #cbd5e1;border-radius:10px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;line-height:1;box-sizing:border-box;white-space:nowrap}
+            .pl-picker .hd .close-btn{background:transparent;border:none;padding:0;color:#135E88;cursor:pointer;border-radius:0}
+            .pl-picker .hd .close-btn:hover{color:#0b4c6c;text-decoration:underline;background:transparent;border-color:transparent}
             .pl-picker .hd .close-btn:focus{outline:none;text-decoration:underline}
-            .pl-picker .btn:hover{background:#39414b;color:#fff}
+            .pl-picker .btn:hover{background:#E0F2FE;color:#135E88}
             .pl-picker .row.is-exist{opacity:.6;cursor:not-allowed}
-            .pl-picker .row .tag{font-size:12px;opacity:.9;background:#2a2f36;padding:2px 6px;border-radius:999px}
+            .pl-picker .row .tag{font-size:12px;opacity:.9;background:#E0F2FE;color:#135E88;padding:2px 6px;border-radius:999px;border:1px solid #bae6fd}
             @media (max-width: 420px){ .pl-picker{min-width:300px} .pl-picker .row{grid-template-columns:auto 1fr auto} }
           `;
           document.head.appendChild(s);
