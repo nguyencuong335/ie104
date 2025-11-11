@@ -18,8 +18,8 @@
 /* Extra small screens */
 @media (max-width: 420px) {
   .brand-mark { width: 84px; height: 84px; }
-  .auth-title { font-size: 24px; }
-  .auth-subtitle { font-size: 13px; }
+  .auth-title { font-size: 20px; }
+  .auth-subtitle { font-size: 16px; }
   .auth-card { padding: 18px 14px; }
   .auth-card.wide .auth-input { height: 48px; }
   select.auth-input, input[type="date"].auth-input { height: 48px; line-height: 48px; }
@@ -51,7 +51,7 @@
 .auth-card {
   width: 100%;
   max-width: 725px;
-  height: 700px;
+  height: auto;
   border-radius: var(--radius-card);
   background: var(--card-bg);
   padding: 28px 36px;
@@ -84,20 +84,20 @@
 }
 
 .auth-card.wide .divider {
-  margin: 18px 0;
+  margin: 12px 0 12px;
 }
 
 .auth-card.wide .grid-2 {
-  gap: 22px 22px;
+  gap: 15px 22px;
   margin-top: 10px;
 }
 
 .auth-card.wide .pair .auth-label {
-  margin: 12px 0 8px;
+  margin: 2px 0 6px;
 }
 
 .auth-card.wide .auth-input {
-  height: 52px;
+  height: 40px;
 }
 
 /* Chuẩn hóa chiều cao và canh giữa cho select/date để đồng nhất với input */
@@ -105,24 +105,25 @@ select.auth-input,
 input[type="date"].auth-input {
   -webkit-appearance: none;
   appearance: none;
-  height: 52px; /* theo card.wide */
+  height: 40px; /* theo card.wide */
   padding: 0 14px;
-  line-height: 52px;
+  line-height: 40px;
+  font-family: var(--family-body); 
 }
 
 /* Đảm bảo các ô luôn full width và cách đều trong lưới */
 .pair .auth-input { width: 100%; }
 
 .auth-card.wide .auth-btn.primary {
-  height: 50px;
-  margin-top: 16px;
+  height: 40px;
+  margin-top: 8px;
   width: 100%;
   display: block;
   margin-inline: 0 auto; /* center if narrower on small screens */
 }
 
 .auth-card.wide .auth-check {
-  margin: 16px 0;
+  margin: 8px 0 0px;
   align-items: center;
 }
 
@@ -137,8 +138,8 @@ input[type="date"].auth-input {
 
 /* ====== Logo 109 × 109 ====== */
 .brand-mark {
-  width: 109px;
-  height: 109px;
+  width: 100px;
+  height: 100px;
   aspect-ratio: 1/1;
   flex-shrink: 0;
   object-fit: cover;
@@ -162,7 +163,7 @@ input[type="date"].auth-input {
   font-size: 14px;
   color: var(--ink-70);
   text-align: center;
-  margin: 0 0 20px;
+  margin: 0 0 13px;
 }
 
 /* ====== Form frame (max 610) ====== */
@@ -176,7 +177,7 @@ form {
   display: block;
   margin: 10px 0 8px;
   font-family: var(--family-body);
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1;
   font-weight: 600;
   color: #000;
@@ -210,7 +211,7 @@ form {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin: 12px 0 12px;
+  margin: 12px 0 6px;
 }
 
 .auth-row.between {
@@ -220,8 +221,8 @@ form {
 .auth-check {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 18px;
+  gap: 5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink-70);
 }
@@ -231,8 +232,8 @@ form {
   appearance: none;
   -webkit-appearance: none;
   outline: none;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   aspect-ratio: 1/1;
   box-sizing: border-box;
   display: inline-block;
@@ -265,21 +266,18 @@ form {
 .auth-link {
   color: #115E82;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   text-decoration: underline;
 }
 
 /* ====== Error block (trên nút) ====== */
 .auth-error {
-  margin: 8px 0 12px;
-  padding: 10px 12px;
+  margin: 0px 0 6px;
+  padding: 8px 10px;
   text-align: center;
   color: var(--danger);
-  background: #FCECEF;
-  border: 1px solid var(--danger);
-  border-radius: 12px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -288,7 +286,7 @@ form {
   display: flex;
   width: 610px;
   max-width: 100%;
-  height: 45px;
+  height: 40px;
   padding: 8px;
   justify-content: center;
   align-items: center;
@@ -298,7 +296,7 @@ form {
   border: 1px solid var(--brand);
   background: var(--brand);
   color: #FFF;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -307,9 +305,9 @@ form {
 .divider {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin: 14px 0;
-  font-size: 18px;
+  gap: 4px;
+  margin: 16px 0;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ink-70);
 }
@@ -340,7 +338,7 @@ form {
 
 .oauth-btn {
   width: 294px;
-  height: 50px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 1px solid var(--border);
@@ -349,7 +347,7 @@ form {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #000;
   text-align: center;
@@ -395,8 +393,8 @@ form {
 }
 
 .oauth-ico {
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   aspect-ratio: 1/1;
   object-fit: contain;
 }
@@ -406,7 +404,7 @@ form {
   text-align: center;
   font-size: 14px;
   color: var(--ink-70);
-  margin-top: 14px;
+  margin-top: 20px;
 }
 
 /* ====== Grid for signup (giữ cặp field theo hàng) ====== */
@@ -449,11 +447,11 @@ form {
   }
 
   .auth-label {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .auth-link,
   .auth-check {
-    font-size: 16px;
+    font-size: 14px;
   }
 }

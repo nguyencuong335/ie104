@@ -4,7 +4,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign up • MusicStream</title>
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="./assets/favicon/manifest.json" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <title>Music Box - Đăng ký tài khoản</title>
   <link rel="stylesheet" href="./assets/css/reset.css" />
   <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
   <link rel="stylesheet" href="./assets/css/auth.css" />
@@ -15,81 +35,80 @@
     <section class="auth-card wide" aria-labelledby="su-title">
       <img class="brand-mark" src="./assets/imgs/music_box_icon.png" alt="MusicStream" />
 
-      <h1 id="su-title" class="auth-title">Welcome to MusicStream</h1>
-      <p class="auth-subtitle">Sign up to access your music library</p>
+      <h1 id="su-title" class="auth-title">Chào mừng đến với Music Box</h1>
+      <p class="auth-subtitle">Hãy đăng nhập để trải nghiệm không gian nghe nhạc</p>
 
       <!-- SSO cùng 1 hàng -->
       <div class="oauth-row top" style="margin-bottom:10px;">
         <button type="button" class="oauth-btn">
           <img class="oauth-ico" src="./assets/imgs/google_icon.png" alt="Google" />
-          <span>Continue with Google</span>
+          <span>Đăng ký bằng Google</span>
         </button>
         <button type="button" class="oauth-btn">
           <img class="oauth-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
-          <span>Continue with Facebook</span>
+          <span>Đăng ký bằng Facebook</span>
         </button>
       </div>
 
-      <div class="divider"><span>or</span></div>
+      <div class="divider"><span>hoặc</span></div>
 
       <form id="form-signup" novalidate>
         <div class="grid-2">
           <div class="pair">
-            <label class="auth-label" for="su-first">First name</label>
-            <input id="su-first" type="text" class="auth-input" placeholder="John" required />
+            <label class="auth-label" for="su-first">Họ và tên lót</label>
+            <input id="su-first" type="text" class="auth-input" placeholder="Nguyễn Văn" required />
           </div>
           <div class="pair">
-            <label class="auth-label" for="su-last">Last name</label>
-            <input id="su-last" type="text" class="auth-input" placeholder="Doe" required />
+            <label class="auth-label" for="su-last">Tên</label>
+            <input id="su-last" type="text" class="auth-input" placeholder="A" required />
           </div>
 
           <div class="pair">
-            <label class="auth-label" for="su-gender">Gender</label>
+            <label class="auth-label" for="su-gender">Giới tính</label>
             <select id="su-gender" class="auth-input" required>
-              <option value="">Select your gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
+              <option value="">Giới tính</option>
+              <option>Nam</option>
+              <option>Nữ</option>
             </select>
           </div>
           <div class="pair">
-            <label class="auth-label" for="su-dob">Day of birth</label>
+            <label class="auth-label" for="su-dob">Sinh nhật</label>
             <input id="su-dob" type="date" class="auth-input" required />
           </div>
 
           <div class="pair">
-            <label class="auth-label" for="su-email">Email</label>
-            <input id="su-email" type="email" class="auth-input" placeholder="example@email.com" required />
+            <label class="auth-label" for="su-email">Địa chỉ Email</label>
+            <input id="su-email" type="email" class="auth-input" placeholder="example@gmail.com" required />
           </div>
           <div class="pair">
-            <label class="auth-label" for="su-phone">Phone number</label>
-            <input id="su-phone" type="tel" class="auth-input" placeholder="e.g. +1234567890" required />
+            <label class="auth-label" for="su-phone">Số điện thoại</label>
+            <input id="su-phone" type="tel" class="auth-input" placeholder="VD: 0123456789" required />
           </div>
 
           <div class="pair">
-            <label class="auth-label" for="su-pass">Password</label>
-            <input id="su-pass" type="password" class="auth-input" placeholder="Enter a strong password" required />
+            <label class="auth-label" for="su-pass">Mật khẩu</label>
+            <input id="su-pass" type="password" class="auth-input" placeholder="Nhập mật khẩu" required />
           </div>
           <div class="pair">
-            <label class="auth-label" for="su-repass">Retype Password</label>
-            <input id="su-repass" type="password" class="auth-input" placeholder="Confirm your password" required />
+            <label class="auth-label" for="su-repass">Nhập lại mật khẩu</label>
+            <input id="su-repass" type="password" class="auth-input" placeholder="Xác nhận mật khẩu" required />
           </div>
         </div>
 
         <label class="auth-check" style="margin-top:6px;">
           <input type="checkbox" id="su-terms" required />
-          <span>By creating an account, you agree to the <a href="#" class="auth-link">Terms of Service</a>. For more information about our privacy practices, see the Privacy Statements. We’ll occasionally send you account‑related emails.</span>
+          <span>Bằng việc nhấp vào nút Đăng ký, bạn đồng ý với <a href="#" class="auth-link">Điều khoản và điều kiện sử dụng</a> của Music Box.</span>
         </label>
 
         <!-- error (TRÊN nút) -->
         <div id="su-error" class="auth-error" hidden>
-          Please fill in all the required fields
+          Vui lòng điền đầy đủ các thông tin
         </div>
 
-        <button type="submit" class="auth-btn primary" id="btn-signup">Sign up</button>
+        <button type="submit" class="auth-btn primary" id="btn-signup">Đăng ký</button>
 
         <p class="auth-foot">
-          Already have an account? <a class="auth-link" href="./login.html">Login</a>
+          Đã có tài khoản? <a class="auth-link" href="./login.html">Đăng nhập</a>
         </p>
       </form>
     </section>
