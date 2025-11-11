@@ -32,7 +32,7 @@ function signInDemo(username, password) {
     localStorage.setItem("auth_user", JSON.stringify(user));
     return { ok: true, user };
   }
-  return { ok: false, error: "Sai tài khoản hoặc mật khẩu" };
+  return { ok: false, error: "Email hoặc mật khẩu không đúng! Vui lòng nhập lại." };
 }
 
 /** Đăng xuất + (tuỳ chọn) điều hướng về auth.html kèm next */

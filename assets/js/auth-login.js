@@ -16,7 +16,7 @@
     if (!pass.value.trim())  { mark(pass,  true); bad = true; } else mark(pass,  false);
 
     // hiện dòng thông báo chung TRÊN nút
-    err.textContent = "Please fill in all the required fields";
+    err.textContent = "Vui lòng điền đầy đủ thông tin";
     err.hidden = !bad;
     if (bad) return;
 
@@ -30,7 +30,7 @@
     }
 
     // sai thông tin
-    err.textContent = "Sai email hoặc mật khẩu";
+    err.textContent = "Email hoặc mật khẩu không đúng";
     err.hidden = false;
     [email, pass].forEach(i => i.classList.add("invalid"));
   });

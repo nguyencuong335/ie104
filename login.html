@@ -4,7 +4,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login • Music Box</title>
+
+    <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="./assets/favicon/apple-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="./assets/favicon/apple-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="./assets/favicon/apple-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/favicon/apple-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="./assets/favicon/apple-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="./assets/favicon/apple-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="./assets/favicon/apple-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="./assets/favicon/apple-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="./assets/favicon/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="./assets/favicon/manifest.json" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="msapplication-TileImage" content="./assets/favicon/ms-icon-144x144.png" />
+  <meta name="theme-color" content="#ffffff" />
+  
+  <title>Music Box - Đăng nhập</title>
   <link rel="stylesheet" href="./assets/css/reset.css" />
   <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
   <link rel="stylesheet" href="./assets/css/auth.css" />
@@ -17,50 +37,50 @@
       <img class="brand-mark" src="./assets/imgs/music_box_icon.png" alt="Music Box" />
 
       <!-- Heading -->
-      <h1 id="login-title" class="auth-title">Welcome back!</h1>
-      <p class="auth-subtitle">Login to access your music library</p>
+      <h1 id="login-title" class="auth-title">Chào mừng quay trở lại!</h1>
+      <p class="auth-subtitle">Đăng nhập để tận hưởng âm nhạc vô tận</p>
 
       <form id="form-login" novalidate>
-        <label class="auth-label" for="login-email">Email</label>
-        <input id="login-email" name="email" type="email" placeholder="example@email.com" class="auth-input"
+        <label class="auth-label" for="login-email">Địa chỉ Email</label>
+        <input id="login-email" name="email" type="email" placeholder="example@gmail.com" class="auth-input"
           autocomplete="username" required />
 
-        <label class="auth-label" for="login-pass">Password</label>
-        <input id="login-pass" name="password" type="password" placeholder="Enter your password" class="auth-input"
+        <label class="auth-label" for="login-pass">Mật khẩu</label>
+        <input id="login-pass" name="password" type="password" placeholder="Nhập mật khẩu" class="auth-input"
           autocomplete="current-password" required />
 
         <div class="auth-row between">
           <label class="auth-check">
             <input type="checkbox" id="login-remember" />
-            <span>Remember me</span>
+            <span>Ghi nhớ đăng nhập</span>
           </label>
-          <a class="auth-link" href="#">Forgot Password?</a>
+          <a class="auth-link" href="#">Quên mật khẩu?</a>
         </div>
 
         <!-- error (TRÊN nút) -->
         <div id="login-error" class="auth-error" hidden>
-          Please fill in all the required fields
+          Vui lòng điền đầy đủ thông tin
         </div>
 
         <!-- Nút chuẩn 610x45 -->
-        <button type="submit" class="auth-btn primary" id="btn-login">Login</button>
+        <button type="submit" class="auth-btn primary" id="btn-login">Đăng nhập</button>
 
-        <div class="divider"><span>or</span></div>
+        <div class="divider"><span>hoặc</span></div>
 
         <!-- 2 nút SSO cùng một hàng -->
         <div class="oauth-row">
           <button type="button" class="oauth-btn">
             <img class="oauth-ico" src="./assets/imgs/google_icon.png" alt="Google" />
-            <span>Continue with Google</span>
+            <span>Đăng nhập với Google</span>
           </button>
           <button type="button" class="oauth-btn">
             <img class="oauth-ico" src="./assets/imgs/facebook_icon.png" alt="Facebook" />
-            <span>Continue with Facebook</span>
+            <span>Đăng nhập với Facebook</span>
           </button>
         </div>
 
         <p class="auth-foot">
-          Don’t have an account? <a class="auth-link" href="./signup.html">Sign up</a>
+          Chưa có tài khoản? <a class="auth-link" href="./signup.html">Đăng ký</a>
         </p>
       </form>
     </section>

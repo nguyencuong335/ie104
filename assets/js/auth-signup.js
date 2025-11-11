@@ -31,7 +31,7 @@
       err.hidden = false; return;
     }
 
-    err.textContent = "Please fill in all the required fields";
+    err.textContent = "Vui lòng điền đầy đủ thông tin";
     err.hidden = !bad;
     if (bad) return;
 
