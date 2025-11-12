@@ -970,6 +970,51 @@ body {
     transform: translateY(-1px);
 }
 
+.queue .b-artist-row .follow-btn,
+#queue .b-artist-row .follow-btn {
+    padding: 8px 16px;
+    border: 1px solid #000;
+    color: #000;
+    background: transparent;
+    border-radius: 26px;
+    font-size: 1.6rem;
+    gap: 8px;
+}
+.queue .b-artist-row .follow-btn:not(.is-following),
+#queue .b-artist-row .follow-btn:not(.is-following) {
+    border-color: #000;
+    color: #000;
+    background: transparent;
+}
+.queue .b-artist-row .follow-btn:hover,
+#queue .b-artist-row .follow-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #000;
+    border-color: #000;
+    box-shadow: none;
+    transform: none;
+}
+.queue .b-artist-row .follow-btn:not(.is-following):hover,
+#queue .b-artist-row .follow-btn:not(.is-following):hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #000;
+    border-color: #000;
+}
+.queue .b-artist-row .follow-btn.is-following,
+#queue .b-artist-row .follow-btn.is-following {
+    border: 1px solid #105e8c;
+    color: #135e88;
+    background: transparent;
+}
+.queue .b-artist-row .follow-btn.is-following:hover,
+#queue .b-artist-row .follow-btn.is-following:hover {
+    background: rgba(16, 94, 140, 0.08);
+    color: #135e88;
+    border-color: #105e8c;
+    box-shadow: none;
+    transform: none;
+}
+
 .q-title {
     font: 700 1.8rem/1 "Poppins", "Inter", system-ui, -apple-system, "Segoe UI",
         Roboto, "Helvetica Neue", Arial, sans-serif;

@@ -3,6 +3,7 @@
   const ytTbody = document.getElementById('yt-body');
   const playlistCover = document.querySelector('.playlist-cover img');
   const playlistSub = document.querySelector('.playlist .playlist-sub');
+  const playlistTitle = document.querySelector('.playlist .playlist-title');
 
   if (!ytTbody) return;
 
@@ -13,6 +14,28 @@
     } catch {
       return [];
     }
+  }
+
+  function getNameKey() {
+    try {
+      const u = JSON.parse(localStorage.getItem('auth_user') || 'null');
+      if (u && (u.id || u.email)) return `displayname_${u.id || u.email}`;
+    } catch {}
+    return 'displayname_guest';
+  }
+  function getDisplayName() {
+    try {
+      const s = localStorage.getItem(getNameKey());
+      return s && s.trim() ? s.trim() : '';
+    } catch {
+      return '';
+    }
+  }
+  function setFavTitle() {
+    if (!playlistTitle) return;
+    const name = getDisplayName();
+    const fallback = 'bạn';
+    playlistTitle.textContent = `Yêu thích của ${name || fallback}`;
   }
 
   function saveLiked(list) {
@@ -106,6 +129,9 @@
   }
 
   // Render khi trang load và khi có thay đổi danh sách thích
-  document.addEventListener('DOMContentLoaded', renderLiked);
+  document.addEventListener('DOMContentLoaded', () => {
+    renderLiked();
+    setFavTitle();
+  });
   window.addEventListener('liked:changed', renderLiked);
 })();

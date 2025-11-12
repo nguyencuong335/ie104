@@ -76,7 +76,7 @@
     height: auto;
 }
 #pl-cover {
-    width: 100%;
+    width: 220px;
     height: auto;
     aspect-ratio: 1 / 1;
     border-radius: 6px;
@@ -92,7 +92,7 @@
     justify-content: center;
 }
 .user-name {
-    font-size: 28px;
+    font-size: 60px;
     font-weight: 800;
     color: #135e88;
     letter-spacing: -0.4px;

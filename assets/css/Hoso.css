@@ -124,6 +124,9 @@
 }
 
 .follow-stats {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
     font-size: 15px;
     color: #111;
     opacity: 0.85;
