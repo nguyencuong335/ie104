@@ -1941,16 +1941,20 @@ document.addEventListener("DOMContentLoaded", () => {
     function onEsc(e) {
         if (e.key === "Escape") hideMoreMenu();
     }
+
     if (moreBtn && moreMenu) {
-        moreBtn.addEventListener("click", (e) => {
+        moreBtn.addEventListener("click", () => {
             const open = moreMenu.classList.toggle("open");
             moreMenu.setAttribute("aria-hidden", String(!open));
             if (open) {
                 document.addEventListener("click", onDocClick, true);
                 document.addEventListener("keydown", onEsc, true);
-            } else hideMoreMenu();
+            } else {
+                hideMoreMenu();
+            }
         });
     }
+
     if (downloadBtn) {
         downloadBtn.addEventListener("click", async () => {
             try {
@@ -1964,16 +1968,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         .trim();
                 const base =
                     safe(
-                        (t.title || "baihat") +
-                            (t.artist ? ` - ${t.artist}` : "")
+                        (t.title || "baihat") + (t.artist ? ` - ${t.artist}` : "")
                     ) || "baihat";
                 const ext = (() => {
                     try {
                         const p = new URL(url, location.href).pathname;
                         const seg = p.split("/").pop() || "";
-                        const e = seg.includes(".")
-                            ? seg.split(".").pop()
-                            : "mp3";
+                        const e = seg.includes(".") ? seg.split(".").pop() : "mp3";
                         return e.split("?")[0].split("#")[0] || "mp3";
                     } catch {
                         return "mp3";
@@ -1981,20 +1982,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 })();
                 const filename = `${base}.${ext}`;
 
-                // Try simple anchor first
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = filename;
-                a.rel = "noopener";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+                const sameOrigin = (() => {
+                    try {
+                        return new URL(url, location.href).origin === location.origin;
+                    } catch {
+                        return true;
+                    }
+                })();
 
-                // Fallback: fetch -> blob (if CORS permits)
-                setTimeout(async () => {
+                if (sameOrigin) {
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = filename;
+                    a.rel = "noopener";
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                } else {
                     try {
                         const res = await fetch(url, { mode: "cors" });
-                        if (!res.ok) return;
+                        if (!res.ok) throw new Error("fetch failed");
                         const blob = await res.blob();
                         const objUrl = URL.createObjectURL(blob);
                         const a2 = document.createElement("a");
@@ -2005,23 +2012,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         a2.click();
                         a2.remove();
                         URL.revokeObjectURL(objUrl);
-                    } catch {}
-                }, 50);
+                    } catch {
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.target = "_blank";
+                        a.rel = "noopener";
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+                    }
+                }
             } finally {
                 hideMoreMenu();
             }
-        });
-    }
-    if (addToPlBtn) {
-        addToPlBtn.addEventListener("click", () => {
-            try {
-                window.dispatchEvent(
-                    new CustomEvent("musicbox:addtoplaylist", {
-                        detail: { index },
-                    })
-                );
-            } catch {}
-            hideMoreMenu();
         });
     }
 
