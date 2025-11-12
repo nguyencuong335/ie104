@@ -25,7 +25,9 @@ body {
     background: var(--bg);
     padding-top: 64px;
 }
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 img {
     max-width: 100%;
     display: block;
@@ -131,7 +133,7 @@ img {
     width: 70px;
     height: 40px;
     border-radius: 0;
-    background-image: url('../imgs/logo.png');
+    background-image: url("../imgs/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -211,7 +213,9 @@ img {
     overflow: hidden;
     background: linear-gradient(135deg, #f8fafc, var(--primary-200), #f8fafc);
 }
-#hero { scroll-margin-top: 72px; }
+#hero {
+    scroll-margin-top: 72px;
+}
 .hero-deco {
     position: absolute;
     opacity: 0.2;
@@ -645,7 +649,7 @@ img {
 .footer .brandline .logo {
     width: 32px;
     height: 32px;
-    background-image: url('../imgs/music_box_icon.png');
+    background-image: url("../imgs/music_box_icon.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -677,7 +681,9 @@ img {
 .footer span {
     color: #90a1b9;
 }
-.footer p { line-height: 1.9; }
+.footer p {
+    line-height: 1.9;
+}
 .footer .brandline span {
     color: #fff;
 }

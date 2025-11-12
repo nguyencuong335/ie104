@@ -364,15 +364,27 @@ a:focus-visible {
 
 /* Responsive */
 @media (max-width: 900px) {
-  /* Sidebar thu gọn + main (theo style.css) */
-  .content { grid-template-columns: var(--sidebar) 1fr; }
-  /* Khi Queue hiển thị -> 1 cột (đồng bộ rule global) */
-  .content:has(.queue:not(.hidden)) { grid-template-columns: 1fr !important; }
-  /* Sidebar không sticky ở mobile để cuộn mượt */
-  .sidebar { position: static; max-height: calc(100vh - var(--player-h) - 14px); overflow: auto; }
-  .timkiem-main { max-height: calc(100vh - var(--player-h) - 16px); }
+    /* Sidebar thu gọn + main (theo style.css) */
+    .content {
+        grid-template-columns: var(--sidebar) 1fr;
+    }
+    /* Khi Queue hiển thị -> 1 cột (đồng bộ rule global) */
+    .content:has(.queue:not(.hidden)) {
+        grid-template-columns: 1fr !important;
+    }
+    /* Sidebar không sticky ở mobile để cuộn mượt */
+    .sidebar {
+        position: static;
+        max-height: calc(100vh - var(--player-h) - 14px);
+        overflow: auto;
+    }
+    .timkiem-main {
+        max-height: calc(100vh - var(--player-h) - 16px);
+    }
 
-  /* Mobile: xếp dọc kết quả */
-  .results-container { grid-template-columns: 1fr; gap: 24px; }
+    /* Mobile: xếp dọc kết quả */
+    .results-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
 }
-
