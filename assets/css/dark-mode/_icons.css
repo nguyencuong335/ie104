@@ -67,9 +67,10 @@
 }
 
 [data-theme="dark"] .player .btn:hover i {
-    color: var(--glow-color);
+    /* color: var(--glow-color); */
     filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
     transform: scale(1.15);
+    transform-origin: center center;
 }
 
 [data-theme="dark"] .player .play:hover i {
@@ -89,6 +90,7 @@
     color: var(--glow-color);
     filter: drop-shadow(0 0 12px rgba(74, 108, 247, 0.8));
     transform: scale(1.2);
+    transform-origin: center center;
 }
 
 /* --- Slider Navigation Icons --- */
@@ -102,6 +104,7 @@
     color: var(--glow-color);
     filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
     transform: scale(1.2);
+    transform-origin: center center;
 }
 
 /* --- Hero Action Icons --- */

@@ -25,7 +25,7 @@
 }
 
 /* --- Yeuthich: Page Header/Banner --- */
-[data-theme="dark"] .liked-header,
+/* [data-theme="dark"] .liked-header,
 [data-theme="dark"] .favorites-header,
 [data-theme="dark"] .yeuthich-header,
 [data-theme="dark"] .page-header {
@@ -36,7 +36,7 @@
     ) !important;
     border: 1px solid var(--border-color);
     box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
-}
+} */
 
 [data-theme="dark"] .liked-header h1,
 [data-theme="dark"] .favorites-header h1,
@@ -65,12 +65,8 @@
 [data-theme="dark"] .page-yeuthich .playlist-header,
 [data-theme="dark"] .playlist-info-header,
 [data-theme="dark"] .playlist-info {
-    background: linear-gradient(
-        135deg,
-        var(--bg-secondary) 0%,
-        var(--bg-tertiary) 100%
-    ) !important;
-    border: 1px solid var(--border-color);
+    background: inherit;
+    /* border: 1px solid var(--border-color); */
 }
 
 /* --- Yeuthich: Playlist Body/Content --- */
@@ -460,4 +456,19 @@
 [data-theme="dark"] .liked-songs::-webkit-scrollbar-thumb:hover,
 [data-theme="dark"] .song-list::-webkit-scrollbar-thumb:hover {
     background-color: var(--hover-bg);
+}
+
+/* --- Yeuthich: Hide main content when Queue is open (Dark Mode) --- */
+[data-theme="dark"] body.queue-open.page-yeuthich .liked-main,
+[data-theme="dark"] body.queue-open.page-yeuthich .favorites-main,
+[data-theme="dark"] body.queue-open.page-yeuthich .yeuthich-main,
+[data-theme="dark"] body.queue-open.page-yeuthich .main-content {
+    display: none !important;
+}
+
+[data-theme="dark"] .page-yeuthich .content:has(.queue:not(.hidden)) .liked-main,
+[data-theme="dark"] .page-yeuthich .content:has(.queue:not(.hidden)) .favorites-main,
+[data-theme="dark"] .page-yeuthich .content:has(.queue:not(.hidden)) .yeuthich-main,
+[data-theme="dark"] .page-yeuthich .content:has(.queue:not(.hidden)) .main-content {
+    display: none !important;
 }

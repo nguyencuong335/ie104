@@ -4,19 +4,62 @@
 
 [data-theme="dark"] .sidebar {
     background: linear-gradient(180deg, #0f1535 0%, #0a0e27 100%);
-    border-right: 1px solid var(--border-color);
+    /* border-right: 1px solid var(--border-color); */
 }
 
 /* --- Sidebar: Menu Buttons --- */
 [data-theme="dark"] .menu-btn {
     color: var(--text-secondary);
+    background: transparent;
     transition: all 0.3s ease;
 }
 
-[data-theme="dark"] .menu-btn:hover {
+/* Reset any specific button styling in dark mode */
+[data-theme="dark"] .menu-btn.explore,
+[data-theme="dark"] .menu-btn.your,
+[data-theme="dark"] .menu-btn.liked,
+[data-theme="dark"] .menu-btn.recent {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--text-secondary) !important;
+    box-shadow: none !important;
+}
+
+/* Ensure icons and text inherit the correct color */
+[data-theme="dark"] .menu-btn.explore i,
+[data-theme="dark"] .menu-btn.your i,
+[data-theme="dark"] .menu-btn.liked i,
+[data-theme="dark"] .menu-btn.recent i,
+[data-theme="dark"] .menu-btn.explore span,
+[data-theme="dark"] .menu-btn.your span,
+[data-theme="dark"] .menu-btn.liked span,
+[data-theme="dark"] .menu-btn.recent span {
+    color: inherit;
+}
+
+[data-theme="dark"] .menu-btn:hover,
+[data-theme="dark"] .menu-btn.explore:hover,
+[data-theme="dark"] .menu-btn.your:hover,
+[data-theme="dark"] .menu-btn.liked:hover,
+[data-theme="dark"] .menu-btn.recent:hover {
     background-color: var(--hover-bg);
     color: var(--text-primary);
     box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* Active/Selected menu button */
+[data-theme="dark"] .menu-btn.active,
+[data-theme="dark"] .menu-btn[aria-pressed="true"] {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .menu-btn.active i,
+[data-theme="dark"] .menu-btn[aria-pressed="true"] i,
+[data-theme="dark"] .menu-btn.active span,
+[data-theme="dark"] .menu-btn[aria-pressed="true"] span {
+    color: #ffffff;
 }
 
 [data-theme="dark"] .menu-btn span {
@@ -49,6 +92,24 @@
     transform: translateX(4px);
 }
 
+/* Active/Selected playlist item */
+[data-theme="dark"] .pl-item.active,
+[data-theme="dark"] .pl-item[aria-pressed="true"] {
+    background-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+    transform: translateX(6px);
+}
+
+[data-theme="dark"] .pl-item.active .pl-name,
+[data-theme="dark"] .pl-item[aria-pressed="true"] .pl-name {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .pl-item.active .pl-sub,
+[data-theme="dark"] .pl-item[aria-pressed="true"] .pl-sub {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 [data-theme="dark"] .pl-name {
     color: var(--text-primary);
 }
@@ -60,9 +121,23 @@
 /* --- Sidebar: Icon Buttons --- */
 [data-theme="dark"] .icon-btn {
     color: var(--text-primary);
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 [data-theme="dark"] .icon-btn:hover {
     background-color: var(--hover-bg);
     color: var(--glow-color);
+    box-shadow: 0 0 8px rgba(74, 108, 247, 0.2);
+}
+
+/* Specific styling for add button (plus icon) */
+[data-theme="dark"] .icon-btn.add {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
 }

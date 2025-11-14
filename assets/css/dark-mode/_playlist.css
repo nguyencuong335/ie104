@@ -14,41 +14,73 @@
     min-height: 100vh;
 }
 
-/* --- Playlist: Header/Banner --- */
-/* [data-theme="dark"] .user-header,
-[data-theme="dark"] #pl-header {
+/* --- Playlist Page: Header/Banner --- */
+[data-theme="dark"] .page-playlist .user-header,
+[data-theme="dark"] .page-playlist #pl-header,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-header,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) #pl-header {
     background: linear-gradient(
         135deg,
         var(--bg-secondary) 0%,
         var(--bg-tertiary) 100%
     ) !important;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
-} */
+    /* border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15); */
+}
 
-/* --- Playlist: Avatar/Cover --- */
-/* [data-theme="dark"] .user-avatar,
-[data-theme="dark"] #pl-cover,
-[data-theme="dark"] .avatar-wrap {
-    border: 3px solid var(--glow-color);
-    box-shadow: 0 0 20px rgba(74, 108, 247, 0.4);
+/* --- Playlist Page: Avatar/Cover styling (separate from profile) --- */
+[data-theme="dark"] .page-playlist .user-avatar,
+[data-theme="dark"] .page-playlist #pl-cover,
+[data-theme="dark"] .page-playlist .avatar-wrap,
+[data-theme="dark"] .page-playlist .avatar-container,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-avatar,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) #pl-cover,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .avatar-wrap,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .avatar-container {
+    border: 2px solid var(--border-color) !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.2) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
     background-color: var(--bg-tertiary);
-} */
+}
 
-/* --- Playlist: Info Section --- */
-[data-theme="dark"] .user-info {
+/* --- Playlist Page: Avatar image inside container --- */
+[data-theme="dark"] .page-playlist .user-avatar img,
+[data-theme="dark"] .page-playlist #pl-cover img,
+[data-theme="dark"] .page-playlist .avatar-wrap img,
+[data-theme="dark"] .page-playlist .avatar-container img,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-avatar img,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) #pl-cover img,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .avatar-wrap img,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .avatar-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+}
+
+/* --- Playlist Page: Info Section --- */
+[data-theme="dark"] .page-playlist .user-info,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-info {
     background-color: transparent !important;
 }
 
-[data-theme="dark"] .user-name-row,
-[data-theme="dark"] .user-name,
-[data-theme="dark"] #pl-name {
+[data-theme="dark"] .page-playlist .user-name-row,
+[data-theme="dark"] .page-playlist .user-name,
+[data-theme="dark"] .page-playlist #pl-name,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-name-row,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .user-name,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) #pl-name {
     color: var(--text-primary) !important;
     text-shadow: 0 2px 12px rgba(74, 108, 247, 0.3);
 }
 
-[data-theme="dark"] .follow-stats,
-[data-theme="dark"] #pl-count {
+[data-theme="dark"] .page-playlist .follow-stats,
+[data-theme="dark"] .page-playlist #pl-count,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .follow-stats,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) #pl-count {
     color: var(--text-secondary) !important;
 }
 

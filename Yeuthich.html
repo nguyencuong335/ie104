@@ -354,17 +354,23 @@
                             </div>
                         </div>
 
-                        <table class="song-list">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Bài hát</th>
-                                    <th>Nghệ sĩ</th>
-                                    <th>Thời lượng</th>
-                                </tr>
-                            </thead>
-                            <tbody id="yt-body"></tbody>
-                        </table>
+                        <div
+                            class="played-table"
+                            role="table"
+                            aria-label="Danh sách bài hát yêu thích"
+                        >
+                            <div class="pt-head" role="row">
+                                <div class="pt-col idx">#</div>
+                                <div class="pt-col track">Title</div>
+                                <div class="pt-col artist">Artist</div>
+                                <div class="pt-col time">Time</div>
+                            </div>
+                            <div
+                                id="yt-body"
+                                class="pt-body"
+                                role="rowgroup"
+                            ></div>
+                        </div>
 
                         <div class="artist-section">
                             <h2>Kết hợp từ các nghệ sĩ</h2>

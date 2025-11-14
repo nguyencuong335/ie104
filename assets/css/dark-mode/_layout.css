@@ -4,6 +4,7 @@
 
 [data-theme="dark"] html {
     background-color: var(--bg-primary) !important;
+    overflow-x: hidden;
 }
 
 [data-theme="dark"] body {
@@ -11,6 +12,20 @@
     color: var(--text-primary);
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+}
+
+/* Global scrollbar hiding for dark mode */
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    background: transparent !important;
+    display: none !important;
+}
+
+[data-theme="dark"] * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 [data-theme="dark"] .wrap {

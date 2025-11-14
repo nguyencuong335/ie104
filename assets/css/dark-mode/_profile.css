@@ -15,6 +15,42 @@
     min-height: 100vh;
 }
 
+/* Hide scrollbars in profile page for dark mode */
+[data-theme="dark"] *::-webkit-scrollbar,
+[data-theme="dark"] html::-webkit-scrollbar,
+[data-theme="dark"] body::-webkit-scrollbar,
+[data-theme="dark"] .content::-webkit-scrollbar,
+[data-theme="dark"] .profile-page::-webkit-scrollbar,
+[data-theme="dark"] .profile-content::-webkit-scrollbar,
+[data-theme="dark"] .main-content::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    background: transparent !important;
+    display: none !important;
+}
+
+/* For Firefox */
+[data-theme="dark"] *,
+[data-theme="dark"] html,
+[data-theme="dark"] body,
+[data-theme="dark"] .content,
+[data-theme="dark"] .profile-page,
+[data-theme="dark"] .profile-content,
+[data-theme="dark"] .main-content {
+    scrollbar-width: none !important;
+}
+
+/* For Internet Explorer and Edge */
+[data-theme="dark"] *,
+[data-theme="dark"] html,
+[data-theme="dark"] body,
+[data-theme="dark"] .content,
+[data-theme="dark"] .profile-page,
+[data-theme="dark"] .profile-content,
+[data-theme="dark"] .main-content {
+    -ms-overflow-style: none !important;
+}
+
 [data-theme="dark"] .profile-container {
     background-color: transparent !important;
     color: var(--text-primary);
@@ -106,10 +142,13 @@
     justify-content: center;
 }
 
-/* Fix cho avatar container để giữ shape tròn */
-[data-theme="dark"] .user-avatar,
-[data-theme="dark"] .profile-avatar-container,
-[data-theme="dark"] .avatar-container {
+/* --- Profile Page: Avatar container styling (separate from playlist) --- */
+[data-theme="dark"] .page-profile .user-avatar,
+[data-theme="dark"] .page-profile .profile-avatar-container,
+[data-theme="dark"] .page-profile .avatar-container,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .user-avatar,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .profile-avatar-container,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .avatar-container {
     border: 3px solid var(--glow-color) !important;
     box-shadow: 0 0 20px rgba(74, 108, 247, 0.4) !important;
     border-radius: 50% !important;
@@ -118,10 +157,13 @@
     object-fit: cover !important;
 }
 
-/* Avatar image inside container */
-[data-theme="dark"] .user-avatar img,
-[data-theme="dark"] .profile-avatar-container img,
-[data-theme="dark"] .avatar-container img {
+/* --- Profile Page: Avatar image inside container --- */
+[data-theme="dark"] .page-profile .user-avatar img,
+[data-theme="dark"] .page-profile .profile-avatar-container img,
+[data-theme="dark"] .page-profile .avatar-container img,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .user-avatar img,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .profile-avatar-container img,
+[data-theme="dark"] body:has(script[src*="hoso.js"]) .avatar-container img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;

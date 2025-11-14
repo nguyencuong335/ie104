@@ -3,9 +3,9 @@
    ======================================================================== */
 
 [data-theme="dark"] .header {
-    background: linear-gradient(180deg, #0f1535 0%, #0a0e27 100%);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 12px rgba(74, 108, 247, 0.1);
+    background: var(--bg-primary);
+    /* border-bottom: 1px solid var(--border-color); */
+    /* box-shadow: 0 2px 12px rgba(74, 108, 247, 0.1); */
 }
 
 [data-theme="dark"] .header * {

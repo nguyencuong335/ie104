@@ -644,6 +644,30 @@ body.dark-mode .track-index {
     height: 0; /* hide bar */
 }
 
+/* Hide all scrollbars in index page */
+body::-webkit-scrollbar,
+.home-main::-webkit-scrollbar,
+.content::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+}
+
+/* For Firefox */
+body,
+.home-main,
+.content {
+    scrollbar-width: none;
+}
+
+/* For Internet Explorer and Edge */
+body,
+.home-main,
+.content {
+    -ms-overflow-style: none;
+}
+
 /* Ensure cards have fixed width and snap */
 .slider .playlist-card {
     min-width: 220px;

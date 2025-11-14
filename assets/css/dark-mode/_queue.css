@@ -9,7 +9,7 @@
         var(--bg-primary) 100%
     ) !important;
     color: var(--text-primary);
-    border-left: 1px solid var(--border-color);
+    /* border-left: 1px solid var(--border-color); */
 }
 
 /* --- Queue Header --- */
@@ -35,13 +35,37 @@
 [data-theme="dark"] #queue-list > * {
     background-color: transparent !important;
     color: var(--text-primary) !important;
-    border-bottom: 1px solid var(--border-color) !important;
+    /* border-bottom: 1px solid var(--border-color) !important; */
     transition: all 0.3s ease;
 }
 
 [data-theme="dark"] #queue-list > *:hover {
     background-color: var(--hover-bg) !important;
     box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Queue: Currently Playing Item --- */
+[data-theme="dark"] .q-item.current,
+[data-theme="dark"] .q-item.playing {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(43, 166, 223, 0.08) 50%,
+        transparent 100%
+    ) !important;
+    /* border-left: 3px solid var(--glow-color) !important; */
+    box-shadow: 0 0 16px rgba(165, 167, 172, 0.2);
+}
+
+/* [data-theme="dark"] .q-item.current .q-title-text,
+[data-theme="dark"] .q-item.playing .q-title-text {
+    color: var(--glow-color) !important;
+    font-weight: 600;
+} */
+
+[data-theme="dark"] .q-item.current .q-artist,
+[data-theme="dark"] .q-item.playing .q-artist {
+    color: var(--text-primary) !important;
 }
 
 /* --- Follow Button in Queue --- */

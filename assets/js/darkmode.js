@@ -73,8 +73,8 @@ class DarkModeManager {
         const icon = document.createElement("i");
         icon.className =
             this.getCurrentTheme() === "dark"
-                ? "fa-solid fa-sun"
-                : "fa-solid fa-moon";
+                ? "fa-solid fa-moon"
+                : "fa-solid fa-sun";
         icon.setAttribute("aria-hidden", "true");
         this.toggleButton.appendChild(icon);
 
@@ -132,7 +132,7 @@ class DarkModeManager {
         const icon = this.toggleButton.querySelector("i");
         if (icon) {
             icon.className =
-                theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
+                theme === "dark" ? "fa-solid fa-moon" : "fa-solid fa-sun";
         }
     }
 }
