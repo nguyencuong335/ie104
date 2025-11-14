@@ -1,0 +1,410 @@
+/* ========================================================================
+   HEADER - THANH ĐIỀU HƯỚNG
+   ======================================================================== */
+
+[data-theme="dark"] .header {
+    background: linear-gradient(180deg, #0f1535 0%, #0a0e27 100%);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 12px rgba(74, 108, 247, 0.1);
+}
+
+[data-theme="dark"] .header * {
+    color: var(--text-primary);
+}
+
+/* --- Header: Navigation Buttons (Back/Forward) --- */
+[data-theme="dark"] .nav-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .nav-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 8px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .nav-btn i {
+    color: var(--text-primary) !important;
+}
+
+/* --- Header: Dark Mode Toggle Button --- */
+[data-theme="dark"] .dark-mode-toggle {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .dark-mode-toggle:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .dark-mode-toggle i {
+    color: var(--glow-color) !important;
+    filter: drop-shadow(0 0 6px rgba(74, 108, 247, 0.5));
+}
+
+/* --- Header: Search Box --- */
+[data-theme="dark"] .search {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .search:focus-within {
+    border-color: var(--glow-color);
+    box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+}
+
+[data-theme="dark"] .search input {
+    color: var(--text-primary);
+    background-color: transparent;
+}
+
+[data-theme="dark"] .search input::placeholder {
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .search i {
+    color: var(--text-secondary);
+}
+
+/* --- Header: Search Results Dropdown --- */
+[data-theme="dark"] #mb-search-panel {
+    background: linear-gradient(
+        135deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-secondary) 100%
+    ) !important;
+    border: 1px solid var(--glow-color) !important;
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.3) !important;
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .search-dropdown,
+[data-theme="dark"] .search-results,
+[data-theme="dark"] .search-suggestions,
+[data-theme="dark"] .sr-dropdown {
+    background: linear-gradient(
+        135deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-secondary) 100%
+    ) !important;
+    border: 1px solid var(--glow-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* --- Search Dropdown: Result Item (sr-item) --- */
+[data-theme="dark"] .sr-item {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .sr-item:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.15) 50%,
+        transparent 100%
+    ) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Search Dropdown: All text inside sr-item --- */
+[data-theme="dark"] .sr-item * {
+    color: var(--text-primary) !important;
+}
+
+/* --- Search Dropdown: Song Title in sr-item --- */
+[data-theme="dark"] .sr-item .sr-title,
+[data-theme="dark"] .sr-item .song-title,
+[data-theme="dark"] .sr-item .title {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+}
+
+/* --- Search Dropdown: Artist Name in sr-item --- */
+[data-theme="dark"] .sr-item .sr-artist,
+[data-theme="dark"] .sr-item .artist,
+[data-theme="dark"] .sr-item .artist-name {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Search Dropdown: Type Label in sr-item (Bài hát) --- */
+[data-theme="dark"] .sr-item .sr-type,
+[data-theme="dark"] .sr-item .type,
+[data-theme="dark"] .sr-item .label,
+[data-theme="dark"] .sr-item .badge {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Search Dropdown: Song Thumbnail in sr-item --- */
+[data-theme="dark"] .sr-item .sr-thumb,
+[data-theme="dark"] .sr-item .thumb,
+[data-theme="dark"] .sr-item img {
+    border: 1px solid var(--border-color);
+}
+
+/* --- Search Dropdown: Play Button in sr-item --- */
+[data-theme="dark"] .sr-item .sr-play,
+[data-theme="dark"] .sr-item .play-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .sr-item .sr-play:hover,
+[data-theme="dark"] .sr-item .play-btn:hover {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Search Dropdown: Section Headers (if any) --- */
+[data-theme="dark"] .search-section-header,
+[data-theme="dark"] .search-category-header {
+    color: var(--text-tertiary) !important;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Search Dropdown: Empty State --- */
+[data-theme="dark"] .sr-empty,
+[data-theme="dark"] .search-empty,
+[data-theme="dark"] .search-no-results {
+    color: var(--text-secondary) !important;
+    background-color: transparent;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* --- Search Dropdown: Loading State --- */
+[data-theme="dark"] .sr-loading,
+[data-theme="dark"] .search-loading {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .search-loading-spinner {
+    border-color: var(--text-tertiary);
+    border-top-color: var(--glow-color);
+}
+
+/* --- Search Dropdown: View All Button --- */
+[data-theme="dark"] .search-view-all,
+[data-theme="dark"] .search-show-all {
+    background-color: transparent !important;
+    color: var(--glow-color) !important;
+    border-top: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .search-view-all:hover,
+[data-theme="dark"] .search-show-all:hover {
+    background-color: var(--hover-bg) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Search Dropdown: Scrollbar --- */
+[data-theme="dark"] .search-dropdown::-webkit-scrollbar,
+[data-theme="dark"] .search-results::-webkit-scrollbar {
+    background-color: var(--bg-secondary);
+    width: 8px;
+}
+
+[data-theme="dark"] .search-dropdown::-webkit-scrollbar-thumb,
+[data-theme="dark"] .search-results::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .search-dropdown::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .search-results::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-bg);
+}
+
+/* --- Search Dropdown: Dividers --- */
+[data-theme="dark"] .search-divider,
+[data-theme="dark"] .search-separator {
+    background-color: var(--border-color) !important;
+}
+
+/* --- Search Dropdown: Recent Searches (if exists) --- */
+[data-theme="dark"] .search-recent,
+[data-theme="dark"] .search-history {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .search-recent-item,
+[data-theme="dark"] .search-history-item {
+    color: var(--text-secondary) !important;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .search-recent-item:hover,
+[data-theme="dark"] .search-history-item:hover {
+    color: var(--text-primary) !important;
+    background-color: var(--hover-bg) !important;
+}
+
+/* --- Search Dropdown: Clear/Delete Button --- */
+[data-theme="dark"] .search-clear-btn,
+[data-theme="dark"] .search-remove-btn {
+    color: var(--text-tertiary) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .search-clear-btn:hover,
+[data-theme="dark"] .search-remove-btn:hover {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 6px rgba(255, 107, 157, 0.5));
+}
+
+/* --- Header: Premium Button --- */
+/* Default state (CHƯA active) */
+[data-theme="dark"] .premium-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .premium-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .premium-btn i {
+    color: var(--glow-color) !important;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.4));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .premium-btn:hover i {
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.6));
+    transform: scale(1.1);
+}
+
+/* Active state (ĐÃ kích hoạt Premium) */
+[data-theme="dark"] .premium-btn[aria-pressed="true"],
+[data-theme="dark"] .premium-btn.active {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important;
+    color: #0a0e27 !important;
+    border: 2px solid #ffed4e !important;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 50px rgba(255, 215, 0, 0.5),
+        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+    animation: premium-active-glow 2s infinite;
+}
+
+[data-theme="dark"] .premium-btn[aria-pressed="true"]::before,
+[data-theme="dark"] .premium-btn.active::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: premium-shine-active 2s infinite;
+}
+
+[data-theme="dark"] .premium-btn[aria-pressed="true"]:hover,
+[data-theme="dark"] .premium-btn.active:hover {
+    background: linear-gradient(135deg, #ffed4e 0%, #fff9a8 100%) !important;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 215, 0, 1), 0 0 70px rgba(255, 215, 0, 0.8),
+        inset 0 2px 15px rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .premium-btn[aria-pressed="true"] i,
+[data-theme="dark"] .premium-btn.active i {
+    color: #0a0e27 !important;
+    filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5));
+    animation: crown-bounce 2s infinite;
+}
+
+/* --- Header: Profile Button --- */
+[data-theme="dark"] .profile-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .profile-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .profile-btn i {
+    color: var(--text-primary) !important;
+}
+
+/* --- Header: Profile Menu Dropdown --- */
+[data-theme="dark"] .profile-menu,
+[data-theme="dark"] .more-menu {
+    background: linear-gradient(
+        135deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-secondary) 100%
+    );
+    border: 1px solid var(--glow-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .profile-item,
+[data-theme="dark"] .more-item {
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .profile-item span,
+[data-theme="dark"] .more-item span {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .profile-item:hover,
+[data-theme="dark"] .more-item:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.2) 50%,
+        transparent 100%
+    );
+}
+
+/* --- Header: Logo - Dark Mode (Desktop only) --- */
+@media (min-width: 900px) {
+    [data-theme="dark"] .logo-box {
+        background-image: url("../../imgs/logo-darkmode.png") !important;
+    }
+}
+
+/* Ở responsive (mobile/tablet), giữ nguyên logo gốc */
+/* @media (max-width: 768px) {
+    [data-theme="dark"] .logo-box {
+        background-image: url("../../imgs/logo.png") !important;
+    }
+} */

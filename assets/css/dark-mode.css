@@ -1,0 +1,23 @@
+/* ========================================================================
+   DARK MODE STYLES - MIDNIGHT SKY THEME
+   Music Box Application
+   Entry Point - Imports all dark mode modules
+   ======================================================================== */
+
+@import url("./dark-mode/_variables.css");
+@import url("./dark-mode/_layout.css");
+
+@import url("./dark-mode/_header.css");
+@import url("./dark-mode/_sidebar.css");
+@import url("./dark-mode/_home.css");
+@import url("./dark-mode/_queue.css");
+@import url("./dark-mode/_player.css");
+
+@import url("./dark-mode/_profile.css");
+@import url("./dark-mode/_yeuthich.css");
+@import url("./dark-mode/_nghe-gan-day.css");
+@import url("./dark-mode/_playlist.css");
+@import url("./dark-mode/_timkiem.css");
+
+@import url("./dark-mode/_icons.css");
+@import url("./dark-mode/_animations.css");

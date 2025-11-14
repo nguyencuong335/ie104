@@ -1,0 +1,26 @@
+/* ========================================================================
+   BASE LAYOUT - HTML & BODY
+   ======================================================================== */
+
+[data-theme="dark"] html {
+    background-color: var(--bg-primary) !important;
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+[data-theme="dark"] .wrap {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary);
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+[data-theme="dark"] .content {
+    background-color: var(--bg-primary) !important;
+}

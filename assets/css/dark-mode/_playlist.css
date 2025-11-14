@@ -1,0 +1,399 @@
+/* ========================================================================
+   PLAYLIST.HTML - TRANG PLAYLIST CHI TIẾT
+   ======================================================================== */
+
+/* --- Playlist: Main Content Area --- */
+[data-theme="dark"] .page-playlist .main-content,
+[data-theme="dark"] body:has(script[src*="playlist.js"]) .main-content {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+}
+
+/* --- Playlist: Header/Banner --- */
+/* [data-theme="dark"] .user-header,
+[data-theme="dark"] #pl-header {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
+} */
+
+/* --- Playlist: Avatar/Cover --- */
+/* [data-theme="dark"] .user-avatar,
+[data-theme="dark"] #pl-cover,
+[data-theme="dark"] .avatar-wrap {
+    border: 3px solid var(--glow-color);
+    box-shadow: 0 0 20px rgba(74, 108, 247, 0.4);
+    background-color: var(--bg-tertiary);
+} */
+
+/* --- Playlist: Info Section --- */
+[data-theme="dark"] .user-info {
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .user-name-row,
+[data-theme="dark"] .user-name,
+[data-theme="dark"] #pl-name {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .follow-stats,
+[data-theme="dark"] #pl-count {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Playlist: Table Header --- */
+[data-theme="dark"] .pl-head {
+    background-color: transparent !important;
+    border-bottom: 2px solid var(--glow-color);
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .pl-hash,
+[data-theme="dark"] .pl-title-col,
+[data-theme="dark"] .pl-artist-col,
+[data-theme="dark"] .pl-album-col,
+[data-theme="dark"] .pl-time-col {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Playlist: Table Body --- */
+[data-theme="dark"] .pl-body,
+[data-theme="dark"] #pl-body {
+    background-color: transparent !important;
+}
+
+/* --- Playlist: Song Row/Item --- */
+[data-theme="dark"] .pl-row,
+[data-theme="dark"] .playlist-row,
+[data-theme="dark"] .track-row {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pl-row:hover,
+[data-theme="dark"] .playlist-row:hover,
+[data-theme="dark"] .track-row:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    ) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Playlist: Playing Row --- */
+[data-theme="dark"] .pl-row.playing,
+[data-theme="dark"] .playlist-row.playing,
+[data-theme="dark"] .track-row.playing {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.15) 50%,
+        transparent 100%
+    ) !important;
+    border-left: 3px solid var(--glow-color) !important;
+}
+
+[data-theme="dark"] .pl-row.playing .pl-title,
+[data-theme="dark"] .pl-row.playing .track-title {
+    color: var(--glow-color) !important;
+}
+
+/* --- Playlist: Index/Hash Column --- */
+[data-theme="dark"] .pl-row .pl-hash,
+[data-theme="dark"] .track-number {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Playlist: Song Title --- */
+[data-theme="dark"] .pl-row .pl-title,
+[data-theme="dark"] .pl-title-cell,
+[data-theme="dark"] .track-title {
+    color: var(--text-primary) !important;
+}
+
+/* --- Playlist: Artist Info --- */
+[data-theme="dark"] .pl-row .pl-artist,
+[data-theme="dark"] .pl-artist-cell,
+[data-theme="dark"] .track-artist {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Playlist: Album Info --- */
+[data-theme="dark"] .pl-row .pl-album,
+[data-theme="dark"] .pl-album-cell,
+[data-theme="dark"] .track-album {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Playlist: Duration/Time --- */
+[data-theme="dark"] .pl-row .pl-time,
+[data-theme="dark"] .pl-time-cell,
+[data-theme="dark"] .track-duration {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Playlist: Song Cover/Thumbnail --- */
+[data-theme="dark"] .pl-row .pl-cover,
+[data-theme="dark"] .track-cover-img {
+    border: 1px solid var(--border-color);
+}
+
+/* --- Playlist: Action Buttons --- */
+[data-theme="dark"] .pl-row .pl-actions,
+[data-theme="dark"] .track-actions {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .pl-row .play-btn,
+[data-theme="dark"] .pl-row .action-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pl-row .play-btn:hover,
+[data-theme="dark"] .pl-row .action-btn:hover {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Playlist: Remove/Delete Button --- */
+[data-theme="dark"] .pl-row .remove-btn,
+[data-theme="dark"] .pl-row .delete-btn {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 4px rgba(255, 107, 157, 0.3));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pl-row .remove-btn:hover,
+[data-theme="dark"] .pl-row .delete-btn:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    transform: scale(1.2);
+}
+
+/* --- Playlist: Toolbar/Controls (if exists) --- */
+[data-theme="dark"] .playlist-toolbar,
+[data-theme="dark"] .pl-controls {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .toolbar-btn,
+[data-theme="dark"] .pl-control-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .toolbar-btn:hover,
+[data-theme="dark"] .pl-control-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+}
+
+/* --- Playlist: Play All Button --- */
+[data-theme="dark"] .play-all-playlist,
+[data-theme="dark"] .btn-play-playlist {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .play-all-playlist:hover,
+[data-theme="dark"] .btn-play-playlist:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- Playlist: Shuffle Button --- */
+[data-theme="dark"] .shuffle-playlist,
+[data-theme="dark"] .btn-shuffle-playlist {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glow-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .shuffle-playlist:hover,
+[data-theme="dark"] .btn-shuffle-playlist:hover {
+    background-color: var(--glow-color) !important;
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Playlist: Empty State --- */
+[data-theme="dark"] .playlist-empty,
+[data-theme="dark"] .empty-playlist {
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+[data-theme="dark"] .playlist-empty-icon,
+[data-theme="dark"] .empty-icon {
+    color: var(--text-tertiary) !important;
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.2));
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .playlist-empty-message,
+[data-theme="dark"] .empty-text {
+    color: var(--text-secondary) !important;
+    font-size: 1.25rem;
+}
+
+/* --- Playlist: Stats/Info --- */
+[data-theme="dark"] .playlist-stats,
+[data-theme="dark"] .pl-info {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .stats-value,
+[data-theme="dark"] .pl-stat-number {
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .stats-label,
+[data-theme="dark"] .pl-stat-label {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Playlist: Description/Bio --- */
+[data-theme="dark"] .playlist-description,
+[data-theme="dark"] .pl-description {
+    color: var(--text-secondary) !important;
+    background-color: transparent;
+}
+
+/* --- Playlist: Owner/Creator --- */
+[data-theme="dark"] .playlist-owner,
+[data-theme="dark"] .pl-creator {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .owner-avatar {
+    border: 2px solid rgba(74, 108, 247, 0.3);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.3);
+}
+
+/* --- Playlist: Edit/Delete Playlist Buttons --- */
+[data-theme="dark"] .edit-playlist-btn,
+[data-theme="dark"] .delete-playlist-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .edit-playlist-btn:hover {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .delete-playlist-btn:hover {
+    background-color: #ff6b9d !important;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.4);
+}
+
+/* --- Playlist: Drag Handle (if sortable) --- */
+[data-theme="dark"] .drag-handle {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .drag-handle:hover {
+    color: var(--text-primary) !important;
+}
+
+/* --- Playlist: Scrollbar --- */
+[data-theme="dark"] .pl-body::-webkit-scrollbar,
+[data-theme="dark"] .main-content::-webkit-scrollbar {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pl-body::-webkit-scrollbar-thumb,
+[data-theme="dark"] .main-content::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .pl-body::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .main-content::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-bg);
+}
+
+/* --- Playlist: Column Header Hover --- */
+[data-theme="dark"] .pl-head > *:hover {
+    color: var(--text-primary) !important;
+}
+
+/* --- Playlist: Play Icon on Row Hover --- */
+[data-theme="dark"] .pl-row:hover .pl-hash::before {
+    color: var(--glow-color) !important;
+}
+
+/* --- Playlist: Like/Heart Button --- */
+[data-theme="dark"] .pl-row .like-btn,
+[data-theme="dark"] .playlist-like-btn {
+    color: var(--text-primary) !important;
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.3));
+}
+
+[data-theme="dark"] .pl-row .like-btn.active,
+[data-theme="dark"] .playlist-like-btn.active {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+}
+
+/* --- Playlist: Add Song Button (if exists) --- */
+[data-theme="dark"] .add-song-btn,
+[data-theme="dark"] .btn-add-song {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .add-song-btn:hover,
+[data-theme="dark"] .btn-add-song:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- Playlist: Dividers --- */
+[data-theme="dark"] .playlist-divider,
+[data-theme="dark"] .pl-divider {
+    background-color: var(--border-color) !important;
+}

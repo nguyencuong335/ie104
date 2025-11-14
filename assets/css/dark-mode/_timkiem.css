@@ -1,0 +1,314 @@
+/* ========================================================================
+   TIMKIEM.HTML - TRANG TÌM KIẾM / KẾT QUẢ TÌM KIẾM
+   ======================================================================== */
+
+/* --- Timkiem: Main Content Area --- */
+[data-theme="dark"] .timkiem-main {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+}
+
+/* --- Timkiem: Top Section Container --- */
+[data-theme="dark"] .top-section,
+[data-theme="dark"] .results-container {
+    background-color: transparent !important;
+}
+
+/* --- Timkiem: Section Titles --- */
+[data-theme="dark"] .section-title {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+/* --- Timkiem: Top Result Section --- */
+[data-theme="dark"] .top-result-section {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Top Result Card --- */
+[data-theme="dark"] .top-result-card {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .top-result-card:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 12px 40px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+/* --- Timkiem: Artist Image in Top Result --- */
+[data-theme="dark"] .artist-image {
+    border: 3px solid var(--glow-color);
+    box-shadow: 0 0 20px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Timkiem: Artist Name --- */
+[data-theme="dark"] .artist-name {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.3);
+}
+
+/* --- Timkiem: Artist Type --- */
+[data-theme="dark"] .artist-type {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Timkiem: Follow Button --- */
+[data-theme="dark"] .follow-button {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .follow-button:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- Timkiem: Top Songs Section --- */
+[data-theme="dark"] .top-songs-section {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Top Songs Grid --- */
+[data-theme="dark"] .top-songs-grid {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Top Song Item --- */
+[data-theme="dark"] .top-song-item {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .top-song-item:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    ) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Timkiem: Song Number --- */
+[data-theme="dark"] .song-number {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Timkiem: Song Cover --- */
+[data-theme="dark"] .song-cover {
+    border: 1px solid var(--border-color);
+}
+
+/* --- Timkiem: Song Details --- */
+[data-theme="dark"] .song-details {
+    color: var(--text-primary);
+}
+
+/* --- Timkiem: Song Title --- */
+[data-theme="dark"] .song-title {
+    color: var(--text-primary) !important;
+}
+
+/* --- Timkiem: Song Artist --- */
+[data-theme="dark"] .song-artist {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Timkiem: Song Duration --- */
+[data-theme="dark"] .song-duration {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Timkiem: Albums Section --- */
+[data-theme="dark"] .albums-section {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Songs Grid --- */
+[data-theme="dark"] .songs-grid {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Song Item (Album Card) --- */
+[data-theme="dark"] .song-item {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .song-item:hover {
+    background: linear-gradient(
+        135deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-accent) 100%
+    ) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+/* --- Timkiem: Song Info --- */
+[data-theme="dark"] .song-info {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Song Name --- */
+[data-theme="dark"] .song-name {
+    color: var(--text-primary) !important;
+}
+
+/* --- Timkiem: Artists Section (if exists) --- */
+[data-theme="dark"] .artists-section {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Artist Card --- */
+[data-theme="dark"] .artist-card-item {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .artist-card-item:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+/* --- Timkiem: Playlists Section (if exists) --- */
+[data-theme="dark"] .playlists-section {
+    background-color: transparent;
+}
+
+/* --- Timkiem: Playlist Card --- */
+[data-theme="dark"] .playlist-card-item {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .playlist-card-item:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+/* --- Timkiem: Empty State (No Results) --- */
+[data-theme="dark"] .search-empty,
+[data-theme="dark"] .no-results {
+    color: var(--text-secondary) !important;
+    background-color: transparent;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+[data-theme="dark"] .search-empty-icon,
+[data-theme="dark"] .no-results-icon {
+    color: var(--text-tertiary) !important;
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.2));
+}
+
+[data-theme="dark"] .search-empty-text,
+[data-theme="dark"] .no-results-text {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Timkiem: Filter/Category Buttons (if exists) --- */
+[data-theme="dark"] .search-filters,
+[data-theme="dark"] .category-filters {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .filter-chip,
+[data-theme="dark"] .category-chip {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .filter-chip:hover,
+[data-theme="dark"] .category-chip:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+}
+
+[data-theme="dark"] .filter-chip.active,
+[data-theme="dark"] .category-chip.active {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Timkiem: Play Button on Hover --- */
+[data-theme="dark"] .song-item .play-overlay,
+[data-theme="dark"] .top-song-item .play-overlay {
+    background: linear-gradient(135deg, var(--glow-color) 0%, #6b8aff 100%);
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Timkiem: Scrollbar --- */
+[data-theme="dark"] .timkiem-main::-webkit-scrollbar {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .timkiem-main::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .timkiem-main::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-bg);
+}
+
+/* --- Timkiem: Dividers --- */
+[data-theme="dark"] .section-divider {
+    background-color: var(--border-color) !important;
+}
+
+/* --- Timkiem: Loading State (if exists) --- */
+[data-theme="dark"] .search-loading {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .loading-spinner {
+    border-color: var(--text-tertiary);
+    border-top-color: var(--glow-color);
+}

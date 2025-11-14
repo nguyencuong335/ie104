@@ -1,0 +1,58 @@
+/* ========================================================================
+   QUEUE - DANH SÁCH PHÁT (BÊN PHẢI)
+   ======================================================================== */
+
+[data-theme="dark"] .queue {
+    background: linear-gradient(
+        180deg,
+        var(--bg-secondary) 0%,
+        var(--bg-primary) 100%
+    ) !important;
+    color: var(--text-primary);
+    border-left: 1px solid var(--border-color);
+}
+
+/* --- Queue Header --- */
+[data-theme="dark"] .q-header {
+    color: var(--text-primary);
+    background-color: transparent;
+}
+
+[data-theme="dark"] .q-title {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+[data-theme="dark"] .q-sub {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Queue List Items --- */
+[data-theme="dark"] .q-list {
+    background-color: transparent;
+}
+
+[data-theme="dark"] #queue-list > * {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] #queue-list > *:hover {
+    background-color: var(--hover-bg) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Follow Button in Queue --- */
+[data-theme="dark"] .follow-btn {
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glow-color) !important;
+    background-color: transparent !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .follow-btn:hover {
+    background-color: var(--glow-color) !important;
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+}

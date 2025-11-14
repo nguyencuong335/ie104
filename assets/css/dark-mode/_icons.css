@@ -1,0 +1,161 @@
+/* ========================================================================
+   ICONS - HIỆU ỨNG CHO TẤT CẢ ICONS
+   ======================================================================== */
+
+[data-theme="dark"] i,
+[data-theme="dark"] .fa-solid,
+[data-theme="dark"] .fa-regular,
+[data-theme="dark"] .fa-brands {
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* --- Header Icons --- */
+[data-theme="dark"] .header i {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .nav-btn i,
+[data-theme="dark"] .premium-btn i,
+[data-theme="dark"] .profile-btn i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+}
+
+[data-theme="dark"] .nav-btn:hover i,
+[data-theme="dark"] .premium-btn:hover i,
+[data-theme="dark"] .profile-btn:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.6));
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .search i {
+    color: var(--text-secondary);
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.2));
+}
+
+/* --- Sidebar Icons --- */
+[data-theme="dark"] .sidebar i {
+    color: var(--text-secondary);
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.2));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .menu-btn:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.5));
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .icon-btn i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+}
+
+[data-theme="dark"] .icon-btn:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.6));
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* --- Player Icons --- */
+[data-theme="dark"] .player i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .player .btn:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
+    transform: scale(1.15);
+}
+
+[data-theme="dark"] .player .play:hover i {
+    animation: pulse-glow 1s infinite;
+}
+
+/* --- Card Play Button Icons --- */
+[data-theme="dark"] .playlist-play i,
+[data-theme="dark"] .album-play i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.4));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .playlist-card:hover .playlist-play i,
+[data-theme="dark"] .album-card:hover .album-play i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 12px rgba(74, 108, 247, 0.8));
+    transform: scale(1.2);
+}
+
+/* --- Slider Navigation Icons --- */
+[data-theme="dark"] .slider-btn i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .slider-btn:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
+    transform: scale(1.2);
+}
+
+/* --- Hero Action Icons --- */
+[data-theme="dark"] .hero-actions button i {
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .hero-play:hover i {
+    filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.8));
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .hero-save:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
+    transform: scale(1.1);
+}
+
+/* --- Menu Items Icons --- */
+[data-theme="dark"] .profile-item i,
+[data-theme="dark"] .more-item i {
+    color: var(--text-secondary);
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.2));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .profile-item:hover i,
+[data-theme="dark"] .more-item:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.6));
+    transform: translateX(3px);
+}
+
+/* --- Footer Social Icons --- */
+[data-theme="dark"] .home-footer-social i {
+    color: var(--text-secondary);
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.2));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .home-footer-social a:hover i {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 10px rgba(74, 108, 247, 0.7));
+    transform: scale(1.2);
+}
+
+/* --- Crown Icon (Premium) --- */
+[data-theme="dark"] .premium-btn i.fa-crown {
+    color: var(--glow-color);
+    filter: drop-shadow(0 0 6px rgba(74, 108, 247, 0.4));
+}
+
+[data-theme="dark"] .premium-btn:hover i.fa-crown {
+    filter: drop-shadow(0 0 12px rgba(74, 108, 247, 0.8));
+    animation: shimmer 2s infinite;
+}

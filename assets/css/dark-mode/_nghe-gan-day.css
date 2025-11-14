@@ -1,0 +1,352 @@
+/* ========================================================================
+   NGHEGANNAY.HTML - TRANG NGHE GẦN ĐÂY
+   ======================================================================== */
+
+/* --- NgheGanDay: Main Content Area --- */
+[data-theme="dark"] .played-main,
+[data-theme="dark"] .recent-main,
+[data-theme="dark"] .page-nghe-gan-day .main-content {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+}
+
+/* --- NgheGanDay: Page Header --- */
+[data-theme="dark"] .played-main .page-header,
+[data-theme="dark"] .recent-header {
+    background-color: transparent;
+    padding: 2rem 0;
+}
+
+[data-theme="dark"] .played-main .page-header h1,
+[data-theme="dark"] .played-main .title-xl {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .played-main .page-header p,
+[data-theme="dark"] .played-main .page-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+/* --- NgheGanDay: Table Container --- */
+[data-theme="dark"] .played-table,
+[data-theme="dark"] .recent-table {
+    background-color: transparent !important;
+    color: var(--text-primary);
+}
+
+/* --- NgheGanDay: Table Header --- */
+[data-theme="dark"] .pt-head,
+[data-theme="dark"] .played-table-head {
+    background-color: transparent !important;
+    border-bottom: 2px solid var(--glow-color);
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .pt-head .pt-col,
+[data-theme="dark"] .played-table-head .pt-col {
+    color: var(--text-secondary) !important;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+}
+
+/* --- NgheGanDay: Table Body --- */
+[data-theme="dark"] .pt-body,
+[data-theme="dark"] .played-table-body {
+    background-color: transparent !important;
+}
+
+/* --- NgheGanDay: Song Row/Item --- */
+[data-theme="dark"] .pt-row,
+[data-theme="dark"] .played-row,
+[data-theme="dark"] .recent-item {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pt-row:hover,
+[data-theme="dark"] .played-row:hover,
+[data-theme="dark"] .recent-item:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    ) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- NgheGanDay: Index/Number Column --- */
+[data-theme="dark"] .pt-row .idx,
+[data-theme="dark"] .played-row .idx,
+[data-theme="dark"] .track-number {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- NgheGanDay: Track/Song Info --- */
+[data-theme="dark"] .pt-row .track,
+[data-theme="dark"] .played-row .track,
+[data-theme="dark"] .track-info {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .pt-row .track-title,
+[data-theme="dark"] .played-row .track-title,
+[data-theme="dark"] .song-title-text {
+    color: var(--text-primary) !important;
+}
+
+/* --- NgheGanDay: Artist Info --- */
+[data-theme="dark"] .pt-row .artist,
+[data-theme="dark"] .played-row .artist,
+[data-theme="dark"] .artist-info {
+    color: var(--text-secondary) !important;
+}
+
+/* --- NgheGanDay: Time/Duration --- */
+[data-theme="dark"] .pt-row .time,
+[data-theme="dark"] .played-row .time,
+[data-theme="dark"] .track-duration {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- NgheGanDay: Album Info (if exists) --- */
+[data-theme="dark"] .pt-row .album,
+[data-theme="dark"] .played-row .album,
+[data-theme="dark"] .album-info {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- NgheGanDay: Played Time/Date --- */
+[data-theme="dark"] .pt-row .played-time,
+[data-theme="dark"] .played-row .played-at,
+[data-theme="dark"] .recent-time {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- NgheGanDay: Song Thumbnail/Cover --- */
+[data-theme="dark"] .pt-row .track-cover,
+[data-theme="dark"] .played-row .track-cover,
+[data-theme="dark"] .recent-cover {
+    border: 1px solid var(--border-color);
+}
+
+/* --- NgheGanDay: Action Buttons --- */
+[data-theme="dark"] .pt-row .actions,
+[data-theme="dark"] .played-row .actions,
+[data-theme="dark"] .track-actions {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .pt-row .play-btn,
+[data-theme="dark"] .played-row .play-btn,
+[data-theme="dark"] .action-play {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pt-row .play-btn:hover,
+[data-theme="dark"] .played-row .play-btn:hover,
+[data-theme="dark"] .action-play:hover {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .pt-row .remove-btn,
+[data-theme="dark"] .played-row .remove-btn,
+[data-theme="dark"] .action-remove {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 4px rgba(255, 107, 157, 0.3));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pt-row .remove-btn:hover,
+[data-theme="dark"] .played-row .remove-btn:hover,
+[data-theme="dark"] .action-remove:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    transform: scale(1.2);
+}
+
+/* --- NgheGanDay: Filter/Sort Controls (if exists) --- */
+[data-theme="dark"] .played-filters,
+[data-theme="dark"] .recent-filters,
+[data-theme="dark"] .filter-bar {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .sort-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .sort-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+}
+
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .sort-btn.active {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+/* --- NgheGanDay: Stats/Counter (if exists) --- */
+[data-theme="dark"] .played-stats,
+[data-theme="dark"] .recent-stats {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .stats-count,
+[data-theme="dark"] .total-played {
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .stats-label {
+    color: var(--text-secondary) !important;
+}
+
+/* --- NgheGanDay: Empty State --- */
+[data-theme="dark"] .played-empty,
+[data-theme="dark"] .recent-empty,
+[data-theme="dark"] .no-played {
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+[data-theme="dark"] .played-empty-icon,
+[data-theme="dark"] .recent-empty-icon,
+[data-theme="dark"] .empty-icon {
+    color: var(--text-tertiary) !important;
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.2));
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .played-empty-message,
+[data-theme="dark"] .recent-empty-message,
+[data-theme="dark"] .empty-text {
+    color: var(--text-secondary) !important;
+    font-size: 1.25rem;
+}
+
+/* --- NgheGanDay: Clear History Button (if exists) --- */
+[data-theme="dark"] .clear-history-btn,
+[data-theme="dark"] .btn-clear-all {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .clear-history-btn:hover,
+[data-theme="dark"] .btn-clear-all:hover {
+    background-color: #ff6b9d !important;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.4);
+}
+
+/* --- NgheGanDay: Play All Button (if exists) --- */
+[data-theme="dark"] .play-all-recent,
+[data-theme="dark"] .btn-play-history {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .play-all-recent:hover,
+[data-theme="dark"] .btn-play-history:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- NgheGanDay: Section Dividers --- */
+[data-theme="dark"] .played-divider,
+[data-theme="dark"] .recent-divider {
+    background-color: var(--border-color) !important;
+}
+
+/* --- NgheGanDay: Group Headers (Today, Yesterday, etc.) --- */
+[data-theme="dark"] .played-group-header,
+[data-theme="dark"] .recent-group-header,
+[data-theme="dark"] .date-group-header {
+    color: var(--text-primary) !important;
+    background-color: transparent;
+    padding: 1rem 0 0.5rem;
+    font-weight: 600;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+/* --- NgheGanDay: Scrollbar --- */
+[data-theme="dark"] .played-main::-webkit-scrollbar,
+[data-theme="dark"] .pt-body::-webkit-scrollbar {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .played-main::-webkit-scrollbar-thumb,
+[data-theme="dark"] .pt-body::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .played-main::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .pt-body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-bg);
+}
+
+/* --- NgheGanDay: Column Headers Hover --- */
+[data-theme="dark"] .pt-head .pt-col:hover {
+    color: var(--text-primary) !important;
+}
+
+/* --- NgheGanDay: Play Icon on Hover --- */
+[data-theme="dark"] .pt-row:hover .idx::before,
+[data-theme="dark"] .played-row:hover .idx::before {
+    color: var(--glow-color) !important;
+}
+
+/* --- NgheGanDay: Active/Playing Row --- */
+[data-theme="dark"] .pt-row.playing,
+[data-theme="dark"] .played-row.playing,
+[data-theme="dark"] .recent-item.playing {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.15) 50%,
+        transparent 100%
+    ) !important;
+    border-left: 3px solid var(--glow-color) !important;
+}
+
+[data-theme="dark"] .pt-row.playing .track,
+[data-theme="dark"] .played-row.playing .track,
+[data-theme="dark"] .recent-item.playing .track-title {
+    color: var(--glow-color) !important;
+}

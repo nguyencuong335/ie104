@@ -1,0 +1,340 @@
+/* ========================================================================
+   HOSO.HTML - TRANG HỒ SƠ NGƯỜI DÙNG
+   ======================================================================== */
+
+/* --- Profile: Main Content Area --- */
+[data-theme="dark"] .profile-page,
+[data-theme="dark"] .profile-content,
+[data-theme="dark"] .main-content {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+}
+
+[data-theme="dark"] .profile-container {
+    background-color: transparent !important;
+    color: var(--text-primary);
+}
+
+/* --- Profile: Header/Banner --- */
+[data-theme="dark"] .profile-header {
+    background: linear-gradient(
+        180deg,
+        var(--bg-secondary) 0%,
+        transparent 100%
+    ) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .profile-banner {
+    background: linear-gradient(135deg, #1a2456 0%, #0f1535 100%);
+    border: 1px solid var(--border-color);
+}
+
+/* --- Profile: User Info Section --- */
+[data-theme="dark"] .profile-info {
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .profile-info h1,
+[data-theme="dark"] .profile-info h2,
+[data-theme="dark"] .profile-name,
+[data-theme="dark"] .user-name,
+[data-theme="dark"] .follow-stats {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .profile-info p,
+[data-theme="dark"] .profile-email,
+[data-theme="dark"] .profile-bio,
+[data-theme="dark"] .user-email,
+[data-theme="dark"] .user-bio,
+[data-theme="dark"] .profile-description {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .profile-subscribers,
+[data-theme="dark"] .profile-followers,
+[data-theme="dark"] .profile-following,
+[data-theme="dark"] .subscriber-count,
+[data-theme="dark"] .follower-count,
+[data-theme="dark"] .profile-stats-text,
+[data-theme="dark"] .profile-meta-text {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .profile-meta,
+[data-theme="dark"] .profile-metadata,
+[data-theme="dark"] .user-meta,
+[data-theme="dark"] .profile-info-text {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .profile-meta span,
+[data-theme="dark"] .profile-metadata span,
+[data-theme="dark"] .user-meta span {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .profile-info small,
+[data-theme="dark"] .profile-stats-item,
+[data-theme="dark"] .follower-info,
+[data-theme="dark"] .following-info {
+    color: var(--text-primary) !important;
+}
+
+/* --- Profile: Avatar --- */
+[data-theme="dark"] .profile-avatar,
+[data-theme="dark"] .profile-image {
+    border: 3px solid var(--glow-color) !important;
+    box-shadow: 0 0 20px rgba(74, 108, 247, 0.4) !important;
+    /* Giữ tỷ lệ avatar */
+    object-fit: cover !important;
+    aspect-ratio: 1 / 1 !important;
+}
+
+[data-theme="dark"] .avatar-wrapper {
+    background-color: transparent !important;
+    /* Đảm bảo wrapper không làm méo avatar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fix cho avatar container để giữ shape tròn */
+[data-theme="dark"] .user-avatar,
+[data-theme="dark"] .profile-avatar-container,
+[data-theme="dark"] .avatar-container {
+    border: 3px solid var(--glow-color) !important;
+    box-shadow: 0 0 20px rgba(74, 108, 247, 0.4) !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: cover !important;
+}
+
+/* Avatar image inside container */
+[data-theme="dark"] .user-avatar img,
+[data-theme="dark"] .profile-avatar-container img,
+[data-theme="dark"] .avatar-container img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+}
+
+/* --- Profile: Delete Avatar Button --- */
+[data-theme="dark"] .remove-avatar-btn,
+[data-theme="dark"] .delete-avatar-btn,
+[data-theme="dark"] .avatar-remove,
+[data-theme="dark"] .btn-remove-avatar,
+[data-theme="dark"] .avatar-delete {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--glow-color) !important;
+    border: 1px solid var(--border-color) !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease;
+    position: absolute;
+    cursor: pointer;
+    /* Đảm bảo button không làm ảnh hưởng đến avatar */
+    z-index: 10 !important;
+}
+
+[data-theme="dark"] .remove-avatar-btn:hover,
+[data-theme="dark"] .delete-avatar-btn:hover,
+[data-theme="dark"] .avatar-remove:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .remove-avatar-btn i,
+[data-theme="dark"] .delete-avatar-btn i,
+[data-theme="dark"] .avatar-remove i {
+    color: var(--glow-color) !important;
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.4));
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .remove-avatar-btn:hover i,
+[data-theme="dark"] .delete-avatar-btn:hover i,
+[data-theme="dark"] .avatar-remove:hover i {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    transform: rotate(90deg);
+}
+
+/* --- Profile: Stats Section --- */
+[data-theme="dark"] .profile-stats,
+[data-theme="dark"] .stats-container {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .stat-item,
+[data-theme="dark"] .stat-box {
+    color: var(--text-primary);
+    background-color: transparent;
+}
+
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .stat-number {
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .stat-label {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Profile: Navigation Tabs --- */
+[data-theme="dark"] .profile-tabs,
+[data-theme="dark"] .tabs-container,
+[data-theme="dark"] .profile-nav {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="dark"] .tab-btn,
+[data-theme="dark"] .profile-tab,
+[data-theme="dark"] .nav-tab {
+    color: var(--text-secondary) !important;
+    border-bottom: 2px solid transparent;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .tab-btn:hover,
+[data-theme="dark"] .profile-tab:hover {
+    color: var(--text-primary) !important;
+    background-color: var(--hover-bg);
+}
+
+[data-theme="dark"] .tab-btn.active,
+[data-theme="dark"] .profile-tab.active,
+[data-theme="dark"] .nav-tab.active {
+    color: var(--glow-color) !important;
+    border-bottom-color: var(--glow-color);
+    background-color: var(--bg-tertiary);
+}
+
+/* --- Profile: Form Elements --- */
+[data-theme="dark"] .form-group label,
+[data-theme="dark"] .form-label {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .profile-input,
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .profile-input:focus,
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus {
+    border-color: var(--glow-color) !important;
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+    outline: none;
+}
+
+[data-theme="dark"] .form-control::placeholder,
+[data-theme="dark"] .profile-input::placeholder,
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Profile: Action Buttons --- */
+[data-theme="dark"] .edit-profile-btn,
+[data-theme="dark"] .btn-edit,
+[data-theme="dark"] .profile-action-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glow-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .edit-profile-btn:hover,
+[data-theme="dark"] .btn-edit:hover {
+    background-color: var(--glow-color) !important;
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .save-profile-btn,
+[data-theme="dark"] .btn-save,
+[data-theme="dark"] .btn-primary {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .save-profile-btn:hover,
+[data-theme="dark"] .btn-save:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- Profile: Cards & Lists --- */
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .info-card,
+[data-theme="dark"] .content-card {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .profile-card:hover,
+[data-theme="dark"] .info-card:hover,
+[data-theme="dark"] .content-card:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+}
+
+/* --- Profile: Badges --- */
+[data-theme="dark"] .badge,
+[data-theme="dark"] .profile-badge,
+[data-theme="dark"] .tag {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .badge.premium,
+[data-theme="dark"] .premium-badge {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important;
+    color: #0a0e27 !important;
+    border: 1px solid #ffd700;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}

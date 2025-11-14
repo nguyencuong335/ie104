@@ -93,11 +93,13 @@
         <!-- Embedded Fonts -->
         <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
-        <link rel="stylesheet" href="./assets/css/Yeuthich.css"/>
+        <link rel="stylesheet" href="./assets/css/Yeuthich.css" />
+        <link rel="stylesheet" href="./assets/css/dark-mode.css" />
         <title>Music Box</title>
         <style>
             .song-list thead th {
-                font-family: "Poppins", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-family: "Poppins", "Inter", system-ui, -apple-system,
+                    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             }
         </style>
     </head>
@@ -107,10 +109,17 @@
             <header class="header" aria-label="Thanh điều hướng">
                 <div class="header-inner">
                     <div class="header-left">
-                        <a href="./index.html" class="logo-link" aria-label="Trang chủ" title="Trang chủ">
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
                             <div
                                 class="logo-box"
-                                style="background-image: url('./assets/imgs/logo.png');"
+                                style="
+                                    background-image: url('./assets/imgs/logo.png');
+                                "
                             ></div>
                         </a>
                     </div>
@@ -135,20 +144,48 @@
                         </div>
                     </div>
                     <div class="header-right">
-                        <button class="premium-btn" title="Premium" aria-label="Premium" aria-pressed="false">
+                        <button
+                            class="premium-btn"
+                            title="Premium"
+                            aria-label="Premium"
+                            aria-pressed="false"
+                        >
                             <i class="fa-solid fa-crown" aria-hidden="true"></i>
                         </button>
                         <div class="profile-wrapper">
-                            <button class="profile-btn" id="profile-btn" title="Hồ sơ" aria-label="Hồ sơ">
-                                <i class="fa-regular fa-user" aria-hidden="true"></i>
+                            <button
+                                class="profile-btn"
+                                id="profile-btn"
+                                title="Hồ sơ"
+                                aria-label="Hồ sơ"
+                            >
+                                <i
+                                    class="fa-regular fa-user"
+                                    aria-hidden="true"
+                                ></i>
                             </button>
-                            <div class="profile-menu" id="profile-menu" role="menu" aria-hidden="true">
-                                <button class="profile-item" id="profile-open" role="menuitem">
+                            <div
+                                class="profile-menu"
+                                id="profile-menu"
+                                role="menu"
+                                aria-hidden="true"
+                            >
+                                <button
+                                    class="profile-item"
+                                    id="profile-open"
+                                    role="menuitem"
+                                >
                                     <i class="fa-regular fa-user"></i>
                                     <span>Hồ sơ</span>
                                 </button>
-                                <button class="profile-item" id="profile-logout" role="menuitem">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                <button
+                                    class="profile-item"
+                                    id="profile-logout"
+                                    role="menuitem"
+                                >
+                                    <i
+                                        class="fa-solid fa-right-from-bracket"
+                                    ></i>
                                     <span>Đăng xuất</span>
                                 </button>
                             </div>
@@ -184,8 +221,6 @@
                             <i class="fa-solid fa-clock-rotate-left"></i
                             ><span>Nghe gần đây</span>
                         </button>
-
-                        
 
                         <div class="section">
                             <div class="section-sep"></div>
@@ -261,13 +296,30 @@
                                 <div class="b-title" id="b-title">—</div>
                                 <div class="b-artist-row">
                                     <div class="b-artist-block">
-                                        <img class="b-artist-avatar" id="b-artist-avatar" alt="Artist" />
+                                        <img
+                                            class="b-artist-avatar"
+                                            id="b-artist-avatar"
+                                            alt="Artist"
+                                        />
                                         <div class="b-artist-meta">
-                                            <div class="b-artist-label">Artist</div>
-                                            <div class="b-artist-name" id="b-artist-name">—</div>
+                                            <div class="b-artist-label">
+                                                Artist
+                                            </div>
+                                            <div
+                                                class="b-artist-name"
+                                                id="b-artist-name"
+                                            >
+                                                —
+                                            </div>
                                         </div>
                                     </div>
-                                    <button class="follow-btn" id="b-follow" aria-pressed="false">Theo dõi</button>
+                                    <button
+                                        class="follow-btn"
+                                        id="b-follow"
+                                        aria-pressed="false"
+                                    >
+                                        Theo dõi
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -282,38 +334,43 @@
 
                 <!-- Main content -->
                 <main class="main-content">
-                <!-- Playlist yêu thích -->
-                <section class="playlist">
-                    <div class="playlist-header">
-                        <div class="playlist-cover">
-                            <img src="./assets/imgs/In-Love.jpg" alt="Playlist" />
+                    <!-- Playlist yêu thích -->
+                    <section class="playlist">
+                        <div class="playlist-header">
+                            <div class="playlist-cover">
+                                <img
+                                    src="./assets/imgs/In-Love.jpg"
+                                    alt="Playlist"
+                                />
+                            </div>
+                            <div class="playlist-info">
+                                <p class="playlist-sub">Playlist ~ 4 bài hát</p>
+                                <h1 class="playlist-title">
+                                    Yêu thích của Nguyễn Quốc Đạt
+                                </h1>
+                                <button class="playlist-play">
+                                    <i class="fa-solid fa-play"></i> Phát tất cả
+                                </button>
+                            </div>
                         </div>
-                        <div class="playlist-info">
-                            <p class="playlist-sub">Playlist ~ 4 bài hát</p>
-                            <h1 class="playlist-title">Yêu thích của Nguyễn Quốc Đạt</h1>
-                            <button class="playlist-play">
-                                <i class="fa-solid fa-play"></i> Phát tất cả
-                            </button>
+
+                        <table class="song-list">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Bài hát</th>
+                                    <th>Nghệ sĩ</th>
+                                    <th>Thời lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yt-body"></tbody>
+                        </table>
+
+                        <div class="artist-section">
+                            <h2>Kết hợp từ các nghệ sĩ</h2>
+                            <div class="artist-list"></div>
                         </div>
-                    </div>
-
-                    <table class="song-list">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Bài hát</th>
-                                <th>Nghệ sĩ</th>
-                                <th>Thời lượng</th>
-                            </tr>
-                        </thead>
-                        <tbody id="yt-body"></tbody>
-                    </table>
-
-                    <div class="artist-section">
-                        <h2>Kết hợp từ các nghệ sĩ</h2>
-                        <div class="artist-list"></div>
-                    </div>
-                </section>
+                    </section>
                 </main>
             </div>
         </div>
@@ -434,4 +491,3 @@
         <script src="./assets/js/YeuThich.js"></script>
     </body>
 </html>
-

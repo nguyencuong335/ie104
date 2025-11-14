@@ -1,0 +1,301 @@
+/* ========================================================================
+   INDEX.HTML - NỘI DUNG TRANG CHỦ
+   ======================================================================== */
+
+/* --- Main Content Area --- */
+[data-theme="dark"] .home-main {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+[data-theme="dark"] .home-section {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .home-section-title {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+[data-theme="dark"] .home-section-sub {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Hero Carousel Section --- */
+[data-theme="dark"] .hero-carousel {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .q-banner {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    );
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
+}
+
+[data-theme="dark"] .q-banner-inner {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .q-banner-text {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .q-banner-text * {
+    color: inherit;
+}
+
+[data-theme="dark"] .b-title {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .b-artist {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .b-artist-name {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .hero-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .hero-subtitle span {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .b-artist-label {
+    color: var(--text-tertiary);
+}
+
+[data-theme="dark"] .b-artist-row {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .b-artist-block {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .b-artist-meta {
+    color: var(--text-primary);
+}
+
+/* Hero Action Buttons */
+[data-theme="dark"] .hero-play {
+    background: linear-gradient(135deg, var(--glow-color) 0%, #6b8aff 100%);
+    border: none;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .hero-play:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .btn.outline {
+    border-color: var(--glow-color);
+    color: var(--text-primary) !important;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .btn.outline:hover {
+    background-color: var(--glow-color);
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+}
+
+/* Hero Dots Navigation */
+[data-theme="dark"] .hero-dot {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .hero-dot.is-active {
+    background-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.6);
+}
+
+/* --- Category Cards (Thể loại & tâm trạng) --- */
+[data-theme="dark"] .category-card {
+    border: 1px solid rgba(74, 108, 247, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .category-label {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .category-sub {
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .category-card .category-bg-overlay {
+    background: rgba(10, 14, 39, 0.3);
+}
+
+/* --- Playlist & Album Cards --- */
+[data-theme="dark"] .playlist-card,
+[data-theme="dark"] .album-card,
+[data-theme="dark"] .artist-card {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    );
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .playlist-card:hover,
+[data-theme="dark"] .album-card:hover,
+[data-theme="dark"] .artist-card:hover {
+    background: linear-gradient(
+        135deg,
+        var(--bg-tertiary) 0%,
+        var(--bg-accent) 100%
+    );
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+[data-theme="dark"] .playlist-title,
+[data-theme="dark"] .album-title,
+[data-theme="dark"] .artist-name {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .playlist-meta,
+[data-theme="dark"] .album-artist,
+[data-theme="dark"] .artist-genre {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Artist Avatar --- */
+[data-theme="dark"] .b-artist-avatar,
+[data-theme="dark"] .artist-avatar {
+    border: 2px solid rgba(74, 108, 247, 0.3);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .artist-card:hover .artist-avatar {
+    border-color: var(--glow-color);
+    box-shadow: 0 0 20px rgba(74, 108, 247, 0.6);
+}
+
+/* --- Charts Table (Bảng xếp hạng) --- */
+[data-theme="dark"] .chart-table {
+    color: var(--text-primary) !important;
+    background-color: transparent;
+}
+
+[data-theme="dark"] .chart-table th {
+    color: var(--text-secondary) !important;
+    background-color: var(--bg-secondary);
+    border-bottom: 2px solid var(--glow-color);
+}
+
+[data-theme="dark"] .chart-table td {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .chart-table thead {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .chart-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .chart-table tbody tr:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    );
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Footer (Chân trang) --- */
+[data-theme="dark"] .home-footer {
+    background: linear-gradient(180deg, var(--bg-primary) 0%, #05071a 100%);
+    border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .home-footer h3,
+[data-theme="dark"] .home-footer h4 {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+[data-theme="dark"] .home-footer p,
+[data-theme="dark"] .home-footer li {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .home-footer a {
+    color: var(--text-secondary) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .home-footer a:hover {
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.5);
+}
+
+[data-theme="dark"] .home-footer-bottom {
+    border-top: 1px solid var(--border-color);
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .home-footer-bottom span {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .home-footer-social a {
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .home-footer-social a:hover {
+    transform: translateY(-2px);
+    color: var(--glow-color) !important;
+}
+
+/* --- Slider Buttons (Navigation) --- */
+[data-theme="dark"] .slider-btn {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .slider-btn:hover {
+    background-color: var(--glow-color);
+    border-color: var(--glow-color);
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.4);
+}

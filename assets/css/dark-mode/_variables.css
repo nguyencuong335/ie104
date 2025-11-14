@@ -1,0 +1,30 @@
+/* ========================================================================
+   CSS VARIABLES - THEME COLORS
+   ======================================================================== */
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-tertiary: #e8e8e8;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: #f0f0f0;
+}
+
+/* Midnight Sky Theme - Bầu trời đêm huyền bí */
+[data-theme="dark"] {
+    --bg-primary: #0a0e27;
+    --bg-secondary: #0f1535;
+    --bg-tertiary: #161d42;
+    --bg-accent: #1a2456;
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa0b8;
+    --text-tertiary: #6b7299;
+    --border-color: #1e2847;
+    --shadow-color: rgba(10, 14, 39, 0.6);
+    --hover-bg: #1a2456;
+    --glow-color: #4a6cf7;
+}

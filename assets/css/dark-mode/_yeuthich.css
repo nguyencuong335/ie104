@@ -1,0 +1,463 @@
+/* ========================================================================
+   YEUTHICH.HTML - TRANG YÊU THÍCH
+   ======================================================================== */
+
+/* --- Yeuthich: Main Content Area --- */
+[data-theme="dark"] .liked-main,
+[data-theme="dark"] .favorites-main,
+[data-theme="dark"] .yeuthich-main,
+[data-theme="dark"] .page-yeuthich .main-content {
+    background: radial-gradient(
+        ellipse at top,
+        #161d42 0%,
+        #0a0e27 100%
+    ) !important;
+    color: var(--text-primary) !important;
+    min-height: 100vh;
+}
+
+/* --- Yeuthich: Content Container --- */
+[data-theme="dark"] .yeuthich-content,
+[data-theme="dark"] .liked-content,
+[data-theme="dark"] .favorites-content {
+    background-color: transparent !important;
+    color: var(--text-primary);
+}
+
+/* --- Yeuthich: Page Header/Banner --- */
+[data-theme="dark"] .liked-header,
+[data-theme="dark"] .favorites-header,
+[data-theme="dark"] .yeuthich-header,
+[data-theme="dark"] .page-header {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(74, 108, 247, 0.15);
+}
+
+[data-theme="dark"] .liked-header h1,
+[data-theme="dark"] .favorites-header h1,
+[data-theme="dark"] .yeuthich-header h1,
+[data-theme="dark"] .page-header h1 {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 12px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .liked-header p,
+[data-theme="dark"] .favorites-header p,
+[data-theme="dark"] .yeuthich-header p,
+[data-theme="dark"] .page-header p {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Yeuthich: Playlist Container --- */
+[data-theme="dark"] .page-yeuthich .playlist,
+[data-theme="dark"] .yeuthich-playlist,
+[data-theme="dark"] .liked-playlist {
+    background-color: transparent !important;
+    color: var(--text-primary);
+}
+
+/* --- Yeuthich: Playlist Header --- */
+[data-theme="dark"] .page-yeuthich .playlist-header,
+[data-theme="dark"] .playlist-info-header,
+[data-theme="dark"] .playlist-info {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Yeuthich: Playlist Body/Content --- */
+[data-theme="dark"] .page-yeuthich .playlist-body,
+[data-theme="dark"] .playlist-content-area {
+    background-color: transparent !important;
+}
+
+/* --- Yeuthich: Playlist Title --- */
+[data-theme="dark"] .page-yeuthich .playlist h1,
+[data-theme="dark"] .page-yeuthich .playlist h2,
+[data-theme="dark"] .page-yeuthich .playlist h3,
+[data-theme="dark"] .playlist-name {
+    color: var(--text-primary) !important;
+}
+
+/* --- Yeuthich: Playlist Description/Meta --- */
+[data-theme="dark"] .page-yeuthich .playlist p,
+[data-theme="dark"] .page-yeuthich .playlist span,
+[data-theme="dark"] .playlist-description,
+[data-theme="dark"] .playlist-owner {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Yeuthich: All nested containers --- */
+[data-theme="dark"] .page-yeuthich .playlist > *,
+[data-theme="dark"] .page-yeuthich .playlist div {
+    background-color: transparent !important;
+}
+
+/* --- Yeuthich: Song List/Grid --- */
+[data-theme="dark"] .liked-songs,
+[data-theme="dark"] .favorites-songs,
+[data-theme="dark"] .songs-container {
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .song-list,
+[data-theme="dark"] .favorites-list,
+[data-theme="dark"] .tracks-list {
+    background-color: transparent !important;
+}
+
+/* --- Yeuthich: Song Items/Rows --- */
+[data-theme="dark"] .song-item,
+[data-theme="dark"] .favorite-item,
+[data-theme="dark"] .track-item,
+[data-theme="dark"] .song-row {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .song-item:hover,
+[data-theme="dark"] .favorite-item:hover,
+[data-theme="dark"] .track-item:hover,
+[data-theme="dark"] .song-row:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    ) !important;
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+/* --- Yeuthich: Song Info Text --- */
+[data-theme="dark"] .song-title,
+[data-theme="dark"] .favorite-title,
+[data-theme="dark"] .track-title,
+[data-theme="dark"] .song-name {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .song-artist,
+[data-theme="dark"] .favorite-artist,
+[data-theme="dark"] .track-artist,
+[data-theme="dark"] .artist-name {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .song-album,
+[data-theme="dark"] .favorite-album,
+[data-theme="dark"] .album-name {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="dark"] .song-duration,
+[data-theme="dark"] .favorite-duration,
+[data-theme="dark"] .track-duration,
+[data-theme="dark"] .duration {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Yeuthich: Song Thumbnail/Cover --- */
+[data-theme="dark"] .song-thumb,
+[data-theme="dark"] .favorite-thumb,
+[data-theme="dark"] .track-cover,
+[data-theme="dark"] .song-cover {
+    border: 1px solid var(--border-color);
+}
+
+/* --- Yeuthich: Action Buttons --- */
+[data-theme="dark"] .song-actions,
+[data-theme="dark"] .favorite-actions,
+[data-theme="dark"] .track-actions {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .play-btn,
+[data-theme="dark"] .add-to-queue-btn,
+[data-theme="dark"] .remove-from-liked-btn,
+[data-theme="dark"] .action-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .play-btn:hover,
+[data-theme="dark"] .add-to-queue-btn:hover,
+[data-theme="dark"] .action-btn:hover {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .remove-from-liked-btn:hover {
+    background-color: #ff6b9d !important;
+    border-color: #ff6b9d;
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.4);
+}
+
+/* --- Yeuthich: Unlike/Remove Button --- */
+[data-theme="dark"] .unlike-btn,
+[data-theme="dark"] .remove-favorite-btn,
+[data-theme="dark"] .remove-btn {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 4px rgba(255, 107, 157, 0.3));
+}
+
+[data-theme="dark"] .unlike-btn:hover,
+[data-theme="dark"] .remove-favorite-btn:hover,
+[data-theme="dark"] .remove-btn:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    transform: scale(1.2);
+}
+
+/* --- Yeuthich: Section Headers --- */
+[data-theme="dark"] .liked-section,
+[data-theme="dark"] .favorites-section,
+[data-theme="dark"] .content-section {
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .liked-section-title,
+[data-theme="dark"] .favorites-section-title,
+[data-theme="dark"] .section-heading {
+    color: var(--text-primary) !important;
+    text-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+}
+
+[data-theme="dark"] .liked-section-sub,
+[data-theme="dark"] .favorites-section-sub,
+[data-theme="dark"] .section-subtitle {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Yeuthich: Filter/Sort Controls --- */
+[data-theme="dark"] .filter-controls,
+[data-theme="dark"] .sort-controls,
+[data-theme="dark"] .controls-bar {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .sort-btn,
+[data-theme="dark"] .control-btn {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .filter-btn:hover,
+[data-theme="dark"] .sort-btn:hover,
+[data-theme="dark"] .control-btn:hover {
+    background-color: var(--hover-bg) !important;
+    border-color: var(--glow-color);
+}
+
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .sort-btn.active,
+[data-theme="dark"] .control-btn.active {
+    background-color: var(--glow-color) !important;
+    border-color: var(--glow-color);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Yeuthich: Empty State --- */
+[data-theme="dark"] .empty-liked,
+[data-theme="dark"] .empty-favorites,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .no-songs {
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .empty-icon {
+    color: var(--text-tertiary) !important;
+    filter: drop-shadow(0 0 8px rgba(74, 108, 247, 0.2));
+}
+
+[data-theme="dark"] .empty-message,
+[data-theme="dark"] .empty-text {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Yeuthich: Stats/Counter --- */
+[data-theme="dark"] .liked-stats,
+[data-theme="dark"] .favorites-stats,
+[data-theme="dark"] .playlist-stats {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .stats-count,
+[data-theme="dark"] .total-songs,
+[data-theme="dark"] .song-count {
+    color: var(--glow-color) !important;
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.4);
+}
+
+[data-theme="dark"] .stats-label,
+[data-theme="dark"] .count-label {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Yeuthich: Play All Button --- */
+[data-theme="dark"] .play-all-btn,
+[data-theme="dark"] .btn-play-all {
+    background: linear-gradient(
+        135deg,
+        var(--glow-color) 0%,
+        #6b8aff 100%
+    ) !important;
+    border: none !important;
+    box-shadow: 0 4px 16px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .play-all-btn:hover,
+[data-theme="dark"] .btn-play-all:hover {
+    box-shadow: 0 6px 24px rgba(74, 108, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .play-all-btn i,
+[data-theme="dark"] .btn-play-all i {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+/* --- Yeuthich: Shuffle All Button --- */
+[data-theme="dark"] .shuffle-all-btn,
+[data-theme="dark"] .btn-shuffle {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--glow-color) !important;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .shuffle-all-btn:hover,
+[data-theme="dark"] .btn-shuffle:hover {
+    background-color: var(--glow-color) !important;
+    box-shadow: 0 0 16px rgba(74, 108, 247, 0.4);
+}
+
+/* --- Yeuthich: Table View (if used) --- */
+[data-theme="dark"] .liked-table,
+[data-theme="dark"] .favorites-table,
+[data-theme="dark"] .songs-table {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .liked-table th,
+[data-theme="dark"] .favorites-table th,
+[data-theme="dark"] .songs-table th {
+    color: var(--text-secondary) !important;
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 2px solid var(--glow-color);
+}
+
+[data-theme="dark"] .liked-table td,
+[data-theme="dark"] .favorites-table td,
+[data-theme="dark"] .songs-table td {
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .liked-table tr:hover,
+[data-theme="dark"] .favorites-table tr:hover,
+[data-theme="dark"] .songs-table tr:hover {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(74, 108, 247, 0.1) 50%,
+        transparent 100%
+    ) !important;
+}
+
+/* --- Yeuthich: Heart Icon (Liked State) --- */
+[data-theme="dark"] .heart-icon,
+[data-theme="dark"] .liked-icon,
+[data-theme="dark"] .fa-heart.liked {
+    color: #ff6b9d !important;
+    filter: drop-shadow(0 0 6px rgba(255, 107, 157, 0.5));
+}
+
+[data-theme="dark"] .heart-icon:hover,
+[data-theme="dark"] .liked-icon:hover {
+    filter: drop-shadow(0 0 12px rgba(255, 107, 157, 0.8));
+    transform: scale(1.15);
+    animation: heart-beat 0.5s ease;
+}
+
+/* --- Yeuthich: Grid View (if used) --- */
+[data-theme="dark"] .liked-grid,
+[data-theme="dark"] .favorites-grid,
+[data-theme="dark"] .songs-grid {
+    background-color: transparent !important;
+}
+
+[data-theme="dark"] .grid-item {
+    background: linear-gradient(
+        135deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 100%
+    ) !important;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .grid-item:hover {
+    border-color: var(--glow-color);
+    box-shadow: 0 8px 24px rgba(74, 108, 247, 0.25);
+    transform: translateY(-4px);
+}
+
+/* --- Yeuthich: Column Headers (như #, Bài hát, Nghệ sĩ, Thời lượng) --- */
+[data-theme="dark"] .column-header,
+[data-theme="dark"] .table-header,
+[data-theme="dark"] .list-header {
+    color: var(--text-secondary) !important;
+    background-color: transparent !important;
+}
+
+/* --- Yeuthich: Index Number Column --- */
+[data-theme="dark"] .song-index,
+[data-theme="dark"] .track-number {
+    color: var(--text-tertiary) !important;
+}
+
+/* --- Yeuthich: Dividers --- */
+[data-theme="dark"] .divider,
+[data-theme="dark"] .separator {
+    background-color: var(--border-color) !important;
+}
+
+/* --- Yeuthich: Scrollbar --- */
+[data-theme="dark"] .liked-songs::-webkit-scrollbar,
+[data-theme="dark"] .song-list::-webkit-scrollbar {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .liked-songs::-webkit-scrollbar-thumb,
+[data-theme="dark"] .song-list::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .liked-songs::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .song-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-bg);
+}

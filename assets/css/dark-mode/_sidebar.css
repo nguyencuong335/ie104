@@ -1,0 +1,68 @@
+/* ========================================================================
+   SIDEBAR - MENU BÊN TRÁI
+   ======================================================================== */
+
+[data-theme="dark"] .sidebar {
+    background: linear-gradient(180deg, #0f1535 0%, #0a0e27 100%);
+    border-right: 1px solid var(--border-color);
+}
+
+/* --- Sidebar: Menu Buttons --- */
+[data-theme="dark"] .menu-btn {
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .menu-btn:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-primary);
+    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+}
+
+[data-theme="dark"] .menu-btn span {
+    color: inherit;
+}
+
+/* --- Sidebar: Section Labels & Separators --- */
+[data-theme="dark"] .section-label {
+    color: var(--text-tertiary);
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .section-sep {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--border-color) 50%,
+        transparent 100%
+    );
+}
+
+/* --- Sidebar: Playlist Items --- */
+[data-theme="dark"] .pl-item {
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .pl-item:hover {
+    background-color: var(--hover-bg);
+    box-shadow: 0 2px 8px rgba(74, 108, 247, 0.2);
+    transform: translateX(4px);
+}
+
+[data-theme="dark"] .pl-name {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .pl-sub {
+    color: var(--text-secondary);
+}
+
+/* --- Sidebar: Icon Buttons --- */
+[data-theme="dark"] .icon-btn {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .icon-btn:hover {
+    background-color: var(--hover-bg);
+    color: var(--glow-color);
+}

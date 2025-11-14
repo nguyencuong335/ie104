@@ -1,8 +1,29 @@
 // ===== MAIN APPLICATION ENTRY POINT =====
 import { gate, signOut } from "./app/auth.js";
-import { initPlaylists, loadPlaylistFromJSON, renderQueue, updateQueueActive, setPlaylist, getPlaylist, getUserPlaylists, setUserPlaylists, getLikedList, setLikedList, isLiked, getFollowedArtists, saveFollowedArtists } from "./app/playlists.js";
+import {
+    initPlaylists,
+    loadPlaylistFromJSON,
+    renderQueue,
+    updateQueueActive,
+    setPlaylist,
+    getPlaylist,
+    getUserPlaylists,
+    setUserPlaylists,
+    getLikedList,
+    setLikedList,
+    isLiked,
+    getFollowedArtists,
+    saveFollowedArtists,
+} from "./app/playlists.js";
 import { initPlayer } from "./app/player.js";
 import { initUI } from "./app/ui.js";
+// Import dark mode manager
+import DarkModeManager from "./darkmode.js";
+
+// Initialize dark mode (chỉ 1 lần)
+if (!window.darkModeManager) {
+    window.darkModeManager = new DarkModeManager();
+}
 
 // Run authentication gate
 gate();
@@ -10,23 +31,23 @@ gate();
 document.addEventListener("DOMContentLoaded", async () => {
     // Initialize playlists module
     const playlistContext = initPlaylists();
-    
+
     // Load playlist data
     const playlistData = await loadPlaylistFromJSON();
-    
+
     // Store playlist data globally for other modules to access
     window.__mbPlaylist = playlistData.playlist;
     window.__mbAllSongs = playlistData.allSongs;
     window.__mbCurrentPlaylistCtx = playlistData.currentPlaylistCtx;
-    
+
     // Initialize player module
     const playerContext = initPlayer();
-    
+
     // Store player functions globally for cross-module communication
     window.__mbSavePlayerState = playerContext.savePlayerState;
     window.__mbGetCurrentIndex = playerContext.getCurrentIndex;
     window.__mbUpdateVolumeSlider = playerContext.updateVolumeSlider;
-    
+
     // Set up playlist functions for player
     window.__mbSetPlaylist = setPlaylist;
     window.__mbRenderQueue = () => {
@@ -40,10 +61,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     };
     window.__mbUpdateQueueActive = updateQueueActive;
-    
+
     // Initial queue render
     window.__mbRenderQueue();
-    
+
     // Try to restore player state or load first track
     if (!playerContext.restorePlayerState()) {
         playerContext.loadTrack(0);
@@ -67,14 +88,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             playerContext.updateVolumeSlider();
         } catch {}
     }
-    
+
     // Initialize UI module
-    const uiContext = initUI({ 
-        signOut, 
-        playlistContext, 
-        playerContext 
+    const uiContext = initUI({
+        signOut,
+        playlistContext,
+        playerContext,
     });
-    
+
     // Set up additional UI functionality that requires all modules to be loaded
     setupAdditionalFeatures(playlistContext, playerContext, uiContext);
 });
@@ -138,11 +159,13 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
                     sub.textContent = `${
                         Array.isArray(pl.tracks) ? pl.tracks.length : 0
                     } bài hát`;
-                
+
                 // Wire click to navigate
                 card.onclick = () => {
                     try {
-                        uiContext.go(`./playlist.html?id=${encodeURIComponent(pl.id)}`);
+                        uiContext.go(
+                            `./playlist.html?id=${encodeURIComponent(pl.id)}`
+                        );
                     } catch {
                         window.location.href = `./playlist.html?id=${encodeURIComponent(
                             pl.id
@@ -152,11 +175,11 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
             });
         } catch {}
     }
-    
+
     // Run once on load and on changes
     syncProfilePlaylists();
     window.addEventListener("playlists:changed", syncProfilePlaylists);
-    
+
     // Sidebar playlists rendering
     function renderSidebarPlaylists() {
         try {
@@ -177,8 +200,8 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
                   <div class="pl-meta"><div class="pl-name">${trunc40(
                       pl.name || "Playlist"
                   )}</div><div class="pl-sub">Playlist • ${
-                        pl.tracks?.length || 0
-                    } songs</div></div>
+                    pl.tracks?.length || 0
+                } songs</div></div>
                 `;
                 const cov = row.querySelector(".pl-cover");
                 if (cov) {
@@ -192,7 +215,9 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
                 }
                 row.addEventListener("click", () => {
                     try {
-                        uiContext.go(`./playlist.html?id=${encodeURIComponent(pl.id)}`);
+                        uiContext.go(
+                            `./playlist.html?id=${encodeURIComponent(pl.id)}`
+                        );
                     } catch {
                         window.location.href = `./playlist.html?id=${encodeURIComponent(
                             pl.id
@@ -203,10 +228,10 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
             });
         } catch {}
     }
-    
+
     renderSidebarPlaylists();
     window.addEventListener("playlists:changed", renderSidebarPlaylists);
-    
+
     // Like button functionality
     const likeBtn = document.getElementById("like");
     function updateLikeUI() {
@@ -222,7 +247,7 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
         icon.classList.add("fa-heart");
         likeBtn.classList.toggle("active", !!liked);
     }
-    
+
     function toggleLikeCurrent() {
         const playlist = getPlaylist();
         const index = playerContext.getCurrentIndex();
@@ -256,7 +281,7 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
         setLikedList(list);
         updateLikeUI();
     }
-    
+
     if (likeBtn) {
         likeBtn.addEventListener("click", () => {
             toggleLikeCurrent();
@@ -271,11 +296,11 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
         // Initialize icon state on first load
         updateLikeUI();
     }
-    
+
     // Follow button functionality
     const bFollow = document.getElementById("b-follow");
     let isFollowing = false;
-    
+
     function updateFollowUI(artistName) {
         if (!bFollow) return;
         const set = getFollowedArtists();
@@ -285,7 +310,7 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
         bFollow.textContent = isFollowing ? "Đã theo dõi" : "Theo dõi";
         bFollow.setAttribute("aria-pressed", String(isFollowing));
     }
-    
+
     if (bFollow) {
         bFollow.addEventListener("click", () => {
             try {
@@ -302,7 +327,7 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
             } catch {}
         });
     }
-    
+
     // Update follow UI when track changes
     window.addEventListener("musicbox:trackchange", () => {
         const playlist = getPlaylist();

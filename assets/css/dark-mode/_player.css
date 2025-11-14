@@ -1,0 +1,69 @@
+/* ========================================================================
+   PLAYER - THANH PHÁT NHẠC (DƯỚI CÙNG)
+   ======================================================================== */
+
+[data-theme="dark"] .player {
+    background: linear-gradient(180deg, #0f1535 0%, #0a0e27 100%) !important;
+    border-top: 1px solid var(--glow-color);
+    box-shadow: 0 -4px 24px rgba(74, 108, 247, 0.2);
+}
+
+/* --- Player: Song Info --- */
+[data-theme="dark"] .player .title {
+    color: var(--text-primary) !important;
+    text-shadow: 0 1px 4px rgba(74, 108, 247, 0.3);
+}
+
+[data-theme="dark"] .player .artist {
+    color: var(--text-secondary) !important;
+}
+
+/* --- Player: Control Buttons --- */
+[data-theme="dark"] .player .btn {
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .player .btn:hover {
+    color: var(--glow-color);
+    text-shadow: 0 0 8px rgba(74, 108, 247, 0.5);
+}
+
+/* --- Player: Like Button --- */
+[data-theme="dark"] .like-btn i {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 3px rgba(74, 108, 247, 0.3));
+}
+
+[data-theme="dark"] .like-btn:hover i,
+[data-theme="dark"] .like-btn.active i {
+    color: #ff6b9d;
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    transform: scale(1.2);
+}
+
+/* --- Player: Timeline --- */
+[data-theme="dark"] .player .time {
+    color: var(--text-secondary);
+}
+
+/* --- Player: Range Inputs (Progress & Volume) --- */
+[data-theme="dark"] input[type="range"] {
+    background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
+    background-color: var(--glow-color);
+    box-shadow: 0 0 8px rgba(74, 108, 247, 0.5);
+}
+
+[data-theme="dark"] input[type="range"]::-moz-range-thumb {
+    background-color: var(--glow-color);
+    box-shadow: 0 0 8px rgba(74, 108, 247, 0.5);
+}
+
+/* --- Player: Volume Icon --- */
+[data-theme="dark"] #vol-icon {
+    color: var(--text-primary);
+    filter: drop-shadow(0 0 4px rgba(74, 108, 247, 0.3));
+}
