@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Favicon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+            href="./assets/favicon/apple-icon-57x57.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+            href="./assets/favicon/apple-icon-60x60.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+            href="./assets/favicon/apple-icon-72x72.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+            href="./assets/favicon/apple-icon-76x76.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+            href="./assets/favicon/apple-icon-114x114.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+            href="./assets/favicon/apple-icon-120x120.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+            href="./assets/favicon/apple-icon-144x144.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+            href="./assets/favicon/apple-icon-152x152.png"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="./assets/favicon/apple-icon-180x180.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="./assets/favicon/android-icon-192x192.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="./assets/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="./assets/favicon/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="./assets/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="./assets/favicon/manifest.json" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta
+            name="msapplication-TileImage"
+            content="./assets/favicon/ms-icon-144x144.png"
+        />
+        <meta name="theme-color" content="#ffffff" />
+
+        <title>Music Box</title>
+        <link rel="stylesheet" href="./assets/css/reset.css" />
+        <link rel="stylesheet" href="./assets/fonts/stylesheet.css" />
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <link rel="stylesheet" href="./assets/css/index.css" />
+        <link rel="stylesheet" href="./assets/css/dark-mode.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+    </head>
+
+    <body>
+        <div class="wrap">
+            <!-- Header -->
+            <header class="header" aria-label="Thanh điều hướng">
+                <div class="header-inner">
+                    <div class="header-left">
+                        <a
+                            href="./index.html"
+                            class="logo-link"
+                            aria-label="Trang chủ"
+                            title="Trang chủ"
+                        >
+                            <div
+                                class="logo-box"
+                                style="
+                                    background-image: url('./assets/imgs/logo.png');
+                                "
+                            ></div>
+                        </a>
+                    </div>
+                    <div class="header-center">
+                        <button
+                            class="nav-btn"
+                            id="nav-back"
+                            title="Quay lại"
+                            aria-label="Quay lại"
+                        >
+                            <i
+                                class="fa-solid fa-chevron-left"
+                                aria-hidden="true"
+                            ></i>
+                        </button>
+                        <button
+                            class="nav-btn"
+                            id="nav-forward"
+                            title="Tiến tới"
+                            aria-label="Tiến tới"
+                        >
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+                        </button>
+                        <div class="search" role="search">
+                            <i
+                                class="fa-solid fa-magnifying-glass"
+                                aria-hidden="true"
+                            ></i>
+                            <input
+                                id="search-input"
+                                type="search"
+                                placeholder="Tìm bài hát, nghệ sĩ..."
+                                aria-label="Tìm kiếm"
+                            />
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <button
+                            class="premium-btn"
+                            title="Premium"
+                            aria-label="Premium"
+                            aria-pressed="false"
+                        >
+                            <i class="fa-solid fa-crown" aria-hidden="true"></i>
+                        </button>
+                        <div class="profile-wrapper">
+                            <button
+                                class="profile-btn"
+                                id="profile-btn"
+                                title="Hồ sơ"
+                                aria-label="Hồ sơ"
+                            >
+                                <i
+                                    class="fa-regular fa-user"
+                                    aria-hidden="true"
+                                ></i>
+                            </button>
+                            <div
+                                class="profile-menu"
+                                id="profile-menu"
+                                role="menu"
+                                aria-hidden="true"
+                            >
+                                <button
+                                    class="profile-item"
+                                    id="profile-open"
+                                    role="menuitem"
+                                >
+                                    <i class="fa-regular fa-user"></i>
+                                    <span>Hồ sơ</span>
+                                </button>
+                                <button
+                                    class="profile-item"
+                                    id="profile-logout"
+                                    role="menuitem"
+                                >
+                                    <i
+                                        class="fa-solid fa-right-from-bracket"
+                                    ></i>
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+                    <nav class="menu">
+                        <button class="menu-btn explore">
+                            <i class="fa-solid fa-compass"></i
+                            ><span>Khám phá</span>
+                        </button>
+                        <button class="menu-btn your">
+                            <i class="fa-regular fa-user"></i
+                            ><span>Playlist của bạn</span>
+                        </button>
+
+                        <div class="section">
+                            <div class="section-sep"></div>
+                            <div class="section-label">THƯ VIỆN</div>
+                            <div class="section-sep"></div>
+                        </div>
+
+                        <button class="menu-btn liked">
+                            <i class="fa-regular fa-heart"></i
+                            ><span>Yêu thích</span>
+                        </button>
+                        <button class="menu-btn recent">
+                            <i class="fa-solid fa-clock-rotate-left"></i
+                            ><span>Nghe gần đây</span>
+                        </button>
+
+                        <div class="section">
+                            <div class="section-sep"></div>
+                            <div class="section-header">
+                                <span class="section-label"
+                                    >Danh sách đã tạo</span
+                                >
+                                <button
+                                    class="icon-btn add"
+                                    title="Thêm playlist"
+                                >
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="section-sep"></div>
+                        </div>
+
+                        <div class="pl-list">
+                            <div class="pl-item">
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg');
+                                    "
+                                ></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">My Chill Mix</div>
+                                    <div class="pl-sub">
+                                        Playlist • 34 songs
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-item">
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/danh_sach_da_tao/anh_playlist_2.jpg');
+                                    "
+                                ></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">Suy tí thôi</div>
+                                    <div class="pl-sub">
+                                        Playlist • 100 songs
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-item">
+                                <div
+                                    class="pl-cover"
+                                    style="
+                                        background-image: url('./assets/imgs/danh_sach_da_tao/anh_playlist_3.jpg');
+                                    "
+                                ></div>
+                                <div class="pl-meta">
+                                    <div class="pl-name">IELTS</div>
+                                    <div class="pl-sub">
+                                        Playlist • 28 songs
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- Queue card -->
+                <div class="queue hidden" id="queue">
+                    <div class="q-banner" id="np-banner">
+                        <div class="q-banner-inner">
+                            <div class="q-banner-cover">
+                                <img id="b-cover" alt="Cover lớn" />
+                            </div>
+                            <div class="q-banner-text">
+                                <div class="b-title" id="b-title">—</div>
+                                <div class="b-artist-row">
+                                    <div class="b-artist-block">
+                                        <img
+                                            class="b-artist-avatar"
+                                            id="b-artist-avatar"
+                                            alt="Artist"
+                                        />
+                                        <div class="b-artist-meta">
+                                            <div class="b-artist-label">
+                                                Nghệ sĩ
+                                            </div>
+                                            <div
+                                                class="b-artist-name"
+                                                id="b-artist-name"
+                                            >
+                                                —
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="follow-btn"
+                                        id="b-follow"
+                                        aria-pressed="false"
+                                    >
+                                        Theo dõi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="q-header">
+                        <div class="q-title">Danh sách phát</div>
+                        <div class="q-sub">Based on this song</div>
+                    </div>
+                    <div id="queue-list" class="q-list"></div>
+                </div>
+
+                <!-- MAIN CONTENT: Dùng khối queue làm khung nội dung -->
+                <!-- MAIN CONTENT: Dùng khối queue làm khung nội dung -->
+                <section
+                    class="home-main"
+                    id="main-content"
+                    aria-label="Nội dung chính"
+                >
+                    <!-- HERO CAROUSEL -->
+                    <div
+                        class="hero-carousel"
+                        id="hero-carousel"
+                        aria-label="Album nổi bật"
+                    >
+                        <div
+                            class="q-banner"
+                            id="hero-slide-1"
+                            data-hero-index="0"
+                        >
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=500&auto=format&fit=crop"
+                                        alt="DJ performing electronic music"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Midnight City</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?w=200&auto=format&fit=crop"
+                                            alt="Artist avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Neon Waves
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Album điện tử hiện đại kết hợp synthwave
+                                        và city pop.
+                                        <span>(Electronic • Synthwave)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Phát ngay
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i
+                                                class="fa-regular fa-bookmark"
+                                            ></i>
+                                            Lưu vào thư viện
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="q-banner hidden"
+                            id="hero-slide-2"
+                            data-hero-index="1"
+                        >
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&auto=format&fit=crop"
+                                        alt="Acoustic guitar and warm lights"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Acoustic Stories</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&auto=format&fit=crop"
+                                            alt="Artist avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Minh An
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Những bản guitar mộc mạc, nhẹ nhàng dành
+                                        cho buổi tối thư giãn.
+                                        <span>(Acoustic • Chill)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Phát ngay
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i class="fa-regular fa-heart"></i>
+                                            Thêm vào yêu thích
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="q-banner hidden"
+                            id="hero-slide-3"
+                            data-hero-index="2"
+                        >
+                            <div class="q-banner-inner">
+                                <div class="q-banner-cover">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop"
+                                        alt="Crowd at a live concert"
+                                    />
+                                </div>
+                                <div class="q-banner-text">
+                                    <div class="b-title">Live Moments</div>
+                                    <div class="b-artist">
+                                        <img
+                                            class="b-artist-avatar"
+                                            src="https://images.unsplash.com/photo-1438109491414-7198515b166b?w=200&auto=format&fit=crop"
+                                            alt="Band avatar"
+                                        />
+                                        <span class="b-artist-name">
+                                            Music Box Live
+                                        </span>
+                                    </div>
+                                    <p class="hero-subtitle">
+                                        Tổng hợp những bản live hay nhất, mang
+                                        lại cảm giác như bạn đang ở ngay trước
+                                        sân khấu.
+                                        <span>(Live • Pop • Rock)</span>
+                                    </p>
+                                    <div class="hero-actions">
+                                        <button
+                                            class="btn hero-play"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                            Xem live
+                                        </button>
+                                        <button
+                                            class="btn outline hero-save"
+                                            type="button"
+                                        >
+                                            <i class="fa-solid fa-plus"></i>
+                                            Thêm vào playlist
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Điều khiển carousel -->
+                        <div class="hero-dots" id="hero-dots">
+                            <button
+                                class="hero-dot is-active"
+                                data-target="0"
+                                aria-label="Slide 1"
+                            ></button>
+                            <button
+                                class="hero-dot"
+                                data-target="1"
+                                aria-label="Slide 2"
+                            ></button>
+                            <button
+                                class="hero-dot"
+                                data-target="2"
+                                aria-label="Slide 3"
+                            ></button>
+                        </div>
+                    </div>
+
+                    <!-- CATEGORIES -->
+                    <section
+                        class="home-section home-categories"
+                        aria-labelledby="categories-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="categories-title"
+                            >
+                                Thể loại - Tâm trạng
+                            </h2>
+                        </header>
+                        <div class="slider">
+                            <div class="slider-track categories-grid">
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="chill"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #667eea 0%,
+                                            #764ba2 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Chill</span>
+                                    <span class="category-sub"
+                                        >Thư giãn • Chill & Lo-fi</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="focus"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #f093fb 0%,
+                                            #f5576c 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label"
+                                        >Tập trung</span
+                                    >
+                                    <span class="category-sub"
+                                        >Focus • Study & Work</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="workout"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #fa709a 0%,
+                                            #fee140 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label"
+                                        >Tập luyện</span
+                                    >
+                                    <span class="category-sub"
+                                        >Workout • Năng động</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="acoustic"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #30cfd0 0%,
+                                            #330867 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Acoustic</span>
+                                    <span class="category-sub"
+                                        >Ghi-ta mộc • Ballad</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="edm"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #a8edea 0%,
+                                            #fed6e3 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">EDM</span>
+                                    <span class="category-sub"
+                                        >Dance • Electronic</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="kpop"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #ff9a9e 0%,
+                                            #fecfef 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">K-Pop</span>
+                                    <span class="category-sub"
+                                        >K-Pop hits & trending</span
+                                    >
+                                </button>
+
+                                <button
+                                    class="category-card"
+                                    type="button"
+                                    data-category="vpop"
+                                    style="
+                                        background: linear-gradient(
+                                            135deg,
+                                            #ffecd2 0%,
+                                            #fcb69f 100%
+                                        );
+                                    "
+                                >
+                                    <div class="category-bg-overlay"></div>
+                                    <span class="category-label">Việt Pop</span>
+                                    <span class="category-sub"
+                                        >Nhạc trẻ Việt Nam</span
+                                    >
+                                </button>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- MADE FOR YOU -->
+                    <section
+                        class="home-section home-made-for-you"
+                        aria-labelledby="made-for-you-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="made-for-you-title"
+                            >
+                                Dành cho bạn
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track playlist-row">
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/09/23/0/5/2/3/1758595550293_300.jpg"
+                                            alt="Anh Trai Say Hi 2025 playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Anh Trai Say Hi 2025"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Anh Trai Say Hi 2025
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            ANH TRAI "SAY HI", Hustlang và hơn
+                                            thế nữa
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/10/27/8/8/5/b/1761540203774_300.jpg"
+                                            alt="V-Pop Thịnh Hành playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát V-Pop Thịnh Hành"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            V-Pop Thịnh Hành
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            MIN, Dangrangto, antransax
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/09/22/8/f/d/9/1758535642289_300.jpg"
+                                            alt="Hit Việt Quốc Dân playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Hit Việt Quốc Dân"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Hit Việt Quốc Dân
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            (S)TRONG, Dangrangto, antransax
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/11/11/6/d/e/1/1762848762321_300.jpg"
+                                            alt="Nhạc Việt Triển Vọng playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Nhạc Việt Triển Vọng"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Nhạc Việt Triển Vọng
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Juky San, buitruonglinh và hơn thế
+                                            nữa
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/08/01/6/e/0/4/1754038888864_300.jpg"
+                                            alt="Indie Việt playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Indie Việt"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Indie Việt
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Cao Trung Hiếu, MYLINA, Duongg và
+                                            hơn thế nữa
+                                        </p>
+                                    </div>
+                                </article>
+
+                                <article class="playlist-card">
+                                    <div class="playlist-thumb">
+                                        <img
+                                            src="https://image-cdn.nct.vn/playlist/2025/10/20/0/6/f/2/1760948038285_300.jpg"
+                                            alt="Hip-Hop Việt playlist cover"
+                                        />
+                                        <button
+                                            class="playlist-play"
+                                            type="button"
+                                            title="Phát Hip-Hop Việt"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <div class="playlist-content">
+                                        <h3 class="playlist-title">
+                                            Hip-Hop Việt
+                                        </h3>
+                                        <p class="playlist-meta">
+                                            Lăng LD, DMT, Tez
+                                        </p>
+                                    </div>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- NEW RELEASES -->
+                    <section
+                        class="home-section home-new-releases"
+                        aria-labelledby="new-releases-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="new-releases-title"
+                            >
+                                Mới phát hành
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track new-release-grid">
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/seven_jung_kook.jpg"
+                                            alt="Album cover for Seven (feat. Latto)"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Seven (feat. Latto)"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        Seven (feat. Latto) (Explicit Ver.)
+                                    </h3>
+                                    <p class="album-artist">Jung Kook, Latto</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/chang_phai_tinh_dau.jpg"
+                                            alt="Album cover for chẳng phải tình đầu sao đau đến thế"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát chẳng phải tình đầu sao đau đến thế"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        chẳng phải tình đầu sao đau đến thế
+                                    </h3>
+                                    <p class="album-artist">
+                                        MIN, Dangrangto, antransax
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/nguoi_dau_tien.jpg"
+                                            alt="Album cover for Người Đầu Tiên"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Người Đầu Tiên"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Người Đầu Tiên</h3>
+                                    <p class="album-artist">
+                                        Juky San, buitruonglinh
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/khong_buong.jpg"
+                                            alt="Album cover for Không Buông"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Không Buông"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Không Buông</h3>
+                                    <p class="album-artist">Hngle, Ari</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/som_muon_thi.jpg"
+                                            alt="Album cover for SỚM MUỘN THÌ"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát SỚM MUỘN THÌ"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">SỚM MUỘN THÌ</h3>
+                                    <p class="album-artist">
+                                        ANH TRAI "SAY HI", Hustlang Robber, N...
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/in_love.jpg"
+                                            alt="Album cover for In Love"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát In Love"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">In Love</h3>
+                                    <p class="album-artist">Low G, JustaTee</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/em_binz.jpg"
+                                            alt="Album cover for Em"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Em"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Em</h3>
+                                    <p class="album-artist">Binz</p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- TODAY'S BIGGEST HITS -->
+                    <section
+                        class="home-section home-biggest-hits"
+                        aria-labelledby="biggest-hits-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="biggest-hits-title"
+                            >
+                                Hit hôm nay
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track new-release-grid">
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/khong_thoi_gian.jpg"
+                                            alt="Album cover for Không Thời Gian"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Không Thời Gian"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Không Thời Gian</h3>
+                                    <p class="album-artist">Dương Domic</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/exit_sign.jpg"
+                                            alt="Album cover for Exit Sign"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Exit Sign"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Exit Sign</h3>
+                                    <p class="album-artist">
+                                        HIEUTHUHAI, marzuz
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/gia_nhu.jpg"
+                                            alt="Album cover for giá như"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát giá như"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">giá như</h3>
+                                    <p class="album-artist">SOOBIN</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/nguoi_dau_tien_say_hi.jpg"
+                                            alt="Album cover for NGƯỜI ĐẦU TIÊN"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát NGƯỜI ĐẦU TIÊN"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">NGƯỜI ĐẦU TIÊN</h3>
+                                    <p class="album-artist">
+                                        EM XINH "SAY HI", Juky San
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/ngan_nam_anh_sang.jpg"
+                                            alt="Album cover for Ngàn Năm Ánh Sáng"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Ngàn Năm Ánh Sáng"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        Ngàn Năm Ánh Sáng
+                                    </h3>
+                                    <p class="album-artist">
+                                        Đặng Vĩnh Thịnh, BMZ, Nguyễn Trung Đ...
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/am_tham_ben_em.jpg"
+                                            alt="Album cover for Âm Thầm Bên Em"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Âm Thầm Bên Em"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Âm Thầm Bên Em</h3>
+                                    <p class="album-artist">Sơn Tùng M-TP</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/chuyen_doi_ta.jpg"
+                                            alt="Album cover for Chuyện Đôi Ta"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Chuyện Đôi Ta"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        Chuyện Đôi Ta (feat. Muộii)
+                                    </h3>
+                                    <p class="album-artist">
+                                        Emcee L (Da LAB), Da LAB, Muộii
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/van_vat_nhu_muon_ta_ben_nhau.jpg"
+                                            alt="Album cover for vạn vật như muốn ta bên nhau"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát vạn vật như muốn ta bên nhau"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        vạn vật như muốn ta bên nhau
+                                    </h3>
+                                    <p class="album-artist">RIO</p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- BEST OF ARTISTS -->
+                    <section
+                        class="home-section home-best-artists"
+                        aria-labelledby="best-artists-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="best-artists-title"
+                            >
+                                Tuyển tập nghệ sĩ
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track artist-grid">
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/adele.jpg"
+                                            alt="Portrait of Adele"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Adele</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/billie_eilish.jpg"
+                                            alt="Portrait of Billie Eilish"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Billie Eilish</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/sam_smith.jpg"
+                                            alt="Portrait of Sam Smith"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Sam Smith</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/hozier.jpg"
+                                            alt="Portrait of Hozier"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Hozier</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/sia.jpg"
+                                            alt="Portrait of Sia"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">Sia</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+
+                                <article class="artist-card">
+                                    <div class="artist-avatar-wrap">
+                                        <img
+                                            src="./assets/imgs/john_legend.jpg"
+                                            alt="Portrait of John Legend"
+                                            class="artist-avatar"
+                                        />
+                                    </div>
+                                    <h3 class="artist-name">John Legend</h3>
+                                    <p class="artist-genre">Nghệ sĩ</p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- NỘI DUNG BẠN CÓ THỂ THÍCH -->
+                    <section
+                        class="home-section home-more-like"
+                        aria-labelledby="more-like-title"
+                    >
+                        <header class="home-section-header">
+                            <h2 class="home-section-title" id="more-like-title">
+                                Nội dung bạn có thể thích
+                            </h2>
+                        </header>
+
+                        <div class="slider">
+                            <div class="slider-track new-release-grid">
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/buon_hay_vui.jpg"
+                                            alt="Album cover for Buồn Hay Vui"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Buồn Hay Vui"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Buồn Hay Vui</h3>
+                                    <p class="album-artist">
+                                        VSOUL, RPT MCK, Obito, Boyzed, Ronb...
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/bao_tang.jpg"
+                                            alt="Album cover for Bảo Tàng"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Bảo Tàng"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Bảo Tàng</h3>
+                                    <p class="album-artist">Low G</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/co_em.jpg"
+                                            alt="Album cover for Có Em"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Có Em"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Có Em</h3>
+                                    <p class="album-artist">Madihu, Low G</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/neu_luc_do.jpg"
+                                            alt="Album cover for nếu lúc đó"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát nếu lúc đó"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">nếu lúc đó</h3>
+                                    <p class="album-artist">tlinh, 2pillz</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/xtc_remix.jpg"
+                                            alt="Album cover for XTC (Xích Thêm Chút) (Remix)"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát XTC (Xích Thêm Chút) (Remix)"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">
+                                        XTC (Xích Thêm Chút) (Remix)
+                                    </h3>
+                                    <p class="album-artist">
+                                        Rapital, Groovie Lã Thắng, tlinh, RPT
+                                        MCK
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/le_luu_ly.jpg"
+                                            alt="Album cover for Lệ Lưu Ly"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Lệ Lưu Ly"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Lệ Lưu Ly</h3>
+                                    <p class="album-artist">
+                                        Vũ Phụng Tiên, DT TAP RAP, Drum7
+                                    </p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/doi_prod_rio.jpg"
+                                            alt="Album cover for ĐỢI (Prod. RIO)"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát ĐỢI (Prod. RIO)"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">ĐỢI (Prod. RIO)</h3>
+                                    <p class="album-artist">52Hz, RIO</p>
+                                </article>
+
+                                <article class="album-card">
+                                    <div class="album-thumb">
+                                        <img
+                                            src="./assets/imgs/tung_quen.jpg"
+                                            alt="Album cover for Từng Quen"
+                                        />
+                                        <button
+                                            class="album-play"
+                                            type="button"
+                                            title="Phát Từng Quen"
+                                        >
+                                            <i class="fa-solid fa-play"></i>
+                                        </button>
+                                    </div>
+                                    <h3 class="album-title">Từng Quen</h3>
+                                    <p class="album-artist">
+                                        Wren Evans, itsnk
+                                    </p>
+                                </article>
+                            </div>
+                            <button
+                                class="slider-btn prev"
+                                type="button"
+                                aria-label="Trước"
+                            >
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button
+                                class="slider-btn next"
+                                type="button"
+                                aria-label="Tiếp"
+                            >
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- TOP CHARTS -->
+                    <section
+                        class="home-section home-charts"
+                        aria-labelledby="top-charts-title"
+                    >
+                        <header class="home-section-header">
+                            <h2
+                                class="home-section-title"
+                                id="top-charts-title"
+                            >
+                                Bảng xếp hạng
+                            </h2>
+                            <p class="home-section-sub">
+                                Top 10 bài hát được phát nhiều nhất hôm nay.
+                            </p>
+                        </header>
+
+                        <div class="home-section-body charts-body">
+                            <table
+                                class="chart-table"
+                                aria-label="Top Songs Chart"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th>Bài hát</th>
+                                        <th>Album</th>
+                                        <th>Lượt nghe</th>
+                                        <th>Thời lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/the_fate_of_ophelia.jpg"
+                                                    alt="The Fate of Ophelia cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    The Fate of Ophelia
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Taylor Swift
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>The Life of a Showgirl</td>
+                                        <td>7.40M</td>
+                                        <td>3:46</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/golden_huntr.jpg"
+                                                    alt="Golden cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    Golden
+                                                </div>
+                                                <div class="chart-artist">
+                                                    HUNTR/X, EJAE, AUDREY NUNA,
+                                                    REI A...
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>KPop Demon Hunters</td>
+                                        <td>5.89M</td>
+                                        <td>3:14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/man_i_need.jpg"
+                                                    alt="Man I Need cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    Man I Need
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Olivia Dean
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>The Art of Loving</td>
+                                        <td>4.74M</td>
+                                        <td>3:04</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/back_to_friends.jpg"
+                                                    alt="back to friends cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    back to friends
+                                                </div>
+                                                <div class="chart-artist">
+                                                    sombr
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>I Barely Know Her</td>
+                                        <td>4.61M</td>
+                                        <td>3:19</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/ordinary_alex_warren.jpg"
+                                                    alt="Ordinary cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    Ordinary
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Alex Warren
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>You'll Be Alright, Kid</td>
+                                        <td>3.86M</td>
+                                        <td>3:06</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/opalite.jpg"
+                                                    alt="Opalite cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    Opalite
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Taylor Swift
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>The Life of a Showgirl</td>
+                                        <td>3.73M</td>
+                                        <td>3:55</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/so_easy_olivia_dean.jpg"
+                                                    alt="So Easy (To Fall In Love) cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    So Easy (To Fall In Love)
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Olivia Dean
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>The Art of Loving</td>
+                                        <td>3.69M</td>
+                                        <td>2:49</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/la_perla.jpg"
+                                                    alt="La Perla cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    La Perla
+                                                </div>
+                                                <div class="chart-artist">
+                                                    ROSALÍA, Yahritza Y Su
+                                                    Esencia
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>LUX</td>
+                                        <td>3.45M</td>
+                                        <td>3:15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/where_is_my_husband.jpg"
+                                                    alt="WHERE IS MY HUSBAND! cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    WHERE IS MY HUSBAND!
+                                                </div>
+                                                <div class="chart-artist">
+                                                    RAYE
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>WHERE IS MY HUSBAND!</td>
+                                        <td>3.35M</td>
+                                        <td>3:16</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td class="chart-cover-cell">
+                                            <div class="chart-cover">
+                                                <img
+                                                    src="./assets/imgs/birds_of_a_feather.jpg"
+                                                    alt="BIRDS OF A FEATHER cover"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="chart-title-artist">
+                                                <div class="chart-title">
+                                                    BIRDS OF A FEATHER
+                                                </div>
+                                                <div class="chart-artist">
+                                                    Billie Eilish
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>HIT ME HARD AND SOFT</td>
+                                        <td>3.32M</td>
+                                        <td>3:30</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- FOOTER -->
+                    <footer class="home-footer" aria-label="Footer">
+                        <div class="home-footer-inner">
+                            <div class="home-footer-column">
+                                <h3>Music Box</h3>
+                                <p>
+                                    Nghe nhạc trực tuyến cùng bạn, mọi lúc mọi
+                                    nơi. Tạo playlist, theo dõi nghệ sĩ và khám
+                                    phá thế giới âm nhạc.
+                                </p>
+                            </div>
+                            <div class="home-footer-column">
+                                <h4>Giới thiệu</h4>
+                                <ul>
+                                    <li><a href="#">Về Music Box</a></li>
+                                    <li><a href="#">Điều khoản sử dụng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                </ul>
+                            </div>
+                            <div class="home-footer-column">
+                                <h4>Cộng đồng</h4>
+                                <ul>
+                                    <li><a href="#">Dành cho nghệ sĩ</a></li>
+                                    <li><a href="#">Hỗ trợ & giúp đỡ</a></li>
+                                    <li><a href="#">Góp ý & phản hồi</a></li>
+                                </ul>
+                            </div>
+                            <div class="home-footer-column">
+                                <h4>Kết nối</h4>
+                                <div class="home-footer-social">
+                                    <a href="#" aria-label="Facebook">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" aria-label="Instagram">
+                                        <i class="fa-brands fa-instagram"></i>
+                                    </a>
+                                    <a href="#" aria-label="YouTube">
+                                        <i class="fa-brands fa-youtube"></i>
+                                    </a>
+                                    <a href="#" aria-label="TikTok">
+                                        <i class="fa-brands fa-tiktok"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home-footer-bottom">
+                            <span>
+                                © 2025 Music Box. All rights reserved.
+                            </span>
+                            <span> Made with ♫ for music lovers. </span>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+
+        <!-- Player bar -->
+        <div class="player" role="region" aria-label="Trình phát nhạc">
+            <div class="bar">
+                <div class="left">
+                    <div class="cover">
+                        <img id="cover" alt="Bìa bài hát" />
+                    </div>
+                    <div class="meta">
+                        <div class="title" id="title">—</div>
+                        <div class="meta-actions">
+                            <button
+                                class="btn like-btn"
+                                id="like"
+                                title="Yêu thích"
+                            >
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                            <div class="more-wrapper">
+                                <button
+                                    class="btn more-btn"
+                                    id="more"
+                                    title="Tùy chọn"
+                                >
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+                                <div
+                                    class="more-menu"
+                                    id="more-menu"
+                                    role="menu"
+                                    aria-hidden="true"
+                                >
+                                    <button
+                                        class="more-item"
+                                        id="download"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-download"></i>
+                                        <span>Tải về</span>
+                                    </button>
+                                    <button
+                                        class="more-item"
+                                        id="add-to-playlist"
+                                        role="menuitem"
+                                    >
+                                        <i class="fa-solid fa-list-ul"></i>
+                                        <span>Thêm vào playlist</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="artist" id="artist">—</div>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <div class="controls">
+                        <button class="btn" id="shuffle" title="Shuffle (trộn)">
+                            <i class="fa-solid fa-shuffle"></i>
+                        </button>
+                        <button class="btn" id="prev" title="Prev">
+                            <i class="fa-solid fa-backward-step"></i>
+                        </button>
+                        <button
+                            class="btn play"
+                            id="play"
+                            title="Phát/Tạm dừng"
+                        >
+                            <i id="play-icon" class="fa-solid fa-play"></i>
+                        </button>
+                        <button class="btn" id="next" title="Next">
+                            <i class="fa-solid fa-forward-step"></i>
+                        </button>
+                        <button
+                            class="btn"
+                            id="repeat"
+                            title="Repeat (off/all/one)"
+                        >
+                            <i class="fa-solid fa-repeat"></i>
+                        </button>
+                    </div>
+                    <div class="timeline">
+                        <div class="time" id="current">0:00</div>
+                        <input
+                            id="progress"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                            aria-label="Tiến độ"
+                        />
+                        <div class="time" id="duration">0:00</div>
+                    </div>
+                </div>
+
+                <div class="right" title="Âm lượng">
+                    <i id="vol-icon" class="fa-solid fa-volume-high fa-fw"></i>
+                    <input
+                        id="volume"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.8"
+                        aria-label="Âm lượng"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="./assets/js/app.js"></script>
+        <script src="./assets/js/index.js"></script>
+    </body>
+</html>

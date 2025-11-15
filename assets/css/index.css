@@ -41,7 +41,7 @@ button {
 
 /* Section Wrapper */
 .home-section {
-    margin: 50px 60px;
+    margin: 30px 60px;
 }
 
 .home-section-header {
@@ -51,7 +51,7 @@ button {
 .home-section-title {
     font-family: "Poppins", "Inter", system-ui, -apple-system, Segoe UI, Roboto,
         Helvetica, Arial, sans-serif;
-    font-size: 2rem;
+    font-size: 28px;
     font-weight: 700;
     margin-bottom: 8px;
     letter-spacing: -0.5px;
@@ -61,7 +61,7 @@ button {
 .home-section-sub {
     font-family: "Inter", "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
         Helvetica, Arial, sans-serif;
-    font-size: 1.05rem;
+    font-size: 14px;
     color: #666;
     font-weight: 400;
 }
@@ -150,7 +150,7 @@ body.queue-open .home-main,
 }
 
 #hero-carousel .b-title {
-    font-size: 2.6rem;
+    font-size: 26px;
     font-weight: 800;
     margin-bottom: 12px;
 }
@@ -174,7 +174,7 @@ body.queue-open .home-main,
 }
 
 .hero-subtitle {
-    font-size: 0.95rem;
+    font-size: 10px;
     margin-bottom: 18px;
     color: #e0e0e0;
 }
@@ -296,7 +296,7 @@ body.queue-open .home-main,
 .category-label {
     position: relative;
     z-index: 2;
-    font-size: 1.7rem;
+    font-size: 19px;
     font-weight: 800;
     margin-bottom: 8px;
     display: block;
@@ -308,7 +308,7 @@ body.queue-open .home-main,
 .category-sub {
     position: relative;
     z-index: 2;
-    font-size: 0.9rem;
+    font-size: 11px;
     color: rgba(255, 255, 255, 0.95);
     display: block;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -331,7 +331,7 @@ body.dark-mode .category-card:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 28px;
-    margin-bottom: 40px;
+    margin-bottom: 0;
 }
 
 .playlist-card {
@@ -417,18 +417,18 @@ body.dark-mode .playlist-card:hover {
 }
 
 .playlist-title {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 6px;
     color: var(--text-color);
     line-height: 1.3;
 }
 
 .playlist-meta {
-    font-size: 1rem;
+    font-size: 14px;
     color: #777;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 body.dark-mode .playlist-meta {
@@ -436,7 +436,7 @@ body.dark-mode .playlist-meta {
 }
 
 .playlist-desc {
-    font-size: 0.85rem;
+    font-size: 10px;
     color: #666;
     line-height: 1.5;
     margin-top: 4px;
@@ -473,7 +473,7 @@ body.dark-mode .playlist-desc {
 
 .track-index {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 11px;
     text-align: center;
     color: var(--accent-color);
 }
@@ -489,16 +489,16 @@ body.dark-mode .track-index {
 
 .track-title {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 13px;
 }
 
 .track-artist {
-    font-size: 1rem;
+    font-size: 12px;
     color: #777;
 }
 
 .track-album {
-    font-size: 0.9rem;
+    font-size: 11px;
     color: #666;
 }
 
@@ -510,7 +510,7 @@ body.dark-mode .track-index {
 }
 
 .track-meta span {
-    font-size: 0.85rem;
+    font-size: 10px;
 }
 
 .track-play-btn {
@@ -563,7 +563,7 @@ body.dark-mode .track-index {
     position: relative;
     border-radius: var(--radius);
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .album-thumb img {
@@ -602,19 +602,22 @@ body.dark-mode .track-index {
 }
 
 .album-title {
-    font-weight: 700;
-    font-size: 1.15rem;
-    margin-bottom: 3px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+    line-height: 1.3;
 }
 
 .album-artist {
-    font-size: 1rem;
+    font-size: 14px;
     color: #777;
-    margin-bottom: 4px;
+    margin-bottom: 0;
+    line-height: 1.4;
+    font-weight: 400;
 }
 
 .album-meta {
-    font-size: 0.95rem;
+    font-size: 11px;
     color: #555;
 }
 
@@ -756,17 +759,17 @@ body,
     font-weight: 700;
     margin-top: 6px;
     margin-bottom: 3px;
-    font-size: 1rem;
+    font-size: 14px;
 }
 
 .artist-genre {
-    font-size: 0.9rem;
+    font-size: 10px;
     color: #777;
     margin-bottom: 4px;
 }
 
 .artist-meta {
-    font-size: 0.85rem;
+    font-size: 10px;
     color: #555;
     margin-bottom: 10px;
 }
@@ -802,12 +805,13 @@ body,
 .chart-table thead th {
     text-align: left;
     padding: 12px 16px;
-    font-size: 0.875rem;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #666;
     border: none;
+    vertical-align: middle;
 }
 
 .chart-table thead th:nth-child(2) {
@@ -839,16 +843,17 @@ body.dark-mode .chart-table tbody tr:hover {
 
 .chart-table tbody td {
     padding: 14px 16px;
-    font-size: 0.95rem;
+    font-size: 13px;
     color: var(--text-color);
     border: none;
+    vertical-align: middle;
 }
 
 .chart-table tbody td:first-child {
     width: 50px;
     text-align: center;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 12px;
     color: #999;
 }
 
@@ -883,31 +888,48 @@ body.dark-mode .chart-table tbody td:first-child {
     transform: scale(1.05);
 }
 
-.chart-table tbody td:nth-child(3) {
-    font-weight: 500;
+.chart-title-artist {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chart-title {
+    font-weight: 600;
     color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.3;
 }
 
-.chart-table tbody td:nth-child(4),
-.chart-table tbody td:nth-child(5) {
+.chart-artist {
+    font-weight: 400;
     color: #666;
-    font-size: 0.9rem;
+    font-size: 12px;
+    line-height: 1.3;
 }
 
-body.dark-mode .chart-table tbody td:nth-child(4),
-body.dark-mode .chart-table tbody td:nth-child(5) {
+body.dark-mode .chart-artist {
     color: #999;
 }
 
-.chart-table tbody td:nth-child(6),
-.chart-table tbody td:nth-child(7) {
+.chart-table tbody td:nth-child(4) {
+    color: #666;
+    font-size: 12px;
+}
+
+body.dark-mode .chart-table tbody td:nth-child(4) {
+    color: #999;
+}
+
+.chart-table tbody td:nth-child(5),
+.chart-table tbody td:nth-child(6) {
     color: #777;
-    font-size: 0.9rem;
+    font-size: 12px;
     text-align: right;
 }
 
-body.dark-mode .chart-table tbody td:nth-child(6),
-body.dark-mode .chart-table tbody td:nth-child(7) {
+body.dark-mode .chart-table tbody td:nth-child(5),
+body.dark-mode .chart-table tbody td:nth-child(6) {
     color: #888;
 }
 
@@ -928,7 +950,7 @@ body.dark-mode .chart-table tbody td:nth-child(7) {
 }
 
 .home-footer-column h3 {
-    font-size: 1.5rem;
+    font-size: 15px;
     font-weight: 700;
     margin-bottom: 16px;
     color: var(--text-color);
@@ -936,17 +958,16 @@ body.dark-mode .chart-table tbody td:nth-child(7) {
 }
 
 .home-footer-column h4 {
-    font-size: 1rem;
+    font-size: 9px;
     font-weight: 700;
     margin-bottom: 18px;
     color: var(--text-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-size: 0.85rem;
 }
 
 .home-footer-column p {
-    font-size: 0.95rem;
+    font-size: 10px;
     line-height: 1.6;
     color: #666;
     margin-bottom: 0;
@@ -968,7 +989,7 @@ body.dark-mode .home-footer-column p {
 
 .home-footer-column ul li a {
     color: #666;
-    font-size: 0.95rem;
+    font-size: 10px;
     text-decoration: none;
     transition: color 0.2s ease;
     display: inline-block;
@@ -999,7 +1020,7 @@ body.dark-mode .home-footer-column ul li a {
     border: 1px solid var(--border-color);
     border-radius: 50%;
     color: var(--text-color);
-    font-size: 1.1rem;
+    font-size: 11px;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -1018,7 +1039,7 @@ body.dark-mode .home-footer-column ul li a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.875rem;
+    font-size: 9px;
     color: #666;
     flex-wrap: wrap;
     gap: 12px;
@@ -1083,7 +1104,7 @@ body,
 
 @media (max-width: 768px) {
     .home-section {
-        margin: 30px 20px;
+        margin: 20px 20px;
     }
     .hero-carousel {
         height: 280px;
@@ -1112,11 +1133,11 @@ body,
         height: 220px;
     }
     #hero-carousel .b-title {
-        font-size: 1.3rem;
+        font-size: 13px;
     }
     .hero-actions .btn {
         padding: 8px 12px;
-        font-size: 0.85rem;
+        font-size: 9px;
     }
     .playlist-thumb img,
     .album-thumb img {
