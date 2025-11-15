@@ -3,6 +3,8 @@
   const q = id => document.getElementById(id);
   const form = q("form-signup");
   const err  = q("su-error");
+  const success = q("su-success");
+  const submitBtn = q("btn-signup");
 
   const fields = [
     q("su-first"), q("su-last"),
@@ -18,6 +20,7 @@
     e.preventDefault();
     let bad = false;
 
+    success.hidden = true;
     fields.forEach(el => {
       const v = (el.value || "").toString().trim();
       if (!v) { mark(el, true); bad = true; } else mark(el, false);
@@ -35,11 +38,19 @@
     err.hidden = !bad;
     if (bad) return;
 
-    // Demo: đăng ký xong -> đăng nhập
-    const email = q("su-email").value.trim();
-    localStorage.setItem("auth_user", JSON.stringify({ username: email }));
-    const next = new URLSearchParams(location.search).get("next");
-    location.replace(next || "./index.html");
+    err.hidden = true;
+    success.textContent = "Đăng ký thành công! Đang chuyển đến trang đăng nhập...";
+    success.hidden = false;
+
+    submitBtn.setAttribute("disabled", "true");
+    submitBtn.setAttribute("aria-busy", "true");
+
+    const params = new URLSearchParams(location.search);
+    const next = params.get("next");
+    const redirectUrl = next ? `./login.html?next=${encodeURIComponent(next)}` : "./login.html";
+    setTimeout(() => {
+      location.replace(redirectUrl);
+    }, 1500);
   });
 
   fields.forEach(el => el.addEventListener("blur", () => {

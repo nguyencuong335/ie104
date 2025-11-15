@@ -309,6 +309,15 @@ form {
     font-weight: 600;
 }
 
+.auth-success {
+    margin: 0 0 6px;
+    padding: 8px 10px;
+    text-align: center;
+    color: #15803d;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 /* ====== Button Login / Signup (610 × 45) ====== */
 .auth-btn.primary {
     display: flex;
