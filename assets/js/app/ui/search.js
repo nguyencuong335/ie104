@@ -4,6 +4,11 @@ export function setupHeaderSearch({ go }) {
     const searchInput = document.querySelector('.search input[type="search"]');
     if (!searchInput) return;
     
+    searchInput.setAttribute("autocomplete", "off");
+    searchInput.setAttribute("autocorrect", "off");
+    searchInput.setAttribute("autocapitalize", "off");
+    searchInput.setAttribute("spellcheck", "false");
+
     const normalize = (s) =>
         s
             .normalize("NFD")

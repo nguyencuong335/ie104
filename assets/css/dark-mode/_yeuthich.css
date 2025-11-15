@@ -421,12 +421,17 @@
     transform: translateY(-4px);
 }
 
-/* --- Yeuthich: Column Headers (như #, Bài hát, Nghệ sĩ, Thời lượng) --- */
+/* --- Yeuthich: Table Headers (như #, Bài hát, Nghệ sĩ, Thời lượng) --- */
 [data-theme="dark"] .column-header,
 [data-theme="dark"] .table-header,
 [data-theme="dark"] .list-header {
     color: var(--text-secondary) !important;
     background-color: transparent !important;
+}
+
+/* --- Yeuthich: Fix uppercase text in chart-table headers --- */
+[data-theme="dark"] .chart-table thead th {
+    text-transform: none !important;
 }
 
 /* --- Yeuthich: Index Number Column --- */

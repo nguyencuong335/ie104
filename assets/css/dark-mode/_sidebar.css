@@ -44,7 +44,8 @@
 [data-theme="dark"] .menu-btn.recent:hover {
     background-color: var(--hover-bg);
     color: var(--text-primary);
-    box-shadow: 0 0 12px rgba(74, 108, 247, 0.15);
+    box-shadow: 0 4px 10px rgba(74, 108, 247, 0.1);
+    transform: translateY(-1px);
 }
 
 /* Active/Selected menu button */

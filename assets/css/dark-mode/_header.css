@@ -408,3 +408,42 @@
         background-image: url("../../imgs/logo.png") !important;
     }
 } */
+
+/* --- Fix focus outline in dark mode for search results --- */
+[data-theme="dark"] .sr-item:focus-visible,
+[data-theme="dark"] .search-results a:focus-visible,
+[data-theme="dark"] .search-dropdown a:focus-visible,
+[data-theme="dark"] a:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: var(--hover-bg) !important;
+}
+
+/* --- Additional fix for any focus state in search dropdown --- */
+[data-theme="dark"] .search-dropdown *:focus-visible,
+[data-theme="dark"] .search-results *:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* --- Fix active states --- */
+[data-theme="dark"] .sr-item:active,
+[data-theme="dark"] .search-results a:active,
+[data-theme="dark"] .search-dropdown a:active {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+/* --- Fix hover states to ensure consistency --- */
+[data-theme="dark"] .sr-item:hover,
+[data-theme="dark"] .search-results a:hover,
+[data-theme="dark"] .search-dropdown a:hover {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
