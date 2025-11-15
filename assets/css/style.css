@@ -173,10 +173,13 @@ body {
 
 /* ===== Header ===== */
 .header {
+    position: relative;
+    z-index: 9999 !important; /* Đảm bảo header luôn trên cùng */
     display: flex;
     background: #f8fafc;
     border-radius: 12px 12px 0 0;
     margin: 0;
+    transform: translateZ(0); /* Kích hoạt GPU acceleration */
 }
 .header-inner {
     display: grid;
@@ -1179,7 +1182,7 @@ body {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
     padding: 12px 0; /* vertical only; inner .bar will handle horizontal gutters */
     margin: 0;
-    z-index: 20;
+    z-index: 1000; /* Đảm bảo thanh phát nhạc luôn hiển thị trên menu playlist (90) */
     overflow: visible; /* allow popovers (more menu, volume) to escape without clipping */
 }
 .bar {

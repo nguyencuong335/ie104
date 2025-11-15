@@ -6,7 +6,6 @@ import { setupMoreMenu } from "./ui/more-menu.js";
 import { setupAddToPlaylist } from "./ui/add-to-playlist.js";
 import { setupLayoutHelpers } from "./ui/layout.js";
 import { setupSidebarPlaylists } from "./ui/sidebar-playlists.js";
-import { setupHosoPlaylists } from "./ui/hoso.js";
 
 // Set active sidebar item by current page
 function setActiveSidebar() {
@@ -88,7 +87,6 @@ export function initUI(deps) {
     setupMoreMenu({ playerContext, playlistContext });
     setupAddToPlaylist({ playerContext, playlistContext });
     setupSidebarPlaylists({ playlistContext, playerContext });
-    setupHosoPlaylists({ playlistContext, playerContext });
 
     return {
         go: layoutContext.go,
