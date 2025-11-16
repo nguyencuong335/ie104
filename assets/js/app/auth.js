@@ -61,7 +61,6 @@ export function signOut(redirect = true) {
     } catch {}
     
     if (redirect) {
-        const next = location.pathname + location.search + location.hash;
-        location.replace("./auth.html?next=" + encodeURIComponent(next));
+        location.replace("./landingpage.html");
     }
 }
