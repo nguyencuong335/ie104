@@ -1,6 +1,23 @@
 // ===== PLAYLISTS MODULE =====
 
-// Fallback playlist data
+// ===== CONSTANTS =====
+const STORAGE_KEYS = {
+    PLAYER_STATE: "player_state_v1",
+    USER_PLAYLISTS: "user_playlists_v1",
+    LIKED_SONGS: "liked_songs",
+    FOLLOWED_ARTISTS: "followed_artists",
+};
+
+const PLAYLIST_TYPES = {
+    GLOBAL: "global",
+    USER: "user",
+};
+
+const DEFAULT_PLAYLIST_COVER = "./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg";
+const SONGS_JSON_PATH = "./assets/music_data/songs.json";
+const MIN_PLAYLIST_LENGTH = 3;
+
+// ===== FALLBACK DATA =====
 const fallbackPlaylist = [
     {
         title: "Muộn Rồi Mà Sao Còn",
@@ -32,124 +49,210 @@ const fallbackPlaylist = [
     },
 ];
 
-// Global playlist state
+// ===== GLOBAL STATE =====
 let playlist = [];
 let allSongs = [];
-let currentPlaylistCtx = { type: "global", id: null };
+let currentPlaylistCtx = { type: PLAYLIST_TYPES.GLOBAL, id: null };
 
-// Load playlist from JSON
+// ===== UTILITY FUNCTIONS =====
+/**
+ * Safely executes a function with error handling
+ * @param {Function} fn - Function to execute
+ * @param {string} context - Context description for error logging
+ * @returns {*} Function result or null on error
+ */
+function safeExecute(fn, context = "operation") {
+    try {
+        return fn();
+    } catch (error) {
+        console.error(`Error in ${context}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Formats seconds to MM:SS format
+ * @param {number} seconds - Time in seconds
+ * @returns {string} Formatted time string
+ */
+function formatTime(seconds) {
+    if (!isFinite(seconds)) return "--:--";
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${secs}`;
+}
+
+/**
+ * Gets current filename from pathname
+ * @returns {string} Current filename in lowercase
+ */
+function getCurrentFilename() {
+    return (location.pathname.split("/").pop() || "").toLowerCase();
+}
+
+/**
+ * Checks if current page is index/home page
+ * @returns {boolean}
+ */
+function isIndexPage() {
+    const filename = getCurrentFilename();
+    return filename === "index.html" || filename === "";
+}
+
+/**
+ * Sets playlist to global catalog
+ */
+function setGlobalPlaylist() {
+    currentPlaylistCtx = { type: PLAYLIST_TYPES.GLOBAL, id: null };
+    playlist.splice(0, playlist.length, ...allSongs);
+}
+
+// ===== PLAYLIST LOADING =====
+/**
+ * Initializes playlist from loaded songs
+ */
+function initializePlaylist() {
+    if (isIndexPage()) {
+        setGlobalPlaylist();
+    } else if (!rehydratePlaylistFromSavedContext()) {
+        setGlobalPlaylist();
+    }
+}
+
+/**
+ * Loads playlist from JSON file
+ * @returns {Promise<Object>} Playlist data with playlist, allSongs, and currentPlaylistCtx
+ */
 export async function loadPlaylistFromJSON() {
     try {
-        const res = await fetch("./assets/music_data/songs.json", {
+        const response = await fetch(SONGS_JSON_PATH, {
             cache: "no-store",
         });
-        if (!res.ok) throw new Error("Failed to fetch songs.json");
-        const data = await res.json();
-        if (!Array.isArray(data) || data.length === 0)
+        
+        if (!response.ok) {
+            throw new Error("Failed to fetch songs.json");
+        }
+        
+        const data = await response.json();
+        if (!Array.isArray(data) || data.length === 0) {
             throw new Error("songs.json invalid or empty");
+        }
         
         // Keep full catalog separate from current queue
         allSongs = data;
+        initializePlaylist();
         
-        // If we are on index.html, always default to full catalog
-        const curFile = (
-            location.pathname.split("/").pop() || ""
-        ).toLowerCase();
-        if (curFile === "index.html" || curFile === "") {
-            currentPlaylistCtx = { type: "global", id: null };
-            playlist.splice(0, playlist.length, ...allSongs);
-        } else if (!rehydratePlaylistFromSavedContext()) {
-            // Otherwise, default to full catalog
-            currentPlaylistCtx = { type: "global", id: null };
-            playlist.splice(0, playlist.length, ...allSongs);
-        }
+        console.assert(
+            playlist.length >= MIN_PLAYLIST_LENGTH,
+            "Playlist phải có >= 3 bài"
+        );
         
-        console.assert(playlist.length >= 3, "Playlist phải có >= 3 bài");
         return { playlist, allSongs, currentPlaylistCtx };
-    } catch (err) {
-        console.error("Không thể tải playlist từ songs.json:", err);
+    } catch (error) {
+        console.error("Không thể tải playlist từ songs.json:", error);
+        
         // Fallback to built-in playlist
         allSongs = fallbackPlaylist;
-        const curFile2 = (
-            location.pathname.split("/").pop() || ""
-        ).toLowerCase();
-        if (curFile2 === "index.html" || curFile2 === "") {
-            currentPlaylistCtx = { type: "global", id: null };
-            playlist.splice(0, playlist.length, ...allSongs);
-        } else if (!rehydratePlaylistFromSavedContext()) {
-            currentPlaylistCtx = { type: "global", id: null };
-            playlist.splice(0, playlist.length, ...allSongs);
-        }
+        initializePlaylist();
+        
         console.warn("Đang sử dụng fallback playlist nội bộ");
         return { playlist, allSongs, currentPlaylistCtx };
     }
 }
 
+/**
+ * Rehydrates playlist from saved player state
+ * @returns {boolean} Success status
+ */
 function rehydratePlaylistFromSavedContext() {
-    try {
-        const s = getSavedPlayerState();
-        if (!s || !s.playlistCtx) return false;
+    return safeExecute(() => {
+        const savedState = getSavedPlayerState();
+        if (!savedState?.playlistCtx) return false;
+        
         if (
-            s.playlistCtx.type === "user" &&
-            Array.isArray(s.trackIds) &&
-            s.trackIds.length
+            savedState.playlistCtx.type === PLAYLIST_TYPES.USER &&
+            Array.isArray(savedState.trackIds) &&
+            savedState.trackIds.length > 0
         ) {
-            // Map ids to allSongs
-            const map = new Map((allSongs || []).map((o) => [o.id, o]));
-            const tracks = s.trackIds
-                .map((id) => map.get(id))
+            // Map track IDs to actual track objects
+            const trackMap = new Map(
+                (allSongs || []).map((track) => [track.id, track])
+            );
+            const tracks = savedState.trackIds
+                .map((id) => trackMap.get(id))
                 .filter(Boolean);
-            if (tracks.length) {
+            
+            if (tracks.length > 0) {
                 currentPlaylistCtx = {
-                    type: "user",
-                    id: s.playlistCtx.id || null,
+                    type: PLAYLIST_TYPES.USER,
+                    id: savedState.playlistCtx.id || null,
                 };
                 playlist.splice(0, playlist.length, ...tracks);
                 return true;
             }
         }
+        
         return false;
-    } catch {
-        return false;
-    }
+    }, "rehydratePlaylistFromSavedContext") ?? false;
 }
 
+/**
+ * Gets saved player state from localStorage
+ * @returns {Object|null} Saved state or null
+ */
 function getSavedPlayerState() {
-    try {
-        const raw = localStorage.getItem("player_state_v1");
+    return safeExecute(() => {
+        const raw = localStorage.getItem(STORAGE_KEYS.PLAYER_STATE);
         if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (!obj || typeof obj !== "object") return null;
-        return obj;
-    } catch {
-        return null;
-    }
+        
+        const state = JSON.parse(raw);
+        if (!state || typeof state !== "object") return null;
+        
+        return state;
+    }, "getSavedPlayerState") ?? null;
 }
 
-// User playlists management
+// ===== USER PLAYLISTS MANAGEMENT =====
+/**
+ * Gets all user playlists from localStorage
+ * @returns {Array} Array of user playlists
+ */
 export function getUserPlaylists() {
-    try {
+    return safeExecute(() => {
         return JSON.parse(
-            localStorage.getItem("user_playlists_v1") || "[]"
+            localStorage.getItem(STORAGE_KEYS.USER_PLAYLISTS) || "[]"
         );
-    } catch {
-        return [];
-    }
+    }, "getUserPlaylists") ?? [];
 }
 
-export function setUserPlaylists(arr) {
-    try {
-        localStorage.setItem("user_playlists_v1", JSON.stringify(arr));
-        try {
+/**
+ * Saves user playlists to localStorage
+ * @param {Array} playlists - Array of playlists to save
+ */
+export function setUserPlaylists(playlists) {
+    safeExecute(() => {
+        localStorage.setItem(
+            STORAGE_KEYS.USER_PLAYLISTS,
+            JSON.stringify(playlists)
+        );
+        safeExecute(() => {
             window.dispatchEvent(new Event("playlists:changed"));
-        } catch {}
-    } catch {}
+        }, "setUserPlaylists:dispatchEvent");
+    }, "setUserPlaylists");
 }
 
+/**
+ * Ensures demo playlists exist for new users
+ */
 export function ensureDemoPlaylists() {
-    const cur = getUserPlaylists();
-    if (Array.isArray(cur) && cur.length) return;
-    const demos = [
+    const currentPlaylists = getUserPlaylists();
+    if (Array.isArray(currentPlaylists) && currentPlaylists.length > 0) {
+        return;
+    }
+    
+    const demoPlaylists = [
         {
             id: "pl_chill",
             name: "My Chill Mix",
@@ -183,211 +286,330 @@ export function ensureDemoPlaylists() {
             ],
         },
     ];
-    setUserPlaylists(demos);
+    
+    setUserPlaylists(demoPlaylists);
 }
 
-// Liked songs management
+// ===== LIKED SONGS MANAGEMENT =====
+/**
+ * Gets liked songs list from localStorage
+ * @returns {Array} Array of liked songs
+ */
 export function getLikedList() {
-    try {
-        const raw = localStorage.getItem("liked_songs");
+    return safeExecute(() => {
+        const raw = localStorage.getItem(STORAGE_KEYS.LIKED_SONGS);
         return raw ? JSON.parse(raw) : [];
-    } catch {
-        return [];
-    }
+    }, "getLikedList") ?? [];
 }
 
+/**
+ * Saves liked songs list to localStorage
+ * @param {Array} list - Array of liked songs
+ */
 export function setLikedList(list) {
-    try {
-        localStorage.setItem("liked_songs", JSON.stringify(list));
-        try {
+    safeExecute(() => {
+        localStorage.setItem(STORAGE_KEYS.LIKED_SONGS, JSON.stringify(list));
+        safeExecute(() => {
             window.dispatchEvent(new Event("liked:changed"));
-        } catch {}
-    } catch {}
+        }, "setLikedList:dispatchEvent");
+    }, "setLikedList");
 }
 
+/**
+ * Checks if a song is liked
+ * @param {string} id - Song ID
+ * @returns {boolean}
+ */
 export function isLiked(id) {
     if (!id) return false;
-    const list = getLikedList();
-    return Array.isArray(list) && list.some((x) => x && x.id === id);
+    const likedList = getLikedList();
+    return Array.isArray(likedList) && likedList.some((song) => song?.id === id);
 }
 
-// Followed artists management
-function normArtist(name) {
+// ===== FOLLOWED ARTISTS MANAGEMENT =====
+/**
+ * Normalizes artist name for consistent comparison
+ * @param {string} name - Artist name
+ * @returns {string} Normalized artist name
+ */
+export function normArtist(name) {
     return String(name || "")
         .toLowerCase()
         .trim()
         .replace(/\s+/g, " ");
 }
 
+/**
+ * Gets followed artists from localStorage
+ * @returns {Set} Set of normalized artist names
+ */
 export function getFollowedArtists() {
-    try {
+    return safeExecute(() => {
         const arr = JSON.parse(
-            localStorage.getItem("followed_artists") || "[]"
+            localStorage.getItem(STORAGE_KEYS.FOLLOWED_ARTISTS) || "[]"
         );
         return new Set(Array.isArray(arr) ? arr.map(normArtist) : []);
-    } catch {
-        return new Set();
-    }
+    }, "getFollowedArtists") ?? new Set();
 }
 
-export function saveFollowedArtists(set) {
-    try {
+/**
+ * Saves followed artists to localStorage
+ * @param {Set} artistSet - Set of artist names
+ */
+export function saveFollowedArtists(artistSet) {
+    safeExecute(() => {
         localStorage.setItem(
-            "followed_artists",
-            JSON.stringify(Array.from(set))
+            STORAGE_KEYS.FOLLOWED_ARTISTS,
+            JSON.stringify(Array.from(artistSet))
         );
-    } catch {}
+    }, "saveFollowedArtists");
 }
 
-// Queue rendering
+// ===== QUEUE RENDERING =====
+/**
+ * Loads and displays track duration
+ * @param {string} src - Audio source URL
+ * @param {string} timeElementId - ID of element to update
+ */
+function loadTrackDuration(src, timeElementId) {
+    const audio = new Audio(src);
+    audio.addEventListener("loadedmetadata", () => {
+        const timeElement = document.getElementById(timeElementId);
+        if (timeElement) {
+            timeElement.textContent = formatTime(audio.duration);
+        }
+    });
+}
+
+/**
+ * Renders the queue list
+ * @param {HTMLElement} queueListEl - Container element for queue
+ * @param {Function} onItemClick - Callback when queue item is clicked
+ */
 export function renderQueue(queueListEl, onItemClick) {
     if (!queueListEl) return;
     
     queueListEl.innerHTML = "";
-    playlist.forEach((t, i) => {
+    
+    playlist.forEach((track, index) => {
         const row = document.createElement("div");
         row.className = "q-item";
-        row.setAttribute("data-index", i);
+        row.setAttribute("data-index", index);
         row.innerHTML = `
-            <div class="q-cover"><img src="${t.cover}" alt="${t.title}"></div>
+            <div class="q-cover"><img src="${track.cover}" alt="${track.title}"></div>
             <div class="q-meta">
-              <div class="q-title-text">${t.title}</div>
-              <div class="q-artist">${t.artist}</div>
+                <div class="q-title-text">${track.title}</div>
+                <div class="q-artist">${track.artist}</div>
             </div>
-            <div class="q-time" id="qtime-${i}">--:--</div>
+            <div class="q-time" id="qtime-${index}">--:--</div>
         `;
+        
         row.addEventListener("click", () => {
-            if (onItemClick) onItemClick(i);
+            if (onItemClick) onItemClick(index);
         });
+        
         queueListEl.appendChild(row);
-
-        // Prefetch duration
-        const a = new Audio(t.src);
-        a.addEventListener("loadedmetadata", () => {
-            const el = document.getElementById(`qtime-${i}`);
-            if (el) {
-                const m = Math.floor(a.duration / 60);
-                const ss = Math.floor(a.duration % 60).toString().padStart(2, "0");
-                el.textContent = `${m}:${ss}`;
-            }
-        });
+        
+        // Prefetch and display duration
+        loadTrackDuration(track.src, `qtime-${index}`);
     });
 }
 
+/**
+ * Updates active queue item styling
+ * @param {number} index - Index of active track
+ */
 export function updateQueueActive(index) {
     document
         .querySelectorAll(".q-item")
-        .forEach((el) => el.classList.remove("current"));
-    const active = document.querySelector(`.q-item[data-index="${index}"]`);
-    if (active) active.classList.add("current");
-}
-
-// Set playlist function
-export function setPlaylist(tracksArray, ctx) {
-    try {
-        if (!Array.isArray(tracksArray) || !tracksArray.length) return false;
-        playlist.splice(0, playlist.length, ...tracksArray);
-        currentPlaylistCtx =
-            ctx && ctx.type ? ctx : { type: "global", id: null };
-        return true;
-    } catch {
-        return false;
+        .forEach((element) => element.classList.remove("current"));
+    
+    const activeElement = document.querySelector(
+        `.q-item[data-index="${index}"]`
+    );
+    if (activeElement) {
+        activeElement.classList.add("current");
     }
 }
 
-// Getters for current state
+// ===== PLAYLIST STATE MANAGEMENT =====
+/**
+ * Sets the current playlist
+ * @param {Array} tracksArray - Array of track objects
+ * @param {Object} context - Playlist context (type and id)
+ * @returns {boolean} Success status
+ */
+export function setPlaylist(tracksArray, context) {
+    return safeExecute(() => {
+        if (!Array.isArray(tracksArray) || tracksArray.length === 0) {
+            return false;
+        }
+        
+        playlist.splice(0, playlist.length, ...tracksArray);
+        currentPlaylistCtx = context?.type
+            ? context
+            : { type: PLAYLIST_TYPES.GLOBAL, id: null };
+        
+        return true;
+    }, "setPlaylist") ?? false;
+}
+
+/**
+ * Gets a copy of the current playlist
+ * @returns {Array} Copy of playlist array
+ */
 export function getPlaylist() {
     return playlist.slice();
 }
 
+/**
+ * Gets a copy of all songs catalog
+ * @returns {Array} Copy of allSongs array
+ */
 export function getAllSongs() {
     return allSongs.slice();
 }
 
+/**
+ * Gets current playlist context
+ * @returns {Object} Copy of currentPlaylistCtx
+ */
 export function getCurrentPlaylistCtx() {
     return { ...currentPlaylistCtx };
 }
 
-// Playlist management helpers
+// ===== USER PLAYLIST OPERATIONS =====
+/**
+ * Converts string to URL-friendly slug
+ * @param {string} str - String to slugify
+ * @returns {string} Slugified string
+ */
+function slugify(str) {
+    return String(str || "")
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "_")
+        .replace(/[^a-z0-9_\-]/g, "");
+}
+
+/**
+ * Generates a unique playlist ID
+ * @param {string} name - Playlist name
+ * @param {Array} existingPlaylists - Existing playlists to check against
+ * @returns {string} Unique playlist ID
+ */
+function generateUniquePlaylistId(name, existingPlaylists) {
+    const base = "pl_" + slugify(name || "new");
+    let id = base || `pl_${Date.now()}`;
+    let counter = 1;
+    
+    const existingIds = new Set(
+        (existingPlaylists || []).map((playlist) => playlist?.id).filter(Boolean)
+    );
+    
+    while (existingIds.has(id)) {
+        id = `${base}_${++counter}`;
+    }
+    
+    return id;
+}
+
+/**
+ * Finds playlist index by ID
+ * @param {Array} playlists - Array of playlists
+ * @param {string} id - Playlist ID
+ * @returns {number} Index or -1 if not found
+ */
+function findPlaylistIndex(playlists, id) {
+    return playlists.findIndex((playlist) => playlist?.id === id);
+}
+
+/**
+ * Creates a new user playlist
+ * @param {Object} options - Playlist options
+ * @param {string} options.name - Playlist name
+ * @param {string} options.cover - Cover image URL
+ * @returns {Object|null} New playlist object or null on error
+ */
 export function createUserPlaylist({ name, cover }) {
-    try {
-        const lists = getUserPlaylists();
-        
-        // Generate unique ID
-        function slugify(s) {
-            return String(s || "")
-                .toLowerCase()
-                .trim()
-                .replace(/\s+/g, "_")
-                .replace(/[^a-z0-9_\-]/g, "");
-        }
-        
-        let base = "pl_" + slugify(name || "new");
-        let id = base || "pl_" + Date.now();
-        let i = 1;
-        const ids = new Set((lists || []).map((p) => p && p.id));
-        while (ids.has(id)) {
-            id = base + "_" + ++i;
-        }
+    return safeExecute(() => {
+        const playlists = getUserPlaylists();
+        const id = generateUniquePlaylistId(name, playlists);
         
         const newPlaylist = {
             id,
             name: name || "Playlist mới",
-            cover: cover || "./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg",
+            cover: cover || DEFAULT_PLAYLIST_COVER,
             tracks: [],
         };
         
-        lists.push(newPlaylist);
-        setUserPlaylists(lists);
+        playlists.push(newPlaylist);
+        setUserPlaylists(playlists);
         return newPlaylist;
-    } catch {
-        return null;
-    }
+    }, "createUserPlaylist") ?? null;
 }
 
+/**
+ * Renames a user playlist
+ * @param {string} id - Playlist ID
+ * @param {string} newName - New playlist name
+ * @returns {boolean} Success status
+ */
 export function renameUserPlaylist(id, newName) {
-    try {
-        const lists = getUserPlaylists();
-        const idx = lists.findIndex((x) => x && x.id === id);
-        if (idx < 0) return false;
+    return safeExecute(() => {
+        const playlists = getUserPlaylists();
+        const index = findPlaylistIndex(playlists, id);
         
-        lists[idx].name = newName;
-        setUserPlaylists(lists);
+        if (index < 0) return false;
+        
+        playlists[index].name = newName;
+        setUserPlaylists(playlists);
         return true;
-    } catch {
-        return false;
-    }
+    }, "renameUserPlaylist") ?? false;
 }
 
+/**
+ * Updates playlist cover image
+ * @param {string} id - Playlist ID
+ * @param {string} newCoverUrl - New cover image URL
+ * @returns {boolean} Success status
+ */
 export function updateUserPlaylistCover(id, newCoverUrl) {
-    try {
-        const lists = getUserPlaylists();
-        const idx = lists.findIndex((x) => x && x.id === id);
-        if (idx < 0) return false;
+    return safeExecute(() => {
+        const playlists = getUserPlaylists();
+        const index = findPlaylistIndex(playlists, id);
         
-        lists[idx].cover = newCoverUrl;
-        setUserPlaylists(lists);
+        if (index < 0) return false;
+        
+        playlists[index].cover = newCoverUrl;
+        setUserPlaylists(playlists);
         return true;
-    } catch {
-        return false;
-    }
+    }, "updateUserPlaylistCover") ?? false;
 }
 
+/**
+ * Deletes a user playlist
+ * @param {string} id - Playlist ID
+ * @returns {boolean} Success status
+ */
 export function deleteUserPlaylist(id) {
-    try {
-        const lists = getUserPlaylists();
-        const idx = lists.findIndex((x) => x && x.id === id);
-        if (idx < 0) return false;
+    return safeExecute(() => {
+        const playlists = getUserPlaylists();
+        const index = findPlaylistIndex(playlists, id);
         
-        lists.splice(idx, 1);
-        setUserPlaylists(lists);
+        if (index < 0) return false;
+        
+        playlists.splice(index, 1);
+        setUserPlaylists(playlists);
         return true;
-    } catch {
-        return false;
-    }
+    }, "deleteUserPlaylist") ?? false;
 }
 
-// Initialize playlists
+// ===== INITIALIZATION =====
+/**
+ * Initializes the playlists module
+ * @returns {Object} Playlist context with all exported functions
+ */
 export function initPlaylists() {
     ensureDemoPlaylists();
     
@@ -410,6 +632,6 @@ export function initPlaylists() {
         getPlaylist,
         getAllSongs,
         getCurrentPlaylistCtx,
-        normArtist
+        normArtist,
     };
 }
