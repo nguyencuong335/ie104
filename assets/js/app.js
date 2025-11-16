@@ -8,7 +8,6 @@ import {
     setPlaylist,
     getPlaylist,
     getUserPlaylists,
-    setUserPlaylists,
     getLikedList,
     setLikedList,
     isLiked,
@@ -17,10 +16,70 @@ import {
 } from "./app/playlists.js";
 import { initPlayer } from "./app/player.js";
 import { initUI } from "./app/ui.js";
-// Import dark mode manager
 import DarkModeManager from "./darkmode.js";
 
-// Initialize dark mode (chỉ 1 lần)
+// ===== CONSTANTS =====
+const DEFAULT_PLAYLIST_COVER = "./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg";
+const TRUNCATE_LENGTH = 40;
+const TRUNCATE_PREVIEW = 37;
+const DEFAULT_PLAYLIST_NAME = "Playlist";
+const DEFAULT_TRACK_COUNT = 0;
+
+// ===== HELPER FUNCTIONS =====
+/**
+ * Truncates a string to a maximum length with ellipsis
+ * @param {string} str - String to truncate
+ * @returns {string} Truncated string
+ */
+function truncateText(str) {
+    const text = String(str || "");
+    if (text.length <= TRUNCATE_LENGTH) return text;
+    return text.slice(0, TRUNCATE_PREVIEW) + "...";
+}
+
+/**
+ * Sets background image styles for a cover element
+ * @param {HTMLElement} element - Element to style
+ * @param {string} imageUrl - Image URL
+ */
+function setCoverImage(element, imageUrl) {
+    if (!element) return;
+    element.style.backgroundImage = `url('${imageUrl || DEFAULT_PLAYLIST_COVER}')`;
+    element.style.backgroundSize = "cover";
+    element.style.backgroundPosition = "center";
+    element.style.backgroundRepeat = "no-repeat";
+}
+
+/**
+ * Navigates to a playlist page with error handling
+ * @param {Object} uiContext - UI context with navigation method
+ * @param {string} playlistId - Playlist ID to navigate to
+ */
+function navigateToPlaylist(uiContext, playlistId) {
+    try {
+        uiContext.go(`./playlist.html?id=${encodeURIComponent(playlistId)}`);
+    } catch (error) {
+        console.warn("Navigation via uiContext failed, using window.location:", error);
+        window.location.href = `./playlist.html?id=${encodeURIComponent(playlistId)}`;
+    }
+}
+
+/**
+ * Safely executes a function with error handling
+ * @param {Function} fn - Function to execute
+ * @param {string} context - Context description for error logging
+ */
+function safeExecute(fn, context = "operation") {
+    try {
+        return fn();
+    } catch (error) {
+        console.error(`Error in ${context}:`, error);
+        return null;
+    }
+}
+
+// ===== INITIALIZATION =====
+// Initialize dark mode (only once)
 if (!window.darkModeManager) {
     window.darkModeManager = new DarkModeManager();
 }
@@ -66,28 +125,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.__mbRenderQueue();
 
     // Try to restore player state or load first track
-    if (!playerContext.restorePlayerState()) {
-        playerContext.loadTrack(0);
-        const audio = playerContext.getAudio();
-        const volumeSlider = document.getElementById("volume");
-        if (volumeSlider) {
-            audio.volume = Number(volumeSlider.value);
-            volumeSlider.setAttribute("aria-valuenow", String(audio.volume));
-        }
-        const progressBar = document.getElementById("progress");
-        if (progressBar) {
-            progressBar.setAttribute("aria-valuenow", "0");
-        }
-        // Set initial play UI to paused
-        const playIcon = document.getElementById("play-icon");
-        if (playIcon) {
-            playIcon.classList.add("fa-play");
-            playIcon.classList.remove("fa-pause");
-        }
-        try {
-            playerContext.updateVolumeSlider();
-        } catch {}
-    }
+    initializePlayerState(playerContext);
 
     // Initialize UI module
     const uiContext = initUI({
@@ -100,39 +138,82 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupAdditionalFeatures(playlistContext, playerContext, uiContext);
 });
 
+/**
+ * Initializes player state on first load
+ * @param {Object} playerContext - Player context
+ */
+function initializePlayerState(playerContext) {
+    if (playerContext.restorePlayerState()) return;
+
+    playerContext.loadTrack(0);
+    const audio = playerContext.getAudio();
+    
+    const volumeSlider = document.getElementById("volume");
+    if (volumeSlider) {
+        audio.volume = Number(volumeSlider.value);
+        volumeSlider.setAttribute("aria-valuenow", String(audio.volume));
+    }
+
+    const progressBar = document.getElementById("progress");
+    if (progressBar) {
+        progressBar.setAttribute("aria-valuenow", "0");
+    }
+
+    // Set initial play UI to paused
+    const playIcon = document.getElementById("play-icon");
+    if (playIcon) {
+        playIcon.classList.add("fa-play");
+        playIcon.classList.remove("fa-pause");
+    }
+
+    safeExecute(() => playerContext.updateVolumeSlider(), "updateVolumeSlider");
+}
+
+// ===== ADDITIONAL FEATURES SETUP =====
 function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
-    // Profile page playlist sync
+    setupProfilePlaylists(uiContext);
+    setupSidebarPlaylists(uiContext);
+    setupLikeButton(playerContext);
+    setupFollowButton(playlistContext, playerContext);
+}
+
+/**
+ * Sets up profile page playlist synchronization
+ * @param {Object} uiContext - UI context
+ */
+function setupProfilePlaylists(uiContext) {
     function syncProfilePlaylists() {
-        try {
+        return safeExecute(() => {
             const wrap = document.querySelector(".my-playlists");
-            if (!wrap) return; // not on profile page
+            if (!wrap) return; // Not on profile page
+
             const lists = getUserPlaylists();
+
             // Update section title count
             const titleEl = Array.from(
                 document.querySelectorAll(".section-title")
             ).find((el) => /Playlist\s+đã\s+tạo/i.test(el.textContent));
+            
             if (titleEl) {
                 titleEl.textContent = `Playlist đã tạo (${lists.length})`;
             }
+
             // Ensure there are enough cards; reuse existing ones
             let cards = Array.from(wrap.querySelectorAll(".my-pl-card"));
+
             // Create missing cards if needed
             while (cards.length < lists.length) {
                 const card = document.createElement("div");
                 card.className = "my-pl-card";
                 card.innerHTML = `
-                  <div class="my-pl-cover"></div>
-                  <div class="my-pl-name"></div>
-                  <div class="my-pl-sub"></div>
+                    <div class="my-pl-cover"></div>
+                    <div class="my-pl-name"></div>
+                    <div class="my-pl-sub"></div>
                 `;
                 wrap.appendChild(card);
                 cards.push(card);
             }
-            // Helper: truncate display name to 40 chars with ellipsis
-            function trunc40(s) {
-                const t = String(s || "");
-                return t.length > 40 ? t.slice(0, 37) + "..." : t;
-            }
+
             // Update cards with playlist data
             cards.forEach((card, i) => {
                 const pl = lists[i];
@@ -140,108 +221,89 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
                     card.style.display = "none";
                     return;
                 }
+
                 card.style.display = "";
                 card.dataset.plId = pl.id;
+
                 const cover = card.querySelector(".my-pl-cover");
-                if (cover) {
-                    cover.style.backgroundImage = `url('${
-                        pl.cover ||
-                        "./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg"
-                    }')`;
-                    cover.style.backgroundSize = "cover";
-                    cover.style.backgroundPosition = "center";
-                    cover.style.backgroundRepeat = "no-repeat";
-                }
+                setCoverImage(cover, pl.cover);
+
                 const name = card.querySelector(".my-pl-name");
-                if (name) name.textContent = trunc40(pl.name || "Playlist");
+                if (name) {
+                    name.textContent = truncateText(pl.name || DEFAULT_PLAYLIST_NAME);
+                }
+
                 const sub = card.querySelector(".my-pl-sub");
-                if (sub)
-                    sub.textContent = `${
-                        Array.isArray(pl.tracks) ? pl.tracks.length : 0
-                    } bài hát`;
+                if (sub) {
+                    const trackCount = Array.isArray(pl.tracks) ? pl.tracks.length : DEFAULT_TRACK_COUNT;
+                    sub.textContent = `${trackCount} bài hát`;
+                }
 
                 // Wire click to navigate
-                card.onclick = () => {
-                    try {
-                        uiContext.go(
-                            `./playlist.html?id=${encodeURIComponent(pl.id)}`
-                        );
-                    } catch {
-                        window.location.href = `./playlist.html?id=${encodeURIComponent(
-                            pl.id
-                        )}`;
-                    }
-                };
+                card.onclick = () => navigateToPlaylist(uiContext, pl.id);
             });
-        } catch {}
+        }, "syncProfilePlaylists");
     }
 
-    // Run once on load and on changes
     syncProfilePlaylists();
     window.addEventListener("playlists:changed", syncProfilePlaylists);
+}
 
-    // Sidebar playlists rendering
+/**
+ * Sets up sidebar playlists rendering
+ * @param {Object} uiContext - UI context
+ */
+function setupSidebarPlaylists(uiContext) {
     function renderSidebarPlaylists() {
-        try {
+        return safeExecute(() => {
             const container = document.querySelector(".pl-list");
             if (!container) return;
+
             const lists = getUserPlaylists();
             container.innerHTML = "";
-            function trunc40(s) {
-                const t = String(s || "");
-                return t.length > 40 ? t.slice(0, 37) + "..." : t;
-            }
+
             lists.forEach((pl) => {
                 const row = document.createElement("div");
                 row.className = "pl-item";
                 row.dataset.plId = pl.id;
                 row.innerHTML = `
-                  <div class="pl-cover"></div>
-                  <div class="pl-meta"><div class="pl-name">${trunc40(
-                      pl.name || "Playlist"
-                  )}</div><div class="pl-sub">Playlist • ${
-                    pl.tracks?.length || 0
-                } songs</div></div>
+                    <div class="pl-cover"></div>
+                    <div class="pl-meta">
+                        <div class="pl-name">${truncateText(pl.name || DEFAULT_PLAYLIST_NAME)}</div>
+                        <div class="pl-sub">Playlist • ${pl.tracks?.length || DEFAULT_TRACK_COUNT} songs</div>
+                    </div>
                 `;
-                const cov = row.querySelector(".pl-cover");
-                if (cov) {
-                    cov.style.backgroundImage = `url('${
-                        pl.cover ||
-                        "./assets/imgs/danh_sach_da_tao/anh_playlist_1.jpg"
-                    }')`;
-                    cov.style.backgroundSize = "cover";
-                    cov.style.backgroundPosition = "center";
-                    cov.style.backgroundRepeat = "no-repeat";
-                }
-                row.addEventListener("click", () => {
-                    try {
-                        uiContext.go(
-                            `./playlist.html?id=${encodeURIComponent(pl.id)}`
-                        );
-                    } catch {
-                        window.location.href = `./playlist.html?id=${encodeURIComponent(
-                            pl.id
-                        )}`;
-                    }
-                });
+
+                const cover = row.querySelector(".pl-cover");
+                setCoverImage(cover, pl.cover);
+
+                row.addEventListener("click", () => navigateToPlaylist(uiContext, pl.id));
                 container.appendChild(row);
             });
-        } catch {}
+        }, "renderSidebarPlaylists");
     }
 
     renderSidebarPlaylists();
     window.addEventListener("playlists:changed", renderSidebarPlaylists);
+}
 
-    // Like button functionality
+/**
+ * Sets up like button functionality
+ * @param {Object} playerContext - Player context
+ */
+function setupLikeButton(playerContext) {
     const likeBtn = document.getElementById("like");
+    if (!likeBtn) return;
+
     function updateLikeUI() {
-        if (!likeBtn) return;
         const icon = likeBtn.querySelector("i");
         if (!icon) return;
+
         const playlist = getPlaylist();
         const index = playerContext.getCurrentIndex();
-        const cur = playlist[index] || {};
-        const liked = isLiked(cur.id);
+        const currentTrack = playlist[index] || {};
+        const liked = isLiked(currentTrack.id);
+
         icon.classList.toggle("fa-solid", !!liked);
         icon.classList.toggle("fa-regular", !liked);
         icon.classList.add("fa-heart");
@@ -251,88 +313,91 @@ function setupAdditionalFeatures(playlistContext, playerContext, uiContext) {
     function toggleLikeCurrent() {
         const playlist = getPlaylist();
         const index = playerContext.getCurrentIndex();
-        const cur = playlist[index] || null;
-        if (!cur) return;
+        const currentTrack = playlist[index];
+        
+        if (!currentTrack) return;
+
         let list = getLikedList();
-        const exists =
-            cur.id && Array.isArray(list)
-                ? list.findIndex((x) => x && x.id === cur.id)
-                : -1;
+        const exists = currentTrack.id && Array.isArray(list)
+            ? list.findIndex((x) => x && x.id === currentTrack.id)
+            : -1;
+
         if (exists >= 0) {
             list.splice(exists, 1);
         } else {
             const durationEl = document.getElementById("duration");
             const item = {
-                id: cur.id || cur.src || cur.title + "|" + cur.artist,
-                title: cur.title || "—",
-                artist: cur.artist || "—",
-                cover: cur.cover || "",
-                duration:
-                    durationEl && durationEl.textContent
-                        ? durationEl.textContent
-                        : "--:--",
+                id: currentTrack.id || currentTrack.src || `${currentTrack.title}|${currentTrack.artist}`,
+                title: currentTrack.title || "—",
+                artist: currentTrack.artist || "—",
+                cover: currentTrack.cover || "",
+                duration: durationEl?.textContent || "--:--",
             };
+
             // Deduplicate by id
             list = Array.isArray(list)
                 ? list.filter((x) => x && x.id !== item.id)
                 : [];
             list.push(item);
         }
+
         setLikedList(list);
         updateLikeUI();
     }
 
-    if (likeBtn) {
-        likeBtn.addEventListener("click", () => {
-            toggleLikeCurrent();
-        });
-        // Sync UI when storage changes
-        window.addEventListener("liked:changed", () => {
-            updateLikeUI();
-        });
-        window.addEventListener("musicbox:trackchange", () => {
-            updateLikeUI();
-        });
-        // Initialize icon state on first load
-        updateLikeUI();
-    }
+    likeBtn.addEventListener("click", toggleLikeCurrent);
+    window.addEventListener("liked:changed", updateLikeUI);
+    window.addEventListener("musicbox:trackchange", updateLikeUI);
+    updateLikeUI();
+}
 
-    // Follow button functionality
+/**
+ * Sets up follow button functionality
+ * @param {Object} playlistContext - Playlist context
+ * @param {Object} playerContext - Player context
+ */
+function setupFollowButton(playlistContext, playerContext) {
     const bFollow = document.getElementById("b-follow");
-    let isFollowing = false;
+    if (!bFollow) return;
 
     function updateFollowUI(artistName) {
-        if (!bFollow) return;
         const set = getFollowedArtists();
         const key = playlistContext.normArtist(artistName);
-        isFollowing = !!(key && set.has(key));
+        const isFollowing = !!(key && set.has(key));
+
         bFollow.classList.toggle("is-following", isFollowing);
         bFollow.textContent = isFollowing ? "Đã theo dõi" : "Theo dõi";
         bFollow.setAttribute("aria-pressed", String(isFollowing));
     }
 
-    if (bFollow) {
-        bFollow.addEventListener("click", () => {
-            try {
-                const playlist = getPlaylist();
-                const index = playerContext.getCurrentIndex();
-                const t = playlist[index] || {};
-                const key = playlistContext.normArtist(t.artist || "");
-                if (!key) return;
-                const set = getFollowedArtists();
-                if (set.has(key)) set.delete(key);
-                else set.add(key);
-                saveFollowedArtists(set);
-                updateFollowUI(t.artist || "");
-            } catch {}
-        });
+    function toggleFollow() {
+        return safeExecute(() => {
+            const playlist = getPlaylist();
+            const index = playerContext.getCurrentIndex();
+            const track = playlist[index] || {};
+            const key = playlistContext.normArtist(track.artist || "");
+
+            if (!key) return;
+
+            const set = getFollowedArtists();
+            if (set.has(key)) {
+                set.delete(key);
+            } else {
+                set.add(key);
+            }
+
+            saveFollowedArtists(set);
+            updateFollowUI(track.artist || "");
+        }, "toggleFollow");
     }
+
+    bFollow.addEventListener("click", toggleFollow);
 
     // Update follow UI when track changes
     window.addEventListener("musicbox:trackchange", () => {
         const playlist = getPlaylist();
         const index = playerContext.getCurrentIndex();
-        const t = playlist[index] || {};
-        updateFollowUI(t.artist);
+        const track = playlist[index] || {};
+        updateFollowUI(track.artist);
     });
 }

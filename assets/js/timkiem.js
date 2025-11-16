@@ -40,12 +40,23 @@
     function pickArtist(artists, qNorm) {
         const list = artists.map((name) => ({ name, norm: normalize(name) }));
         if (!qNorm) return list[0]?.name || "";
+
+        // Try exact match first
         const exact = list.find((a) => a.norm === qNorm);
         if (exact) return exact.name;
-        const contains = list.find(
-            (a) => a.norm.includes(qNorm) || qNorm.includes(a.norm)
-        );
+
+        // Try starts with match
+        const startsWith = list.find((a) => a.norm.startsWith(qNorm));
+        if (startsWith) return startsWith.name;
+
+        // Try contains match
+        const contains = list.find((a) => a.norm.includes(qNorm));
         if (contains) return contains.name;
+
+        // Try query contains artist name
+        const reverseContains = list.find((a) => qNorm.includes(a.norm));
+        if (reverseContains) return reverseContains.name;
+
         return list[0]?.name || "";
     }
 
@@ -121,7 +132,10 @@
         // Try to use MusicBox playlist if ready
         let pl = [];
         try {
-            if (window.MusicBox && typeof window.MusicBox.playlist === "function") {
+            if (
+                window.MusicBox &&
+                typeof window.MusicBox.playlist === "function"
+            ) {
                 pl = window.MusicBox.playlist();
             }
         } catch {}
@@ -143,13 +157,19 @@
             // If already filled, skip
             if (durEl.textContent && durEl.textContent !== "0:00") return;
 
-            const key = (String(song.title) + "\u0000" + String(song.artist)).toLowerCase();
+            const key = (
+                String(song.title) +
+                "\u0000" +
+                String(song.artist)
+            ).toLowerCase();
             const match = byKey.get(key);
             if (match && match.src) {
                 const a = new Audio(match.src);
                 a.addEventListener("loadedmetadata", () => {
                     const mins = Math.floor(a.duration / 60);
-                    const secs = Math.floor(a.duration % 60).toString().padStart(2, "0");
+                    const secs = Math.floor(a.duration % 60)
+                        .toString()
+                        .padStart(2, "0");
                     durEl.textContent = `${mins}:${secs}`;
                 });
                 return;
@@ -160,7 +180,9 @@
                 const a = new Audio(song.src);
                 a.addEventListener("loadedmetadata", () => {
                     const mins = Math.floor(a.duration / 60);
-                    const secs = Math.floor(a.duration % 60).toString().padStart(2, "0");
+                    const secs = Math.floor(a.duration % 60)
+                        .toString()
+                        .padStart(2, "0");
                     durEl.textContent = `${mins}:${secs}`;
                 });
             }

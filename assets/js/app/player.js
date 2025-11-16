@@ -1,11 +1,42 @@
 // ===== PLAYER MODULE =====
 
+// ===== CONSTANTS =====
+const REPEAT_MODES = {
+    OFF: "off",
+    ALL: "all",
+    ONE: "one",
+};
+
+const PLAYER_STATE_KEY = "player_state_v1";
+const STATE_SAVE_THROTTLE_MS = 500;
+const TIME_BUFFER_SECONDS = 0.2;
+const DEFAULT_VOLUME = 0.8;
+const MOBILE_BREAKPOINT = 900;
+const NAVIGATION_TYPE_RELOAD = 1;
+
+const AD_LOCK_SELECTORS = [
+    "#play",
+    "#next",
+    "#prev",
+    "#shuffle",
+    "#repeat",
+    "#progress",
+    "#queue-list",
+    "#pl-tbody tr",
+    ".song-card",
+    ".song-item",
+    ".q-list",
+    ".q-item",
+    ".q-row",
+];
+
+// ===== STATE VARIABLES =====
 // Player state
 let audio = null;
 let index = 0;
 let isPlaying = false;
 let shuffle = false;
-let repeatMode = "off"; // 'off' | 'all' | 'one'
+let repeatMode = REPEAT_MODES.OFF;
 
 // Ad state
 let isAdPlaying = false;
@@ -17,32 +48,49 @@ let currentTrackKey = null;
 // Logout flag
 let logoutInProgress = false;
 
-// First visit detection
-const FIRST_VISIT = (() => {
-    try {
-        const v = !sessionStorage.getItem("app_started");
-        sessionStorage.setItem("app_started", "1");
-        return v;
-    } catch {
-        return false;
-    }
-})();
-
-// Just logged in detection
-let JUST_LOGGED_IN = false;
-try {
-    const uNow = localStorage.getItem("auth_user") || "";
-    const uSeen = sessionStorage.getItem("seen_auth_user") || "";
-    if (uNow && uNow !== uSeen) {
-        JUST_LOGGED_IN = true;
-        sessionStorage.setItem("seen_auth_user", uNow);
-    }
-} catch {}
-
 // DOM elements (will be set during init)
 let elements = {};
 
-// Ad assets
+// Player state persistence
+let lastStateSavedAt = 0;
+
+// ===== INITIALIZATION HELPERS =====
+/**
+ * Detects if this is the first visit
+ * @returns {boolean}
+ */
+function detectFirstVisit() {
+    try {
+        const isFirst = !sessionStorage.getItem("app_started");
+        sessionStorage.setItem("app_started", "1");
+        return isFirst;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Detects if user just logged in
+ * @returns {boolean}
+ */
+function detectJustLoggedIn() {
+    try {
+        const currentUser = localStorage.getItem("auth_user") || "";
+        const seenUser = sessionStorage.getItem("seen_auth_user") || "";
+        if (currentUser && currentUser !== seenUser) {
+            sessionStorage.setItem("seen_auth_user", currentUser);
+            return true;
+        }
+        return false;
+    } catch {
+        return false;
+    }
+}
+
+const FIRST_VISIT = detectFirstVisit();
+const JUST_LOGGED_IN = detectJustLoggedIn();
+
+// ===== AD ASSETS =====
 const adAssets = {
     title: "Quảng cáo",
     artist: "Tài trợ",
@@ -51,387 +99,529 @@ const adAssets = {
     artistImg: "./assets/quang_cao/imgs_logo_quang_cao/quang_cao.png",
 };
 
-// Helper functions
-function fmt(s) {
-    if (!isFinite(s)) return "0:00";
-    const m = Math.floor(s / 60),
-        ss = Math.floor(s % 60)
-            .toString()
-            .padStart(2, "0");
-    return `${m}:${ss}`;
-}
-
-function isReloadNavigation() {
+// ===== UTILITY FUNCTIONS =====
+/**
+ * Safely executes a function with error handling
+ * @param {Function} fn - Function to execute
+ * @param {string} context - Context description for error logging
+ * @returns {*} Function result or null on error
+ */
+function safeExecute(fn, context = "operation") {
     try {
-        const nav =
-            performance.getEntriesByType &&
-            performance.getEntriesByType("navigation");
-        if (nav && nav[0] && typeof nav[0].type === "string")
-            return nav[0].type === "reload";
-        // fallback (deprecated API)
-        if (
-            performance &&
-            performance.navigation &&
-            typeof performance.navigation.type === "number"
-        )
-            return performance.navigation.type === 1;
-    } catch {}
-    return false;
-}
-
-function getTrackKey(t) {
-    try {
-        return (t && (t.id || t.src || t.title + "|" + t.artist)) || null;
-    } catch {
+        return fn();
+    } catch (error) {
+        console.error(`Error in ${context}:`, error);
         return null;
     }
 }
 
-function setPlayUI(p) {
-    if (elements.playIcon) {
-        elements.playIcon.classList.toggle("fa-play", !p);
-        elements.playIcon.classList.toggle("fa-pause", p);
-    }
+/**
+ * Formats seconds to MM:SS format
+ * @param {number} seconds - Time in seconds
+ * @returns {string} Formatted time string
+ */
+function formatTime(seconds) {
+    if (!isFinite(seconds)) return "0:00";
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${secs}`;
 }
 
-function setControlsDisabled(disabled) {
-    try {
-        [elements.playBtn, elements.prevBtn, elements.nextBtn, elements.shuffleBtn, elements.repeatBtn].forEach((b) => {
-            if (!b) return;
-            b.disabled = !!disabled;
-            b.classList.toggle("disabled", !!disabled);
-        });
-        if (elements.progress) elements.progress.disabled = !!disabled;
-    } catch {}
-}
-
-function isPremiumOn() {
-    try {
-        return localStorage.getItem("premium_enabled") === "true";
-    } catch {
+/**
+ * Checks if navigation was a reload
+ * @returns {boolean}
+ */
+function isReloadNavigation() {
+    return safeExecute(() => {
+        const navEntries =
+            performance.getEntriesByType &&
+            performance.getEntriesByType("navigation");
+        if (navEntries?.[0]?.type === "string") {
+            return navEntries[0].type === "reload";
+        }
+        // Fallback (deprecated API)
+        if (performance?.navigation?.type === "number") {
+            return performance.navigation.type === NAVIGATION_TYPE_RELOAD;
+        }
         return false;
+    }, "isReloadNavigation") ?? false;
+}
+
+/**
+ * Gets a unique key for a track
+ * @param {Object} track - Track object
+ * @returns {string|null} Track key or null
+ */
+function getTrackKey(track) {
+    if (!track) return null;
+    return track.id || track.src || `${track.title}|${track.artist}` || null;
+}
+
+/**
+ * Updates play/pause UI icon
+ * @param {boolean} isPlaying - Whether audio is playing
+ */
+function setPlayUI(isPlaying) {
+    if (!elements.playIcon) return;
+    elements.playIcon.classList.toggle("fa-play", !isPlaying);
+    elements.playIcon.classList.toggle("fa-pause", isPlaying);
+}
+
+/**
+ * Enables or disables player controls
+ * @param {boolean} disabled - Whether to disable controls
+ */
+function setControlsDisabled(disabled) {
+    const controls = [
+        elements.playBtn,
+        elements.prevBtn,
+        elements.nextBtn,
+        elements.shuffleBtn,
+        elements.repeatBtn,
+    ];
+    
+    controls.forEach((button) => {
+        if (!button) return;
+        button.disabled = !!disabled;
+        button.classList.toggle("disabled", !!disabled);
+    });
+    
+    if (elements.progress) {
+        elements.progress.disabled = !!disabled;
     }
 }
 
-// Player state persistence
-const PLAYER_STATE_KEY = "player_state_v1";
-let lastStateSavedAt = 0;
+/**
+ * Checks if premium is enabled
+ * @returns {boolean}
+ */
+function isPremiumOn() {
+    return safeExecute(
+        () => localStorage.getItem("premium_enabled") === "true",
+        "isPremiumOn"
+    ) ?? false;
+}
 
+// ===== PLAYER STATE PERSISTENCE =====
+/**
+ * Saves current player state to localStorage
+ * @param {boolean} force - Force save even if throttled
+ */
 function savePlayerState(force = false) {
-    if (isAdPlaying) return; // avoid saving ad as track
+    if (isAdPlaying) return; // Avoid saving ad as track
+    
     const now = Date.now();
-    if (!force && now - lastStateSavedAt < 500) return; // throttle
+    if (!force && now - lastStateSavedAt < STATE_SAVE_THROTTLE_MS) {
+        return; // Throttle saves
+    }
     lastStateSavedAt = now;
-    try {
+
+    safeExecute(() => {
         const playlist = window.__mbPlaylist || [];
-        const s = {
+        const currentTrack = playlist[index];
+        
+        const state = {
             index,
             currentTime: Math.max(
                 0,
                 Math.min(
                     audio.currentTime || 0,
-                    isFinite(audio.duration) ? audio.duration - 0.2 : 1e9
+                    isFinite(audio.duration)
+                        ? audio.duration - TIME_BUFFER_SECONDS
+                        : 1e9
                 )
             ),
             isPlaying: logoutInProgress
                 ? false
                 : !!isPlaying && !isAdPlaying,
-            volume: Number.isFinite(audio.volume) ? audio.volume : 0.8,
+            volume: Number.isFinite(audio.volume) ? audio.volume : DEFAULT_VOLUME,
             shuffle: !!shuffle,
             repeatMode,
             queueOpen: document.body.classList.contains("queue-open"),
             ts: now,
             playlistCtx: window.__mbCurrentPlaylistCtx || { type: "global", id: null },
-            trackIds: (playlist || [])
-                .map((t) => t && t.id)
-                .filter(Boolean),
-            currentId:
-                playlist && playlist[index] && playlist[index].id
-                    ? playlist[index].id
-                    : null,
+            trackIds: playlist.map((t) => t?.id).filter(Boolean),
+            currentId: currentTrack?.id || null,
         };
-        localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(s));
-    } catch {}
+        
+        localStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(state));
+    }, "savePlayerState");
 }
 
+/**
+ * Retrieves saved player state from localStorage
+ * @returns {Object|null} Saved state or null
+ */
 function getSavedPlayerState() {
-    try {
+    return safeExecute(() => {
         const raw = localStorage.getItem(PLAYER_STATE_KEY);
         if (!raw) return null;
-        const obj = JSON.parse(raw);
-        if (!obj || typeof obj !== "object") return null;
-        return obj;
-    } catch {
-        return null;
-    }
+        
+        const state = JSON.parse(raw);
+        if (!state || typeof state !== "object") return null;
+        
+        return state;
+    }, "getSavedPlayerState") ?? null;
 }
 
+/**
+ * Restores player state from localStorage
+ * @returns {boolean} Success status
+ */
 function restorePlayerState() {
-    const s = getSavedPlayerState();
-    if (!s) return false;
-    try {
+    const savedState = getSavedPlayerState();
+    if (!savedState) return false;
+
+    return safeExecute(() => {
         const playlist = window.__mbPlaylist || [];
-        // sanity checks
+        
+        // Validate index
         if (
-            typeof s.index !== "number" ||
-            s.index < 0 ||
-            s.index >= playlist.length
-        )
+            typeof savedState.index !== "number" ||
+            savedState.index < 0 ||
+            savedState.index >= playlist.length
+        ) {
             return false;
-        if (typeof s.volume === "number") {
-            audio.volume = Math.min(1, Math.max(0, s.volume));
+        }
+
+        // Restore volume
+        if (typeof savedState.volume === "number") {
+            audio.volume = Math.min(1, Math.max(0, savedState.volume));
             if (elements.volume) {
                 elements.volume.value = String(audio.volume);
                 elements.volume.setAttribute("aria-valuenow", String(audio.volume));
             }
-            try {
-                updateVolumeSlider();
-            } catch {}
+            updateVolumeSlider();
         }
-        if (s.shuffle === true || s.shuffle === false) {
-            shuffle = !!s.shuffle;
+
+        // Restore shuffle
+        if (typeof savedState.shuffle === "boolean") {
+            shuffle = savedState.shuffle;
             if (elements.shuffleBtn) {
                 elements.shuffleBtn.classList.toggle("active", shuffle);
             }
             updateShuffleA11y();
         }
+
+        // Restore repeat mode
         if (
-            s.repeatMode === "off" ||
-            s.repeatMode === "all" ||
-            s.repeatMode === "one"
+            savedState.repeatMode === REPEAT_MODES.OFF ||
+            savedState.repeatMode === REPEAT_MODES.ALL ||
+            savedState.repeatMode === REPEAT_MODES.ONE
         ) {
-            repeatMode = s.repeatMode;
+            repeatMode = savedState.repeatMode;
             if (elements.repeatBtn) {
                 elements.repeatBtn.dataset.mode = repeatMode;
-                elements.repeatBtn.classList.toggle("active", repeatMode !== "off");
+                elements.repeatBtn.classList.toggle("active", repeatMode !== REPEAT_MODES.OFF);
             }
             updateRepeatA11y();
         }
-        // Decide which index to load: prefer mapping by currentId if present
-        let targetIndex = s.index;
-        try {
-            if (s.currentId) {
-                const found = (playlist || []).findIndex(
-                    (t) => t && t.id === s.currentId
-                );
-                if (found >= 0) targetIndex = found;
+
+        // Determine target index (prefer mapping by currentId)
+        let targetIndex = savedState.index;
+        if (savedState.currentId) {
+            const foundIndex = playlist.findIndex(
+                (track) => track?.id === savedState.currentId
+            );
+            if (foundIndex >= 0) {
+                targetIndex = foundIndex;
             }
-        } catch {}
+        }
+
         loadTrack(targetIndex);
+
+        // Restore playback time
         const applyTime = () => {
             if (
-                typeof s.currentTime === "number" &&
+                typeof savedState.currentTime === "number" &&
                 isFinite(audio.duration)
             ) {
                 audio.currentTime = Math.min(
-                    audio.duration - 0.2,
-                    Math.max(0, s.currentTime)
+                    audio.duration - TIME_BUFFER_SECONDS,
+                    Math.max(0, savedState.currentTime)
                 );
             }
         };
-        if (isFinite(audio.duration)) applyTime();
-        else
-            audio.addEventListener("loadedmetadata", applyTime, {
-                once: true,
-            });
-        // Decide paused/playing on load
-        // Always paused on explicit reloads
+
+        if (isFinite(audio.duration)) {
+            applyTime();
+        } else {
+            audio.addEventListener("loadedmetadata", applyTime, { once: true });
+        }
+
+        // Restore play/pause state
         if (isReloadNavigation()) {
             pause();
             setPlayUI(false);
         } else {
-            // Force paused on first visit OR right after login in this session
-            if (!FIRST_VISIT && !JUST_LOGGED_IN && s.isPlaying) {
+            // Force paused on first visit OR right after login
+            if (!FIRST_VISIT && !JUST_LOGGED_IN && savedState.isPlaying) {
                 play();
             } else {
                 setPlayUI(false);
             }
         }
+
         return true;
-    } catch {
-        return false;
-    }
+    }, "restorePlayerState") ?? false;
 }
 
-// Ad functions
+// ===== AD FUNCTIONS =====
+/**
+ * Applies ad UI to player elements
+ */
 function applyAdUI() {
-    try {
+    safeExecute(() => {
+        // Update main player UI
         if (elements.titleEl) elements.titleEl.textContent = adAssets.title;
         if (elements.artistEl) elements.artistEl.textContent = adAssets.artist;
         if (elements.coverEl) elements.coverEl.src = adAssets.cover;
+
+        // Update banner UI
         if (elements.bTitle) elements.bTitle.textContent = adAssets.title;
         if (elements.bArtistName) elements.bArtistName.textContent = adAssets.artist;
         if (elements.bCover) elements.bCover.src = adAssets.cover;
         if (elements.bArtistAvatar) elements.bArtistAvatar.src = adAssets.artistImg;
+
+        // Reset progress
         if (elements.progress) {
             elements.progress.value = 0;
             elements.progress.style.setProperty("--progress-value", "0%");
         }
+
+        // Reset time displays
         if (elements.currentTimeEl) elements.currentTimeEl.textContent = "0:00";
         if (elements.durationEl) elements.durationEl.textContent = "0:00";
-    } catch {}
+    }, "applyAdUI");
 }
 
-function startAdThen(cb) {
-    // Do not start ad in these cases
+/**
+ * Starts an ad and executes callback after
+ * @param {Function|null} callback - Callback to execute after ad
+ */
+function startAdThen(callback) {
+    // Don't start ad if already playing
     if (isAdPlaying) return;
+
+    // Skip ad for premium users
     if (isPremiumOn()) {
-        if (typeof cb === "function") cb();
-        else nextTrack(true);
+        if (typeof callback === "function") {
+            callback();
+        } else {
+            nextTrack(true);
+        }
         return;
     }
-    if (repeatMode === "one" && adShownThisTrackCycle) {
-        if (typeof cb === "function") cb();
-        else nextTrack(true);
+
+    // Skip ad if already shown for this track in repeat-one mode
+    if (repeatMode === REPEAT_MODES.ONE && adShownThisTrackCycle) {
+        if (typeof callback === "function") {
+            callback();
+        } else {
+            nextTrack(true);
+        }
         return;
     }
+
     isAdPlaying = true;
-    adAfterCallback = typeof cb === "function" ? cb : null;
+    adAfterCallback = typeof callback === "function" ? callback : null;
     setControlsDisabled(true);
     applyAdUI();
+    
     audio.src = adAssets.src;
     audio.load();
     play();
-    try {
+
+    safeExecute(() => {
         if (elements.queueListEl) {
             elements.queueListEl.setAttribute("aria-disabled", "true");
         }
-    } catch {}
-    try {
         document.body.classList.add("ad-locked");
-    } catch {}
+    }, "startAdThen");
 }
 
+/**
+ * Ends ad and resumes playback
+ */
 function endAdThenResume() {
     isAdPlaying = false;
     setControlsDisabled(false);
-    try {
+
+    safeExecute(() => {
         if (elements.queueListEl) {
             elements.queueListEl.removeAttribute("aria-disabled");
         }
-    } catch {}
-    try {
         document.body.classList.remove("ad-locked");
-    } catch {}
-    // Continue as requested
+    }, "endAdThenResume");
+
+    // Execute callback or continue to next track
     if (typeof adAfterCallback === "function") {
-        const fn = adAfterCallback;
+        const callback = adAfterCallback;
         adAfterCallback = null;
-        fn();
+        callback();
     } else {
         nextTrack(true);
     }
 }
 
-// Track loading and playback
-function loadTrack(i) {
+// ===== TRACK LOADING AND PLAYBACK =====
+/**
+ * Updates track UI elements
+ * @param {Object} track - Track object
+ */
+function updateTrackUI(track) {
+    // Update main player UI
+    if (elements.titleEl) elements.titleEl.textContent = track.title;
+    if (elements.artistEl) elements.artistEl.textContent = track.artist;
+    if (elements.coverEl) elements.coverEl.src = track.cover;
+
+    // Update banner UI
+    if (elements.bTitle) elements.bTitle.textContent = track.title;
+    if (elements.bArtistName) elements.bArtistName.textContent = track.artist;
+    if (elements.bCover) elements.bCover.src = track.cover;
+    if (elements.bArtistAvatar) {
+        elements.bArtistAvatar.src = track.artistImg || track.cover;
+    }
+}
+
+/**
+ * Resets progress and time displays
+ */
+function resetProgressUI() {
+    if (elements.progress) {
+        elements.progress.value = 0;
+        elements.progress.style.setProperty("--progress-value", "0%");
+    }
+    if (elements.currentTimeEl) elements.currentTimeEl.textContent = "0:00";
+    if (elements.durationEl) elements.durationEl.textContent = "0:00";
+}
+
+/**
+ * Loads a track at the given index
+ * @param {number} trackIndex - Index of track to load
+ */
+function loadTrack(trackIndex) {
     const playlist = window.__mbPlaylist || [];
-    const t = playlist[i];
-    if (!t) return;
-    
-    // Only reset ad flags if the track identity actually changes
-    const nextKey = getTrackKey(t);
+    const track = playlist[trackIndex];
+    if (!track) return;
+
+    // Reset ad flags only if track identity changes
+    const nextKey = getTrackKey(track);
     if (nextKey !== currentTrackKey) {
         currentTrackKey = nextKey;
         adShownThisTrackCycle = false;
         lastAdTrackId = null;
     }
-    index = i;
-    audio.src = t.src;
-    audio.load();
-    
-    // Update UI elements
-    if (elements.titleEl) elements.titleEl.textContent = t.title;
-    if (elements.artistEl) elements.artistEl.textContent = t.artist;
-    if (elements.coverEl) elements.coverEl.src = t.cover;
 
-    // Update banner
-    if (elements.bTitle) elements.bTitle.textContent = t.title;
-    if (elements.bArtistName) elements.bArtistName.textContent = t.artist;
-    if (elements.bCover) elements.bCover.src = t.cover;
-    if (elements.bArtistAvatar) elements.bArtistAvatar.src = t.artistImg || t.cover;
+    index = trackIndex;
+    audio.src = track.src;
+    audio.load();
+
+    // Update UI
+    updateTrackUI(track);
+    resetProgressUI();
 
     // Expose current track id for other modules
-    try {
-        window.currentTrackId = t && (t.id || null);
-    } catch {}
+    safeExecute(() => {
+        window.currentTrackId = track.id || null;
+    }, "loadTrack:setTrackId");
 
-    if (elements.progress) {
-        elements.progress.value = 0;
-        try {
-            elements.progress.style.setProperty("--progress-value", "0%");
-        } catch {}
-    }
-    if (elements.currentTimeEl) elements.currentTimeEl.textContent = "0:00";
-    if (elements.durationEl) elements.durationEl.textContent = "0:00";
-    
     // Update queue active state
     if (window.__mbUpdateQueueActive) {
         window.__mbUpdateQueueActive(index);
     }
 
     // Notify other modules
-    try {
+    safeExecute(() => {
         window.dispatchEvent(
             new CustomEvent("musicbox:trackchange", { detail: { index } })
         );
-    } catch {}
+    }, "loadTrack:dispatchEvent");
 }
 
+/**
+ * Plays the audio
+ */
 function play() {
     audio.play();
     isPlaying = true;
     setPlayUI(true);
-    try {
+    safeExecute(() => {
         window.dispatchEvent(new Event("musicbox:statechange"));
-    } catch {}
+    }, "play:dispatchEvent");
 }
 
+/**
+ * Pauses the audio
+ */
 function pause() {
     audio.pause();
     isPlaying = false;
     setPlayUI(false);
-    try {
+    safeExecute(() => {
         window.dispatchEvent(new Event("musicbox:statechange"));
-    } catch {}
+    }, "pause:dispatchEvent");
 }
 
+/**
+ * Gets a random index different from current index
+ * @param {number} currentIndex - Current track index
+ * @param {number} playlistLength - Playlist length
+ * @returns {number} Random index
+ */
+function getRandomIndex(currentIndex, playlistLength) {
+    if (playlistLength === 1) return currentIndex;
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * playlistLength);
+    } while (randomIndex === currentIndex);
+    return randomIndex;
+}
+
+/**
+ * Calculates next track index
+ * @returns {number} Next track index
+ */
 function nextIndex() {
     const playlist = window.__mbPlaylist || [];
     if (shuffle) {
-        if (playlist.length === 1) return index;
-        let r;
-        do {
-            r = Math.floor(Math.random() * playlist.length);
-        } while (r === index);
-        return r;
+        return getRandomIndex(index, playlist.length);
     }
     return (index + 1) % playlist.length;
 }
 
+/**
+ * Calculates previous track index
+ * @returns {number} Previous track index
+ */
 function prevIndex() {
     const playlist = window.__mbPlaylist || [];
     if (shuffle) {
-        if (playlist.length === 1) return index;
-        let r;
-        do {
-            r = Math.floor(Math.random() * playlist.length);
-        } while (r === index);
-        return r;
+        return getRandomIndex(index, playlist.length);
     }
     return (index - 1 + playlist.length) % playlist.length;
 }
 
+/**
+ * Advances to next track
+ * @param {boolean} auto - Whether this was auto-advanced
+ */
 function nextTrack(auto = false) {
-    if (auto && repeatMode === "one") {
+    // Repeat one: restart current track
+    if (auto && repeatMode === REPEAT_MODES.ONE) {
         audio.currentTime = 0;
         audio.play();
         return;
     }
+
     const playlist = window.__mbPlaylist || [];
+    
+    // End of playlist: stop if not repeating
     if (
         auto &&
-        repeatMode === "off" &&
+        repeatMode === REPEAT_MODES.OFF &&
         !shuffle &&
         index === playlist.length - 1
     ) {
@@ -439,13 +629,22 @@ function nextTrack(auto = false) {
         audio.currentTime = 0;
         return;
     }
+
     loadTrack(nextIndex());
-    if (isPlaying || auto) play();
-    else setPlayUI(false);
+    
+    if (isPlaying || auto) {
+        play();
+    } else {
+        setPlayUI(false);
+    }
+
     if (window.__mbPushUIState) window.__mbPushUIState();
     savePlayerState(true);
 }
 
+/**
+ * Goes to previous track
+ */
 function prevTrack() {
     loadTrack(prevIndex());
     if (isPlaying) play();
@@ -453,26 +652,37 @@ function prevTrack() {
     savePlayerState(true);
 }
 
-// A11y helpers
+// ===== ACCESSIBILITY HELPERS =====
+/**
+ * Updates repeat button accessibility attributes
+ */
 function updateRepeatA11y() {
     if (!elements.repeatBtn) return;
-    const pressed = repeatMode !== "off";
+    
+    const pressed = repeatMode !== REPEAT_MODES.OFF;
     elements.repeatBtn.setAttribute("aria-pressed", String(pressed));
+    
     const titles = {
-        off: "Repeat: Off",
-        all: "Repeat: All",
-        one: "Repeat: One",
+        [REPEAT_MODES.OFF]: "Repeat: Off",
+        [REPEAT_MODES.ALL]: "Repeat: All",
+        [REPEAT_MODES.ONE]: "Repeat: One",
     };
     elements.repeatBtn.title = titles[repeatMode] || "Repeat";
 }
 
+/**
+ * Updates shuffle button accessibility attributes
+ */
 function updateShuffleA11y() {
     if (!elements.shuffleBtn) return;
     elements.shuffleBtn.setAttribute("aria-pressed", String(shuffle));
     elements.shuffleBtn.title = shuffle ? "Shuffle: On" : "Shuffle: Off";
 }
 
-// Volume slider update
+// ===== VOLUME CONTROL =====
+/**
+ * Updates volume slider visual indicator
+ */
 function updateVolumeSlider() {
     if (!elements.volume) return;
     const value = elements.volume.value;
@@ -480,83 +690,136 @@ function updateVolumeSlider() {
     elements.volume.style.setProperty("--volume-value", `${percentage}%`);
 }
 
-// Setup ad interaction guards
+// ===== AD INTERACTION GUARDS =====
+/**
+ * Checks if an element matches ad-locked selectors
+ * @param {Element} element - Element to check
+ * @returns {boolean}
+ */
+function isAdLockedElement(element) {
+    if (!(element instanceof Element)) return false;
+    return AD_LOCK_SELECTORS.some((selector) => element.closest(selector));
+}
+
+/**
+ * Sets up ad interaction guards to prevent control during ads
+ */
 function setupAdInteractionGuards() {
-    try {
-        // Visual cue styles when locked
+    safeExecute(() => {
+        // Add visual cue styles when locked
         if (!document.getElementById("ad-lock-style")) {
-            const s = document.createElement("style");
-            s.id = "ad-lock-style";
-            s.textContent = `
-              body.ad-locked .player .controls .btn,
-              body.ad-locked #progress,
-              body.ad-locked #queue-list *,
-              body.ad-locked #pl-tbody tr,
-              body.ad-locked .song-card,
-              body.ad-locked .song-item { cursor:not-allowed !important; }
+            const style = document.createElement("style");
+            style.id = "ad-lock-style";
+            style.textContent = `
+                body.ad-locked .player .controls .btn,
+                body.ad-locked #progress,
+                body.ad-locked #queue-list *,
+                body.ad-locked #pl-tbody tr,
+                body.ad-locked .song-card,
+                body.ad-locked .song-item {
+                    cursor: not-allowed !important;
+                }
             `;
-            document.head.appendChild(s);
+            document.head.appendChild(style);
         }
-        const SELS = [
-            "#play",
-            "#next",
-            "#prev",
-            "#shuffle",
-            "#repeat",
-            "#progress",
-            "#queue-list",
-            "#pl-tbody tr",
-            ".song-card",
-            ".song-item",
-            ".q-list",
-            ".q-item",
-            ".q-row",
-        ];
-        function isTrigger(el) {
-            if (!(el instanceof Element)) return false;
-            for (const sel of SELS) {
-                if (el.closest(sel)) return true;
-            }
-            return false;
-        }
-        // Capture clicks
+
+        // Block clicks on locked elements
         document.addEventListener(
             "click",
             (e) => {
-                try {
-                    if (!isAdPlaying) return;
-                    const t = e.target;
-                    if (isTrigger(t)) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        e.stopImmediatePropagation();
-                    }
-                } catch {}
+                if (!isAdPlaying) return;
+                if (isAdLockedElement(e.target)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
             },
             true
         );
-        // Capture Enter/Space on interactive elements
+
+        // Block keyboard interactions on locked elements
         document.addEventListener(
             "keydown",
             (e) => {
-                try {
-                    if (!isAdPlaying) return;
-                    if (e.key === "Enter" || e.key === " ") {
-                        const t = e.target;
-                        if (isTrigger(t)) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            e.stopImmediatePropagation();
-                        }
-                    }
-                } catch {}
+                if (!isAdPlaying) return;
+                if ((e.key === "Enter" || e.key === " ") && isAdLockedElement(e.target)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
             },
             true
         );
-    } catch {}
+    }, "setupAdInteractionGuards");
 }
 
-// Event listeners setup
+/**
+ * Handles track ended event with ad logic
+ */
+function handleTrackEnded() {
+    // If repeating one song, show ad only once per track cycle
+    if (repeatMode === REPEAT_MODES.ONE) {
+        const playlist = window.__mbPlaylist || [];
+        const currentTrack = playlist[index];
+        const currentId = currentTrack?.id || null;
+
+        if (
+            !adShownThisTrackCycle &&
+            currentId &&
+            currentId !== lastAdTrackId
+        ) {
+            adShownThisTrackCycle = true;
+            lastAdTrackId = currentId;
+            startAdThen(() => nextTrack(true));
+        } else {
+            nextTrack(true); // Loop without showing ad again
+        }
+    } else {
+        startAdThen(() => nextTrack(true));
+    }
+}
+
+/**
+ * Sets up mobile volume toggle functionality
+ */
+function setupMobileVolumeToggle() {
+    function toggleMobileVolume(e) {
+        if (window.innerWidth > MOBILE_BREAKPOINT) return;
+        const right = elements.volIcon.closest(".right");
+        if (!right) return;
+        e.stopPropagation();
+        right.classList.toggle("show-volume");
+    }
+
+    function hideMobileVolume() {
+        const right = document.querySelector(".right.show-volume");
+        if (right) right.classList.remove("show-volume");
+    }
+
+    elements.volIcon.addEventListener("click", toggleMobileVolume);
+
+    document.addEventListener(
+        "click",
+        (e) => {
+            if (window.innerWidth > MOBILE_BREAKPOINT) return;
+            const right = document.querySelector(".right");
+            if (right && (right.contains(e.target) || e.target === elements.volIcon)) {
+                return;
+            }
+            hideMobileVolume();
+        },
+        true
+    );
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > MOBILE_BREAKPOINT) hideMobileVolume();
+    });
+}
+
+// ===== EVENT LISTENERS SETUP =====
+/**
+ * Sets up all event listeners for player controls
+ */
 function setupEventListeners() {
     // Play/pause button
     if (elements.playBtn) {
@@ -594,11 +857,17 @@ function setupEventListeners() {
         elements.shuffleBtn.addEventListener("click", () => {
             shuffle = !shuffle;
             elements.shuffleBtn.classList.toggle("active", shuffle);
-            if (repeatMode === "one" && shuffle) repeatMode = "all";
+            
+            // Disable repeat-one when shuffle is enabled
+            if (repeatMode === REPEAT_MODES.ONE && shuffle) {
+                repeatMode = REPEAT_MODES.ALL;
+            }
+            
             if (elements.repeatBtn) {
                 elements.repeatBtn.dataset.mode = repeatMode;
-                elements.repeatBtn.classList.toggle("active", repeatMode !== "off");
+                elements.repeatBtn.classList.toggle("active", repeatMode !== REPEAT_MODES.OFF);
             }
+            
             updateShuffleA11y();
             updateRepeatA11y();
             savePlayerState(true);
@@ -608,10 +877,16 @@ function setupEventListeners() {
     // Repeat button
     if (elements.repeatBtn) {
         elements.repeatBtn.addEventListener("click", () => {
+            // Cycle through repeat modes: off -> all -> one -> off
             repeatMode =
-                repeatMode === "off" ? "all" : repeatMode === "all" ? "one" : "off";
+                repeatMode === REPEAT_MODES.OFF
+                    ? REPEAT_MODES.ALL
+                    : repeatMode === REPEAT_MODES.ALL
+                    ? REPEAT_MODES.ONE
+                    : REPEAT_MODES.OFF;
+            
             elements.repeatBtn.dataset.mode = repeatMode;
-            elements.repeatBtn.classList.toggle("active", repeatMode !== "off");
+            elements.repeatBtn.classList.toggle("active", repeatMode !== REPEAT_MODES.OFF);
             updateRepeatA11y();
             savePlayerState(true);
         });
@@ -620,23 +895,24 @@ function setupEventListeners() {
     // Audio events
     audio.addEventListener("loadedmetadata", () => {
         if (elements.durationEl) {
-            elements.durationEl.textContent = fmt(audio.duration);
+            elements.durationEl.textContent = formatTime(audio.duration);
         }
     });
 
     audio.addEventListener("timeupdate", () => {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        const val = isFinite(pct) ? Math.round(pct) : 0;
+        const percentage = (audio.currentTime / audio.duration) * 100;
+        const value = isFinite(percentage) ? Math.round(percentage) : 0;
+        
         if (elements.progress) {
-            elements.progress.value = val;
-            elements.progress.setAttribute("aria-valuenow", String(val));
-            try {
-                elements.progress.style.setProperty("--progress-value", val + "%");
-            } catch {}
+            elements.progress.value = value;
+            elements.progress.setAttribute("aria-valuenow", String(value));
+            elements.progress.style.setProperty("--progress-value", `${value}%`);
         }
+        
         if (elements.currentTimeEl) {
-            elements.currentTimeEl.textContent = fmt(audio.currentTime);
+            elements.currentTimeEl.textContent = formatTime(audio.currentTime);
         }
+        
         savePlayerState(false);
     });
 
@@ -646,36 +922,14 @@ function setupEventListeners() {
         } else if (isPremiumOn()) {
             nextTrack(true);
         } else {
-            // If repeating one song, show the ad only once for this track cycle
-            if (repeatMode === "one") {
-                const playlist = window.__mbPlaylist || [];
-                const currentId =
-                    playlist && playlist[index] && playlist[index].id
-                        ? playlist[index].id
-                        : null;
-                if (
-                    !adShownThisTrackCycle &&
-                    currentId &&
-                    currentId !== lastAdTrackId
-                ) {
-                    adShownThisTrackCycle = true;
-                    lastAdTrackId = currentId;
-                    startAdThen(() => nextTrack(true));
-                } else {
-                    nextTrack(true); // loop without showing ad again
-                }
-            } else {
-                startAdThen(() => nextTrack(true));
-            }
+            handleTrackEnded();
         }
     });
 
     // Prevent pausing ad
     audio.addEventListener("pause", () => {
         if (isAdPlaying) {
-            try {
-                audio.play();
-            } catch {}
+            safeExecute(() => audio.play(), "preventAdPause");
         }
     });
 
@@ -698,13 +952,15 @@ function setupEventListeners() {
             audio.volume = v;
             elements.volume.setAttribute("aria-valuenow", String(v));
             if (elements.volIcon) {
-                elements.volIcon.className =
-                    "fa-solid " +
-                    (audio.volume === 0
-                        ? "fa-volume-xmark"
-                        : audio.volume < 0.5
-                        ? "fa-volume-low"
-                        : "fa-volume-high");
+                let volumeIcon = "fa-solid ";
+                if (audio.volume === 0) {
+                    volumeIcon += "fa-volume-xmark";
+                } else if (audio.volume < 0.5) {
+                    volumeIcon += "fa-volume-low";
+                } else {
+                    volumeIcon += "fa-volume-high";
+                }
+                elements.volIcon.className = volumeIcon;
             }
             savePlayerState(true);
         });
@@ -712,43 +968,23 @@ function setupEventListeners() {
 
     // Mobile volume toggle
     if (elements.volIcon) {
-        function toggleMobileVolume(e) {
-            if (window.innerWidth > 900) return;
-            const right = elements.volIcon.closest(".right");
-            if (!right) return;
-            e.stopPropagation();
-            right.classList.toggle("show-volume");
-        }
-        function hideMobileVolume() {
-            const right = document.querySelector(".right.show-volume");
-            if (right) right.classList.remove("show-volume");
-        }
-        elements.volIcon.addEventListener("click", toggleMobileVolume);
-        document.addEventListener(
-            "click",
-            (e) => {
-                if (window.innerWidth > 900) return;
-                const right = document.querySelector(".right");
-                if (right && (right.contains(e.target) || e.target === elements.volIcon))
-                    return;
-                hideMobileVolume();
-            },
-            true
-        );
-        window.addEventListener("resize", () => {
-            if (window.innerWidth > 900) hideMobileVolume();
-        });
+        setupMobileVolumeToggle();
     }
 }
 
-// Initialize player
+// ===== PLAYER INITIALIZATION =====
+/**
+ * Initializes the player module
+ * @param {Object} options - Initialization options
+ * @returns {Object} Player context with public methods
+ */
 export function initPlayer(options = {}) {
     // Create audio element
     audio = new Audio();
-    try {
+    safeExecute(() => {
         window.__mbAudio = audio;
         window.__mbLogoutInProgress = logoutInProgress;
-    } catch {}
+    }, "initPlayer:exposeGlobals");
 
     // Store DOM elements
     elements = {
@@ -786,13 +1022,17 @@ export function initPlayer(options = {}) {
     updateVolumeSlider();
 
     // Expose global API
-    try {
+    safeExecute(() => {
         window.MusicBox = Object.assign({}, window.MusicBox || {}, {
-            playAt(i) {
+            playAt(trackIndex) {
                 const playlist = window.__mbPlaylist || [];
-                if (typeof i === "number" && i >= 0 && i < playlist.length) {
+                if (
+                    typeof trackIndex === "number" &&
+                    trackIndex >= 0 &&
+                    trackIndex < playlist.length
+                ) {
                     if (isAdPlaying) return;
-                    loadTrack(i);
+                    loadTrack(trackIndex);
                     play();
                     if (window.__mbPushUIState) window.__mbPushUIState();
                     savePlayerState(true);
@@ -804,42 +1044,32 @@ export function initPlayer(options = {}) {
             playlist() {
                 return (window.__mbPlaylist || []).slice();
             },
-            setPlaylist: (tracks, ctx) => {
-                try {
-                    if (isAdPlaying) return;
-                    if (window.__mbSetPlaylist) {
-                        const success = window.__mbSetPlaylist(tracks, ctx);
-                        if (success) {
-                            if (window.__mbRenderQueue) window.__mbRenderQueue();
-                            loadTrack(0);
-                            setPlayUI(false);
-                            savePlayerState(true);
-                        }
+            setPlaylist(tracks, context) {
+                if (isAdPlaying) return;
+                if (window.__mbSetPlaylist) {
+                    const success = window.__mbSetPlaylist(tracks, context);
+                    if (success) {
+                        if (window.__mbRenderQueue) window.__mbRenderQueue();
+                        loadTrack(0);
+                        setPlayUI(false);
+                        savePlayerState(true);
                     }
-                } catch {}
-            },
-            pause: () => {
-                try {
-                    pause();
-                    savePlayerState(true);
-                } catch {}
-            },
-            resume: () => {
-                try {
-                    if (isAdPlaying) return;
-                    play();
-                    savePlayerState(true);
-                } catch {}
-            },
-            isPlaying: () => {
-                try {
-                    return !!isPlaying;
-                } catch {
-                    return false;
                 }
             },
+            pause() {
+                pause();
+                savePlayerState(true);
+            },
+            resume() {
+                if (isAdPlaying) return;
+                play();
+                savePlayerState(true);
+            },
+            isPlaying() {
+                return !!isPlaying;
+            },
         });
-    } catch {}
+    }, "initPlayer:exposeMusicBoxAPI");
 
     return {
         loadTrack,
