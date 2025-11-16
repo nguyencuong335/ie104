@@ -53,12 +53,23 @@
       avatarEl.classList.toggle('locked', locked);
       avatarEl.setAttribute('aria-disabled', String(!!locked));
       if (locked) avatarEl.setAttribute('title','Đã có ảnh đại diện'); else avatarEl.removeAttribute('title');
-      if (removeBtn) removeBtn.disabled = !locked; // chỉ cho xóa khi đã có ảnh
+      if (removeBtn) {
+        removeBtn.disabled = !locked; // chỉ cho xóa khi đã có ảnh
+        // Ẩn hẳn nút xóa khi chưa có avatar để tránh gây hiểu nhầm
+        removeBtn.style.display = locked ? '' : 'none';
+      }
     } catch {}
   }
   syncLock();
 
-  function openPicker() { try { if (isLocked()) return; fileInput.click(); } catch {} }
+  function openPicker() {
+    try {
+      if (isLocked()) return;
+      // Reset giá trị input để chọn lại cùng một file vẫn kích hoạt change
+      fileInput.value = '';
+      fileInput.click();
+    } catch {}
+  }
   avatarEl.addEventListener('click', (e)=>{ if (isLocked()) { e.preventDefault(); e.stopPropagation(); return; } openPicker(); });
   avatarEl.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (isLocked()) return; openPicker(); }

@@ -192,6 +192,11 @@
     z-index: 10 !important;
 }
 
+/* Ẩn nút xoá khi avatar trống trong dark mode (override display:flex !important ở trên) */
+[data-theme="dark"] .avatar-wrap:has(.user-avatar:not([style*="background-image"])) .avatar-remove {
+    display: none !important;
+}
+
 [data-theme="dark"] .remove-avatar-btn:hover,
 [data-theme="dark"] .delete-avatar-btn:hover,
 [data-theme="dark"] .avatar-remove:hover {

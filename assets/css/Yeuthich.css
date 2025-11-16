@@ -47,6 +47,7 @@
 }
 
 .page-yeuthich .playlist-play {
+    margin-top: 8px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
